@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace InvoiceAndStockModels
+namespace PROJECT.Data.Models
 {
     using static ConstantsValidation;
     public class Invoice

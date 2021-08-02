@@ -2,7 +2,46 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mx-1 col-12 ">
+    <h1 class="display-3">Welcome to SIAS invoice and Managment System</h1>
+
 </div>
+<div class="pb-5 mb-5">
+
+</div>
+<div class="container  btn-group-vertical">
+    <ul class="navbar col-12 ">
+        <li>
+            <button contenteditable="true" contextmenu="" asp-action="Create" asp-controller="Documents" type="button" class="btn btn-lg btn-outline-dark btn-block"> New Document</button>
+            <br />
+        </li>
+        <li>
+            <a href="~/Purchases/AddPurchase" class="btn btn-lg btn-outline-dark btn-block"> New Purchase</a>
+            <br />
+        </li>
+        <li>
+            <a href="~/Customers/Add" class="btn btn-lg btn-outline-dark btn-block"> New Customer  </a>
+          
+            <br />
+        </li></ul>
+
+    <ul class="navbar col-12 ">
+        <li>
+            <button contenteditable="true" contextmenu="" asp-action="" asp-controller="" type="button" class="btn btn-lg btn-outline-dark btn-block"> Customer Invoice Records</button>
+            <br />
+        </li>
+        <li>
+            <button contenteditable="true" contextmenu="" asp-action="" asp-controller="" type="button" class="btn btn-lg btn-outline-dark btn-block"> Supplier Purchases Records</button>
+            <br />
+        </li>
+        <li>
+            <button contenteditable="true" contextmenu="" asp-action="" asp-controller="" type="button" class="btn btn-lg btn-outline-dark btn-block"> Products Avaialbility</button>
+            <br />
+        </li>
+
+    </ul>
+</div>
+   
+
+
+

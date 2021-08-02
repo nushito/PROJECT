@@ -1,6 +1,7 @@
-﻿using InvoiceAndStockModels;
+﻿
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PROJECT.Data.Models;
 
 namespace PROJECT.Data
 {

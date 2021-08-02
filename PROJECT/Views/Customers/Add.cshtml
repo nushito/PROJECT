@@ -1,0 +1,52 @@
+﻿@model AddCustomerFormModel
+
+<form method="post">
+    <div class="input-group flex-nowrap mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="addon-wrapping">Name</span>
+        </div>
+        <input asp-for="Name" class="form-control" placeholder="Customer Name" aria-label="Name" aria-describedby="addon-wrapping">
+    </div>
+
+    <div class="input-group flex-nowrap mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="addon-wrapping">EIK</span>
+        </div>
+        <input asp-for="EIK" class="form-control" placeholder="Eik" aria-label="EIK" aria-describedby="addon-wrapping">
+    </div>
+
+    <div class="input-group flex-nowrap mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="addon-wrapping">VAT</span>
+        </div>
+        <input asp-for="VAT" class="form-control" placeholder="Vat" aria-label="VAT" aria-describedby="addon-wrapping">
+    </div>
+
+    <div class="input-group flex-nowrap mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="addon-wrapping">Country</span>
+        </div>
+        <input asp-for="ClientAddress.Country" class="form-control" placeholder="Country" aria-label="Country" aria-describedby="addon-wrapping">
+    </div>
+
+    <div class="input-group flex-nowrap mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="addon-wrapping">City</span>
+        </div>
+        <input asp-for="ClientAddress.City" class="form-control" placeholder="City" aria-label="City" aria-describedby="addon-wrapping">
+    </div>
+    <div class="input-group flex-nowrap mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="addon-wrapping">Address</span>
+        </div>
+        <input asp-for="ClientAddress.Street" class="form-control" placeholder="Address" aria-label="Address" aria-describedby="addon-wrapping">
+    </div>
+    <div class="input-group flex-nowrap mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="addon-wrapping">Representative person</span>
+        </div>
+        <input asp-for="RepresentativePerson" class="form-control" placeholder="Manager" aria-describedby="addon-wrapping">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

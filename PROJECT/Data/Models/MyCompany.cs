@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using PROJECT.Data;
 
-namespace InvoiceAndStockModels
+namespace PROJECT.Data.Models
 {
     using static ConstantsValidation;
     public class MyCompany 

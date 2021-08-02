@@ -1,0 +1,88 @@
+﻿
+@model PurchaseFormModel
+
+  <a href="~/Suppliers/AddSupplier" class="btn btn-primary mb-3 mt-3">Add Supplier</a>
+    <form method="get">
+        <div class="form-group">
+            <label asp-for="SupplierName">Supplier</label>
+            <select asp-for="SupplierName" asp-items="@(new SelectList(Model.Suppliers))">
+                <option value="">Choose Supplier</option>
+                @foreach (var supplier in Model.Suppliers)
+                {
+                    <option value="@supplier">@supplier</option>
+                }
+            </select>
+        </div>
+    </form>
+        @*<button type="button" class="btn btn-primary mb-4" asp-action="AddSupplier" asp-controller="Suppliers">Add Supplier</button>*@
+    
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="InvoiceNumber">Invoice Number</label>
+            <input asp-for="InvoiceNumber" type="text" class="form-control" placeholder="Invoice number">
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Date">Date</label>
+            <input asp-for="Date" type="text" class="form-control" placeholder="Date">
+        </div>
+        <a href="~/Purchases/AddSupplier" class="btn btn-primary mb-3 mt-3">Add Product</a>
+
+        @*<div class="form-row">
+
+            <div class="form-group col-md-6">
+                <label asp-for="purchaseProducts.Select(a=>a.ProductDescription)">Description</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="purchaseProducts.Select(a=>a.Size)">Size</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="purchaseProducts.Select(a=>a.Grade)">Grade</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="purchaseProducts.Select(a=>a.PurchasePrice)">Price</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="purchaseProducts.Select(a=>a.Unit)">Unit</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="purchaseProducts.Select(a=>a.Quantity)">Quantity</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="purchaseProducts.Select(a=>a.TransportCost)">TransportCost</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="purchaseProducts.Select(a=>a.TerminalCharges)">Terminal Charges</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="purchaseProducts.Select(a=>a.Duty)">Duty</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="purchaseProducts.Select(a=>a.CustomsExpenses)">Customs Expenses</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="purchaseProducts.Select(a=>a.BankExpenses)">Bank Expenses</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <button type="submit" class="btn btn-primary" asp-action="AddProduct" asp-controller="Purchases">Add Product</button>
+        </div>*@
+
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>

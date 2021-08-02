@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace InvoiceAndStockModels
+namespace PROJECT.Data.Models
 {
     public class Supplier
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using PROJECT.Data;
 
-namespace InvoiceAndStockModels
+namespace PROJECT.Data.Models
 {
     using static ConstantsValidation;
     public class Document
