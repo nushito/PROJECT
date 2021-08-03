@@ -9,6 +9,7 @@ using PROJECT.Models.MyCompany;
 using PROJECT.Services;
 using PROJECT.Services.BankDetails;
 using PROJECT.Services.MyCompany;
+using System.Security.Claims;
 
 namespace PROJECT.Controllers
 {
@@ -17,25 +18,34 @@ namespace PROJECT.Controllers
         private readonly ApplicationDbContext dbContext;
         private readonly ICurrency icurrency;
         private readonly IBankService bankService;
+        private readonly IMycompanyService mycompany;
    
         public MyCompanyController (ApplicationDbContext dbContext
-            ,ICurrency icurrency)
+            ,ICurrency icurrency, IBankService bankService, IMycompanyService mycompany)
         {
             this.dbContext = dbContext;
             this.icurrency = icurrency;
+            this.bankService = bankService;
+            this.mycompany = mycompany;
 
         }
         public IActionResult Register()
         {
             return  View();
         }
+
+        [Authorize]
         [HttpPost]
         public IActionResult Register(MyCompanyFormModel model)
         {
-           
-            string userId = User.Identity.GetUserId();
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
 
-           var company = new MyCompany
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var company = new MyCompany
             {
                 Id = model.Id,
                 Name = model.Name,
@@ -55,24 +65,30 @@ namespace PROJECT.Controllers
             dbContext.MyCompanies.Add(company);
             dbContext.SaveChanges();
 
-            return RedirectToAction(nameof(AddBank));
+            return RedirectToAction("Index","Home");
         }
         public IActionResult AddBank()       
         {
             return View(new AddBankDetailsFormModel
             {
-                CompanyNames = this.GetCompany(),
+                CompanyNames = mycompany.GetCompany(),
                 Currencies = icurrency.GetCurrencies()
             }) ;
         }
 
-        [HttpPost]
+      
         [Authorize]
+        [HttpPost]
         public IActionResult AddBank(BankDetailsAddModel bankmodel)
         {
             if (!ModelState.IsValid)
             {
                bankmodel.Currencies = this.icurrency.GetCurrencies();
+            }
+
+            if (mycompany.GetCompany() == null)
+            {
+                return RedirectToAction("Register", "MyCompany");
             }
 
             bankService.Create(
@@ -97,18 +113,9 @@ namespace PROJECT.Controllers
 
             //dbContext.BankDetails.Add(bankdetails);
            
-
             return RedirectToAction("Index","Home");
         }
-
-        public ICollection<string> GetCompany()
-        {
-            return dbContext.MyCompanies
-                .Select(x=> x.Name)
-                .ToList();
-        }
-
-        
+       
 
     }
 }

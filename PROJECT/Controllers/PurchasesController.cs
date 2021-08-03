@@ -1,11 +1,11 @@
-﻿using InvoiceAndStockModels;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using PROJECT.Data;
 using PROJECT.Models.Purchases;
 using PROJECT.Data.Models;
+using PROJECT.Services;
 
 namespace PROJECT.Controllers
 {

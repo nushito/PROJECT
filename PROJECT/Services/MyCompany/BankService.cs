@@ -19,10 +19,10 @@ namespace PROJECT.Services.MyCompany
             var newBank = new BankDetails
             {
                  CurrencyId = currencyId,
-                  BankName = bankName,
-                   Iban = iban,
-                   Swift = swift,
-                   Address = address,
+                 BankName = bankName,
+                 Iban = iban,
+                 Swift = swift,
+                 Address = address,
                  Company = new MyCompany
                  {
                      Name = companyName,

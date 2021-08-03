@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PROJECT.Data;
 using PROJECT.Services;
+using PROJECT.Services.MyCompany;
 
 namespace PROJECT
 {
@@ -33,6 +34,8 @@ namespace PROJECT
 
             services.AddTransient<ISupplierService, SupplierService>();
             services.AddTransient<ICurrency, Currency>();
+            services.AddTransient<IMycompanyService, MycompanyService>();
+            services.AddTransient<IBankService, BankService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

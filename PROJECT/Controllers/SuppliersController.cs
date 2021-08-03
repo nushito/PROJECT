@@ -1,15 +1,12 @@
-﻿using InvoiceAndStockModels;
-using InvoiceAndStockModels.Enums;
+﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SIAS.Data;
-using SIAS.Models.Suppliers;
-using SIAS.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using PROJECT.Data;
+using PROJECT.Data.Models;
+using PROJECT.Models.Suppliers;
+using PROJECT.Services;
 
-namespace SIAS.Controllers
+namespace PROJECT.Controllers
 {
     public class SuppliersController : Controller
     {

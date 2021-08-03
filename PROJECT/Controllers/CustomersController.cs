@@ -1,7 +1,8 @@
-﻿using InvoiceAndStockModels;
+﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PROJECT.Data;
+using PROJECT.Data.Models;
 using PROJECT.Models;
 using PROJECT.Models.Customers;
 

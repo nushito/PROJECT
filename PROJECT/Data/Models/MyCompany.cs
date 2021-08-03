@@ -22,9 +22,11 @@ namespace PROJECT.Data.Models
         public int Id { get; init; } 
         [Required]
         public string Name { get; set; }
+
         [Required]
         [StringLength(EikLength, MinimumLength = EikLength, ErrorMessage = "EIK number should be 9 symbols long.")]
         public string Eik { get; set; }
+
         [Required]
         [StringLength(VatLength, MinimumLength = VatLength, ErrorMessage = "VAT number should be 11 symbols long.")]
         public string VAT { get; set; }
@@ -43,7 +45,7 @@ namespace PROJECT.Data.Models
 
       public IEnumerable<Document> Invoices { get; set; }
         [NotMapped]
-        public IDictionary<Currency, BankDetails> BankDetailsList { get; set; }
+      public IDictionary<Currency, BankDetails> BankDetailsList { get; set; }
 
     }
 }
