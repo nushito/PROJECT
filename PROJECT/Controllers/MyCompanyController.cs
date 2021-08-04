@@ -49,17 +49,17 @@ namespace PROJECT.Controllers
             {
                 Id = model.Id,
                 Name = model.Name,
-                Eik = model.CompanyEik,
-                VAT = model.CompanyVat,
+                Eik = model.EIK,
+                VAT = model.VAT,
 
                 Address = new Address
                 {
                     City = model.City,
                     Country = model.Country,
-                    Street = model.Address
+                    Street = model.Street
                 },
                 RepresentativePerson = model.RepresentativePerson,
-               UserId = userId
+                UserId = userId
            };
             
             dbContext.MyCompanies.Add(company);
@@ -70,23 +70,23 @@ namespace PROJECT.Controllers
         public IActionResult AddBank()       
         {
             return View(new AddBankDetailsFormModel
-            {
+            { 
                 CompanyNames = mycompany.GetCompany(),
                 Currencies = icurrency.GetCurrencies()
-            }) ;
+            }); 
         }
-
-      
+              
         [Authorize]
         [HttpPost]
-        public IActionResult AddBank(BankDetailsAddModel bankmodel)
+        public IActionResult AddBank(AddBankDetailsFormModel bankmodel)
         {
             if (!ModelState.IsValid)
             {
-               bankmodel.Currencies = this.icurrency.GetCurrencies();
+                bankmodel.Currencies = this.icurrency.GetCurrencies().ToList();
             }
+                
 
-            if (mycompany.GetCompany() == null)
+                if (mycompany.GetCompany() == null)
             {
                 return RedirectToAction("Register", "MyCompany");
             }

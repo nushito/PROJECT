@@ -64,6 +64,8 @@ namespace PROJECT.Data
                 .Property(a => a.TransportCost)
                 .HasColumnType("decimal");
 
+        
+
             base.OnModelCreating(builder);
         }
     }

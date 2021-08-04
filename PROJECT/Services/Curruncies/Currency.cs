@@ -28,18 +28,17 @@ namespace PROJECT.Services
                  .ToList();
         }
 
-        public IEnumerable<string> GetCurrencies()
+        ICollection<string> ICurrency.GetCurrencies()
         {
-            // return ((string[])Enum.GetNames(typeof(AccountCurrency))).ToList();
             return this.dbContext
-                 .Currencies
-                 .Select(a => a.Name)
-                 .ToList();
-               
+                .Currencies
+                .Select(a => a.Name)
+                .ToList();
+
         }
 
 
-     
+
         //public int GetCurrencyId(string currencyName)
         //{
         //    var id = this.dbContext

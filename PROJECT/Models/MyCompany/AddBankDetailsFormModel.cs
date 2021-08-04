@@ -4,21 +4,24 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PROJECT.Models.MyCompany
 {
+    using static PROJECT.Data.ConstantsValidation;
     public class AddBankDetailsFormModel
     {
         public AddBankDetailsFormModel()
         {
-            Currencies = new List<string>();
-            CompanyNames = new List<string>();
+           Currencies = new List<string>();
+          CompanyNames = new List<string>();
         }
         public int Id { get; init; }
-        [Required]
-        public IEnumerable<string> Currencies { get; init; }
 
+        [Required]      
+        public int CurrencyId { get; set; }
         public string Currency { get; set; }
+
         [Required]
         public string BankName { get; set; }
-       
+
+        [StringLength(IbanLength, ErrorMessage = "Your IBAN is invalid!")]
         public string Iban { get; set; }
         [Required]
         public string Swift { get; set; }
@@ -27,8 +30,10 @@ namespace PROJECT.Models.MyCompany
       
         public int CompanyId { get; set; }
         public string CompanyName { get; set; }
-        public ICollection<string> CompanyNames { get; set; }
-       
-      //  public ICollection<MyCompanyGetNameModel> Company { get; set; } = new List<MyCompanyGetNameModel>();
+      public ICollection<string> CompanyNames { get; set; }
+      public ICollection<string> Currencies { get; set; }
+
+
+        //  public ICollection<MyCompanyGetNameModel> Company { get; set; } = new List<MyCompanyGetNameModel>();
     }
 }

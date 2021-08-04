@@ -1,11 +1,9 @@
 ﻿
-
 namespace PROJECT.Models.Currencies
 {
-    public enum CurrencyModelView
+    public class CurrencyModelView
     {
-        BGN = 1,
-        EUR = 2,
-        USD = 3
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

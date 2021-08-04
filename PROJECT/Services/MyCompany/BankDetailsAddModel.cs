@@ -15,17 +15,17 @@ namespace PROJECT.Services.BankDetails
         public string Currency { get; set; }
         [Required]
         public string BankName { get; set; }
-        [MaxLength(IbanLength)]
+
+        [StringLength(IbanLength, ErrorMessage = "Your IBAN is invalid!")]
         public string Iban { get; set; }
         [Required]
         public string Swift { get; set; }
         [Required]
         public string Address { get; set; }
-
         public int CompanyId { get; set; }
         public string CompanyName { get; set; }
-        public ICollection<string> CompanyNames { get; set; }
-        public IEnumerable<string> Currencies { get; set; }
+     //   public ICollection<string> CompanyNames { get; set; }
+      //  public IEnumerable<string> Currencies { get; set; }
 
     }
 }

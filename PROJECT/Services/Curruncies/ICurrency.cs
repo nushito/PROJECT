@@ -6,7 +6,7 @@ namespace PROJECT.Services
     public interface ICurrency
     {
 
-        public IEnumerable<string> GetCurrencies();
+        public ICollection<string> GetCurrencies();
         //  public int GetCurrencyId(string a);
         public IEnumerable<GetCurrencyModel> AllCurrencies();
     }
