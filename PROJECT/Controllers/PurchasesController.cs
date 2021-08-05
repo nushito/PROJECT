@@ -29,7 +29,9 @@ namespace PROJECT.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddPurchase(PurchaseFormModel model, 
+        [Authorize]
+        public IActionResult AddPurchase(
+            PurchaseFormModel model, 
             PurchaseProductFormModel purchasemodel)
         {
             if (!ModelState.IsValid)

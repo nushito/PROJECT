@@ -7,7 +7,6 @@ using PROJECT.Data;
 using PROJECT.Data.Models;
 using PROJECT.Models.MyCompany;
 using PROJECT.Services;
-using PROJECT.Services.BankDetails;
 using PROJECT.Services.MyCompany;
 using System.Security.Claims;
 
@@ -83,6 +82,7 @@ namespace PROJECT.Controllers
             if (!ModelState.IsValid)
             {
                 bankmodel.Currencies = this.icurrency.GetCurrencies().ToList();
+                bankmodel.CompanyNames = this.mycompany.GetCompany();
             }
                 
 
@@ -93,6 +93,7 @@ namespace PROJECT.Controllers
 
             bankService.Create(
                 bankmodel.CurrencyId,
+                bankmodel.CurrencyName,
                 bankmodel.BankName,
                 bankmodel.Iban,
                 bankmodel.Swift,
@@ -100,19 +101,7 @@ namespace PROJECT.Controllers
                 bankmodel.CompanyName,
                 bankmodel.CompanyId
                 );
-          //  string currency, string bankName, string iban, string swift, string address, string companyName, int companyId
-            //var bankdetails = new BankDetails
-            //{
-            //    Currency = bankmodel.Currency,
-            //    Address = bankmodel.Address,
-            //    Iban = bankmodel.Iban,
-            //    Swift = bankmodel.Swift,
-            //    BankName = bankmodel.BankName, 
-            //    CompanyName = bankmodel.CompanyName,
-            //  };
-
-            //dbContext.BankDetails.Add(bankdetails);
-           
+                     
             return RedirectToAction("Index","Home");
         }
        

@@ -16,10 +16,14 @@ namespace PROJECT.Models.Customers
         public string EIK { get; set; }
         [Display(Name ="Representative person")]
         public string RepresentativePerson { get; set; }
+
         [Required]
-
-        public Address ClientAddress { get; set; }
-
+        public string Country { get; set; }
+        [Required]
+        public string City { get; set; }
+        [Required]
+        public string Street { get; set; }
+       
         [DataType(DataType.EmailAddress)]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }

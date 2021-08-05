@@ -31,7 +31,10 @@ namespace PROJECT.Controllers
           AddSupplierModel model
             )
         {
-
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             var supplier = new Supplier
             { 
                 Id = model.Id,
@@ -64,7 +67,7 @@ namespace PROJECT.Controllers
             this.dbContext.Suppliers.Add(supplier);
             this.dbContext.SaveChanges();
 
-            return View();
+            return View(supplier);
                 //RedirectToAction("AddPurchase");
 
         }

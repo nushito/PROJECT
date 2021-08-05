@@ -35,11 +35,17 @@ namespace PROJECT.Controllers
 
             var customer = new Customer
             {
-              ClientAddress = model.ClientAddress,
+              ClientAddress = new Address 
+              {
+                  Country = model.Country,
+                  City = model.City,
+                  Street = model.Street
+              } ,
                Email = model.Email,
                Name = model.Name,
               VAT = model.VAT,
-              EIK = model.EIK
+              EIK = model.EIK,
+              RepresentativePerson = model.RepresentativePerson
             };
 
             this.dbContext.Clients.Add(customer);

@@ -16,7 +16,7 @@ namespace PROJECT.Models.MyCompany
 
         [Required]      
         public int CurrencyId { get; set; }
-        public string Currency { get; set; }
+        public string CurrencyName { get; set; }
 
         [Required]
         public string BankName { get; set; }
