@@ -8,5 +8,6 @@ namespace PROJECT.Services.MyCompany
     public interface IMycompanyService
     {
       public ICollection<string> GetCompany();
+     
     }
 }

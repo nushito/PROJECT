@@ -40,6 +40,8 @@
                                     </div>
                                 </div>
                             </li>
+
+
                         }
 
 
@@ -53,13 +55,26 @@
         </nav>
 
     </header>
+    <div class="row">
+        <div class="col-3 border-right-0 ml-sm-n1">
+            <aside class="navbar">
+               <partial name="_SideLayout" />
 
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+            </aside>
+        </div>
+        <div class="col-9 align-content-between mb-0 pr-sm-1 border-left-0 border-right-0">
+            
+                <main role="main" class="pb-9 m-0">
+                    @RenderBody()
+                </main>
+           
+        </div>
     </div>
+   
+   
+
+
+
 
     <footer class="border-top footer text-muted">
         <div class="container">

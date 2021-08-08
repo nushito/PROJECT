@@ -9,6 +9,7 @@ using PROJECT.Data;
 using PROJECT.Infrastructure;
 using PROJECT.Services;
 using PROJECT.Services.MyCompany;
+using PROJECT.Services.Products;
 
 namespace PROJECT
 {
@@ -37,6 +38,7 @@ namespace PROJECT
             services.AddTransient<ICurrency, Currency>();
             services.AddTransient<IMycompanyService, MycompanyService>();
             services.AddTransient<IBankService, BankService>();
+            services.AddTransient<IProductsService, ProductsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

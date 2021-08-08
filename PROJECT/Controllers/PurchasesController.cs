@@ -6,6 +6,8 @@ using PROJECT.Data;
 using PROJECT.Models.Purchases;
 using PROJECT.Data.Models;
 using PROJECT.Services;
+using PROJECT.Services.Products;
+using System.Threading.Tasks;
 
 namespace PROJECT.Controllers
 {
@@ -13,19 +15,26 @@ namespace PROJECT.Controllers
     {
         private readonly ApplicationDbContext dbContext;
         private readonly ISupplierService supplierService;
-        public PurchasesController(ApplicationDbContext dbContext, ISupplierService supplierService)
+        private readonly IProductsService productsService;
+        public PurchasesController(ApplicationDbContext dbContext, 
+            ISupplierService supplierService,
+            IProductsService productsService)
         {
             this.dbContext = dbContext;
             this.supplierService = supplierService;
+            this.productsService = productsService;
         }
+        [Authorize]
         public IActionResult AddPurchase()
         {
-          
+
             return View(new PurchaseFormModel
             {
-                Suppliers = supplierService.GetSuppliers()
-            });
-             
+                Suppliers = supplierService.GetSuppliers(),
+                Descriptions = productsService.GetDescription(),
+                Sizes = productsService.GetSize(),
+                Grades = productsService.GetGrade()
+            }) ;             
         }
 
         [HttpPost]
@@ -49,7 +58,7 @@ namespace PROJECT.Controllers
                 return RedirectToAction(nameof(SuppliersController.AddSupplier),"Suppliers");
             }
 
-            var supplier = this.dbContext
+            var supplier =  this.dbContext
                 .Suppliers
                 .Where(a => a.Name.ToLower() == model.SupplierName.ToLower())
                 .FirstOrDefault();
@@ -59,54 +68,22 @@ namespace PROJECT.Controllers
                 Supplier = supplier,
                 Date = DateTime.Parse(model.Date),
                 InvoiceNumber = model.InvoiceNumber,
-             };
+            };
 
-           // var product = AddProduct(purchasemodel);
-            //var product = this.dbContext
-            //    .Products
-            //    .Where(a => a.Id == purchasemodel.Id)
-            //    .FirstOrDefault();
 
-            //if(product == null)
-            //{
+            var product = this.dbContext
+                .Products
+                .Where(a => a.Id == purchasemodel.Id)
+                .FirstOrDefault();
 
-            //var newProduct = AddProduct();
-            //    purchase.Products.Add(newProduct);
-          //  supplier.Products.Add(product);
-            
             this.dbContext.Purchases.Add(purchase);
+           // product.Suppliers.Add(new Supplier{id = purchase.Supplier.Id);
 
+          dbContext.SaveChanges();
             return View(purchase);
         }
 
-        public IActionResult AddProduct()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult AddProduct(PurchaseProductFormModel purchasemodel)
-        {
-            var newProduct = new Product
-            {
-                Id = purchasemodel.Id,
-                Description = purchasemodel.ProductDescription,
-                Size = purchasemodel.Size,
-                Grade = purchasemodel.Grade,
-                Price = purchasemodel.PurchasePrice,
-                Quantity = purchasemodel.Quantity,
-                Unit = purchasemodel.Unit,
-                TransportCost = purchasemodel.TransportCost,
-                CustomsExpenses = purchasemodel.CustomsExpenses,
-                BankExpenses = purchasemodel.BankExpenses,
-                Duty = purchasemodel.Duty,
-                TerminalCharges = purchasemodel.TerminalCharges,
-            };
-            
-           this.dbContext.Products.Add(newProduct);
-            this.dbContext.SaveChanges();
-
-            return View("AddPurchase", newProduct);
-        }
+        
         [HttpPost]
         public IActionResult Add(Product product)
         {

@@ -23,7 +23,7 @@ namespace PROJECT.Data.Models
         [Required]
         public Supplier Supplier { get; set; }
         [Required]
-        public Customer  Client { get; set; }
+        public Customer Client { get; set; }
         public ICollection<Product> Products { get; set; }
     }
 }

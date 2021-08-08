@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +7,7 @@ using PROJECT.Data.Models;
 using PROJECT.Models.MyCompany;
 using PROJECT.Services;
 using PROJECT.Services.MyCompany;
-using System.Security.Claims;
+using PROJECT.Infrastructure;
 
 namespace PROJECT.Controllers
 {
@@ -42,7 +41,7 @@ namespace PROJECT.Controllers
                 return View();
             }
 
-            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userId = this.User.UserId();//this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var company = new MyCompany
             {

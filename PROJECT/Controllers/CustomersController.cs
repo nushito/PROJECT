@@ -51,7 +51,7 @@ namespace PROJECT.Controllers
             this.dbContext.Clients.Add(customer);
             this.dbContext.SaveChanges();
 
-            return View();
+            return RedirectToAction("Index","Home");
         }
     }
 }

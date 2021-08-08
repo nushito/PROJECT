@@ -18,6 +18,8 @@ namespace PROJECT.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<ProductSupplier> ProductSuppliers { get; set; }
+        public DbSet<ProductCustomer> ProductCustomers { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -53,7 +55,7 @@ namespace PROJECT.Data
                 .HasColumnType("decimal");
 
             builder.Entity<Product>()
-                .Property(a => a.Quantity)
+                .Property(a => a.Cubic)
                 .HasColumnType("decimal");
 
             builder.Entity<Product>()
@@ -64,7 +66,14 @@ namespace PROJECT.Data
                 .Property(a => a.TransportCost)
                 .HasColumnType("decimal");
 
-        
+            builder.Entity<ProductSupplier>()
+                    .HasKey(a => new { a.ProductId, a.SupplierId });
+
+            builder.Entity<ProductCustomer>()
+                    .HasKey(a => new { a.ProductId, a.CustomerId });
+
+            builder.Entity<ProductInvoice>()
+                   .HasKey(a => new { a.ProductId, a.InvoiceId });
 
             base.OnModelCreating(builder);
         }

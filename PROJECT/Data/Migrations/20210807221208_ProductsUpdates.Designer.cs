@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PROJECT.Data;
 
 namespace PROJECT.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210807221208_ProductsUpdates")]
+    partial class ProductsUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -512,9 +514,6 @@ namespace PROJECT.Data.Migrations
                     b.Property<decimal>("BankExpenses")
                         .HasColumnType("decimal");
 
-                    b.Property<decimal>("Cubic")
-                        .HasColumnType("decimal");
-
                     b.Property<decimal>("CustomsExpenses")
                         .HasColumnType("decimal");
 
@@ -535,10 +534,13 @@ namespace PROJECT.Data.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Pieces")
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal");
+
+                    b.Property<int?>("PurchaseId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("Quantity")
                         .HasColumnType("decimal");
 
                     b.Property<string>("Size")
@@ -560,6 +562,8 @@ namespace PROJECT.Data.Migrations
                     b.HasIndex("DocumentId");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("PurchaseId");
 
                     b.ToTable("Products");
                 });
@@ -664,21 +668,6 @@ namespace PROJECT.Data.Migrations
                     b.HasIndex("SupplierAddressId");
 
                     b.ToTable("Suppliers");
-                });
-
-            modelBuilder.Entity("ProductPurchase", b =>
-                {
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PurchasesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductsId", "PurchasesId");
-
-                    b.HasIndex("PurchasesId");
-
-                    b.ToTable("ProductPurchase");
                 });
 
             modelBuilder.Entity("ProductSupplier", b =>
@@ -876,6 +865,10 @@ namespace PROJECT.Data.Migrations
                     b.HasOne("PROJECT.Data.Models.Order", null)
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
+
+                    b.HasOne("PROJECT.Data.Models.Purchase", null)
+                        .WithMany("Products")
+                        .HasForeignKey("PurchaseId");
                 });
 
             modelBuilder.Entity("PROJECT.Data.Models.Purchase", b =>
@@ -900,21 +893,6 @@ namespace PROJECT.Data.Migrations
                     b.Navigation("BankDetail");
 
                     b.Navigation("SupplierAddress");
-                });
-
-            modelBuilder.Entity("ProductPurchase", b =>
-                {
-                    b.HasOne("PROJECT.Data.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PROJECT.Data.Models.Purchase", null)
-                        .WithMany()
-                        .HasForeignKey("PurchasesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProductSupplier", b =>
@@ -968,6 +946,11 @@ namespace PROJECT.Data.Migrations
             modelBuilder.Entity("PROJECT.Data.Models.Product", b =>
                 {
                     b.Navigation("Customers");
+                });
+
+            modelBuilder.Entity("PROJECT.Data.Models.Purchase", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("PROJECT.Data.Models.Supplier", b =>
