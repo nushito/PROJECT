@@ -1,4 +1,6 @@
 ﻿
+using PROJECT.Data.Models;
+using PROJECT.Services.Supplier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +10,7 @@ namespace PROJECT.Services
 {
     public interface ISupplierService
     {
-        public ICollection<string> GetSuppliers();
+        public ICollection<AllSuppliers> GetSuppliers();
 
        
     }

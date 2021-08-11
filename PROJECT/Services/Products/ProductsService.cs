@@ -2,6 +2,7 @@
 using System.Linq;
 using PROJECT.Data;
 using PROJECT.Data.Models;
+using PROJECT.Services.Products.Models;
 
 namespace PROJECT.Services.Products
 {
@@ -34,25 +35,38 @@ namespace PROJECT.Services.Products
             return newProduct.Id;
         }
 
-        public ICollection<string> GetDescription()
+        public ICollection<DescriptionListModel> GetDescription()
         {
             return dbContext.Products
-                .Select(x => x.Description)
+                .Select(x => new DescriptionListModel 
+                {
+                    Id = x.Id, 
+                    Name = x.Description
+                })
                 .ToList();
         }
     
 
-        public ICollection<string> GetGrade()
+        public ICollection<GradeListModel> GetGrade()
         {
             return dbContext.Products
-                .Select(x => x.Grade)
+                .Select(x => 
+                new GradeListModel
+                {
+                    Id = x.Id,
+                    Name = x.Grade
+                })
                 .ToList();
         }
     
-        public ICollection<string> GetSize()
+        public ICollection<SizeListModel> GetSize()
         {
             return dbContext.Products
-                .Select(x => x.Size)                 
+                .Select(x => new SizeListModel 
+                { 
+                    Id = x.Id,
+                    Name = x.Size
+                } )                 
                 .ToList();
         }
     }

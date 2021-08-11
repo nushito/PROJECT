@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PROJECT.Data;
 
 namespace PROJECT.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210810081458_ChangeProductProp")]
+    partial class ChangeProductProp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -509,12 +511,24 @@ namespace PROJECT.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal>("BankExpenses")
+                        .HasColumnType("decimal");
+
+                    b.Property<decimal>("Cubic")
+                        .HasColumnType("decimal");
+
+                    b.Property<decimal>("CustomsExpenses")
+                        .HasColumnType("decimal");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("DocumentId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Duty")
+                        .HasColumnType("decimal");
 
                     b.Property<string>("Grade")
                         .IsRequired()
@@ -523,9 +537,21 @@ namespace PROJECT.Data.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Pieces")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal");
+
                     b.Property<string>("Size")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TerminalCharges")
+                        .HasColumnType("decimal");
+
+                    b.Property<decimal>("TransportCost")
+                        .HasColumnType("decimal");
 
                     b.HasKey("Id");
 
@@ -562,47 +588,6 @@ namespace PROJECT.Data.Migrations
                     b.ToTable("ProductInvoice");
                 });
 
-            modelBuilder.Entity("PROJECT.Data.Models.ProductSpecification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("BankExpenses")
-                        .HasColumnType("decimal");
-
-                    b.Property<decimal>("Cubic")
-                        .HasColumnType("decimal");
-
-                    b.Property<decimal>("CustomsExpenses")
-                        .HasColumnType("decimal");
-
-                    b.Property<decimal>("Duty")
-                        .HasColumnType("decimal");
-
-                    b.Property<int>("Pieces")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TerminalCharges")
-                        .HasColumnType("decimal");
-
-                    b.Property<decimal>("TransportCost")
-                        .HasColumnType("decimal");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductSpecifications");
-                });
-
             modelBuilder.Entity("PROJECT.Data.Models.ProductSupplier", b =>
                 {
                     b.Property<int>("ProductId")
@@ -628,9 +613,6 @@ namespace PROJECT.Data.Migrations
 
                     b.Property<string>("InvoiceNumber")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SipplierId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("SupplierId")
                         .HasColumnType("int");
@@ -662,9 +644,6 @@ namespace PROJECT.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
 
                     b.Property<string>("RepresentativePerson")
                         .HasColumnType("nvarchar(max)");
@@ -897,13 +876,6 @@ namespace PROJECT.Data.Migrations
                         .HasForeignKey("OrderId");
                 });
 
-            modelBuilder.Entity("PROJECT.Data.Models.ProductSpecification", b =>
-                {
-                    b.HasOne("PROJECT.Data.Models.Product", null)
-                        .WithMany("ProductSpecifications")
-                        .HasForeignKey("ProductId");
-                });
-
             modelBuilder.Entity("PROJECT.Data.Models.Purchase", b =>
                 {
                     b.HasOne("PROJECT.Data.Models.Supplier", "Supplier")
@@ -994,8 +966,6 @@ namespace PROJECT.Data.Migrations
             modelBuilder.Entity("PROJECT.Data.Models.Product", b =>
                 {
                     b.Navigation("Customers");
-
-                    b.Navigation("ProductSpecifications");
                 });
 
             modelBuilder.Entity("PROJECT.Data.Models.Supplier", b =>

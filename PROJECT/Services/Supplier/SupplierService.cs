@@ -1,5 +1,7 @@
 ﻿
 using PROJECT.Data;
+using PROJECT.Data.Models;
+using PROJECT.Services.Supplier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +18,16 @@ namespace PROJECT.Services
             this.dbContext = dbContext;
         }
 
-        public ICollection<string> GetSuppliers()
+        public ICollection<AllSuppliers> GetSuppliers()
         {
             return dbContext
                  .Suppliers
-                 .Select(a => a.Name)
+                 .Select(a => 
+                 new AllSuppliers 
+                 {
+                    Id = a.Id,
+                    Name = a.Name
+                 })
                  .ToList();
 
         }

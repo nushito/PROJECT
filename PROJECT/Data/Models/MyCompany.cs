@@ -9,10 +9,9 @@ namespace PROJECT.Data.Models
     using static ConstantsValidation;
     public class MyCompany 
     {
-        private readonly IDictionary<Currency, BankDetails> bankDetailsList = null;
         public MyCompany()
         {
-            //BankDetails = new Dictionary<Currency,BankDetails>();
+           
             BankDetails = new HashSet<BankDetails>();
             Currencies = new HashSet<Currency>();
             Invoices = new List<Document>();
@@ -44,8 +43,8 @@ namespace PROJECT.Data.Models
         public ISet<BankDetails> BankDetails { get; set; }
 
       public IEnumerable<Document> Invoices { get; set; }
-        [NotMapped]
-      public IDictionary<Currency, BankDetails> BankDetailsList { get; set; }
+        
+    
 
     }
 }

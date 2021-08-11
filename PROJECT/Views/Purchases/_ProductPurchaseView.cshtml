@@ -1,43 +1,176 @@
 ﻿@model PurchaseProductFormModel
 
-<div class="form-row">
+   <form method="post">
+        <fieldset>
+            <h4 class="modal-title" id="gridSystemModalLabel">Products</h4>
+            <table id="clientTable" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>Type</td>
+                        <td>Size</td>
+                    </tr>
+                    <tr>
+                    <tr id="tablerow0">
+                        <td>
+                            <div class="editor-field">
+                                <select name="ProductDescription[0]" asp-for="DescriptionId" asp-items="@(new SelectList(Model.Descriptions))">
+                                    <option value="">All</option>
+                                    @foreach (var type in Model.Descriptions)
+                                    {
+                                        <option value="@type">@type</option>
+                                    }
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="editor-field">
+                                <select name="Size[0]" asp-for="SizeId" asp-items="@(new SelectList(Model.Sizes))">
+                                    <option value="">All</option>
+                                    @foreach (var size in Model.Sizes)
+                                    {
+                                        <option value="@size">@size</option>
+                                    }
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="editor-field">
+                                <select name="Grade[0]" asp-for="GradeId" asp-items="@(new SelectList(Model.Grades))">
+                                    <option value="">All</option>
+                                    @foreach (var grade in Model.Grades)
+                                    {
+                                        <option value="@grade">@grade</option>
+                                    }
+                                </select>
+                            </div>
+                        </td>
+                    </tr></tr></thead>
+                   <thead> <tr>
+                        <td>Grade</td>
+                        <td>Count</td>
+                        <td>Quantity</td>
+                        <td>Price</td>
+                        <td>Transport Cost</td>
+                        <td>Terminal Charges</td>
+                        <td>Duty</td>
+                        <td>Customs Expenses</td>
+                        <td>Bank Expenses</td>
+                    </tr>
+                </thead>
+                
+                <tr id="tablerow0">
+                    <td>
+                        <div class="editor-field">
+                            <input asp-for="Pieces" type="text" class="text-box single-line" name="Pieces[0]" value="" required="required">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="editor-field">
+                            <input asp-for="Cubic" type="text" class="text-box single-line" name="Cubic[0]" value="" required="required">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="editor-field">
+                            <input asp-for="PurchasePrice" type="text" class="text-box single-line" name="PurchasePrice[0]" value="" required="required">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="editor-field">
+                            <input asp-for="TransportCost" type="text" class="text-box single-line" name="TransportCost[0]" value="" required="required">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="editor-field">
+                            <input asp-for="TerminalCharges" type="text" class="text-box single-line" name="TerminalCharges[0]" value="" required="required">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="editor-field">
+                            <input asp-for="Duty" type="text" class="text-box single-line" name="Duty[0]" value="" required="required">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="editor-field">
 
-    <div class="form-group col-md-6">
-        <label asp-for="Pieces">Count</label>
-        <input type="text" class="form-control">
-    </div>
+                            <input asp-for="CustomsExpenses" type="text" class="text-box single-line" name="CustomsExpenses[0]" value="" required="required">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="editor-field">
 
-    <div class="form-group col-md-6">
-        <label asp-for="Cubic">Quantity</label>
-        <input type="text" class="form-control">
-    </div>
+                            <input asp-for="BankExpenses" type="text" class="text-box single-line" name="BankExpenses[0]" value="" required="required">
+                        </div>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="removeTr(0);">Delete</button>
+                    </td>
+                </tr>
+            </table>
+            <p>
+                <button id="addButton" type="submit" class="btn btn-primary">New Product</button>
+            </p>
+            <hr />
 
-    <div class="form-group col-md-6">
-        <label asp-for="PurchasePrice">Price</label>
-        <input type="text" class="form-control">
-    </div>
+            <p>
+                <button type="submit" class="btn btn-primary">Save </button>
+            </p>
+       
+        </fieldset>
+   </form> 
+    @section Scripts {
 
-    <div class="form-group col-md-6">
-        <label asp-for="TransportCost">TransportCost</label>
-        <input type="text" class="form-control" id="inputCity">
-    </div>
-    <div class="form-group col-md-6">
-        <label asp-for="TerminalCharges">Terminal Charges</label>
-        <input type="text" class="form-control">
-    </div>
-    <div class="form-group col-md-6">
-        <label asp-for="Duty">Duty</label>
-        <input type="text" class="form-control">
-    </div>
+        <script type="text/javascript">
+            var counter = 1;
+            $(function () {
+                $('#addButton').click(function () {
+                    $('<tr id="tablerow' + counter + '"><td>' +
+                        ' <select name="ProductDescription[' + counter + ']" asp-for="ProductDescription" asp-items="@(new SelectList(Model.ProductDescription))"><option value="">All</option>@foreach (var type in Model.Descriptions){<option value="@type">@type</option>}</select>' +
+                        '</td>' +
+                        '<td>' +
+                        '<select name="Size[' + counter + ']" asp-for="Size" asp-items="@(new SelectList(Model.Size))"><option value="">All</option>@foreach (var size in Model.Sizes){<option value="@size">@size</option>}</select>' +
+                        '</td>' +
+                        '<td>' +
+                        '<select name="Grade[' + counter + ']" asp-for="Grade" asp-items="@(new SelectList(Model.Grades))"><option value="">All</option>@foreach (var grade in Model.Grades){<option value="@grade">@grade</option>}</select>' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="Pieces[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                       '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="PurchasePrice[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="TransportCost[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="TerminalCharges[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="Duty[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="CustomsExpenses[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="email" class="text-box single-line" name="BankExpenses[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
 
-    <div class="form-group col-md-6">
-        <label asp-for="CustomsExpenses">Customs Expenses</label>
-        <input type="text" class="form-control">
-    </div>
+                        '<td>' +
+                        '<button type="button" class="btn btn-primary" onclick="removeTr(' + counter + ');">Delete</button>' +
+                        '</td>' +
+                        '</tr>').appendTo('#clientTable');
+                    counter++;
+                    return false;
+                });
+            });
 
-    <div class="form-group col-md-6">
-        <label asp-for="BankExpenses">Bank Expenses</label>
-        <input type="text" class="form-control">
-    </div>
-
-</div>
+            function removeTr(index) {
+                if (counter > 1) {
+                    $('#tablerow' + index).remove();
+                    counter--;
+                }
+                return false;
+            }
+        </script>
+    }

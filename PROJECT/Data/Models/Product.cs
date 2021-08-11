@@ -19,17 +19,7 @@ namespace PROJECT.Data.Models
         [Required]
         public string Grade { get; set; }       
         [Required]
-        public string Unit { get; set; }
-        [Required]
-        public decimal Price { get; set; }
-        public int Pieces { get; set; }
-        [Required]
-        public decimal Cubic { get; set; }
-        public decimal TransportCost { get; set; }
-        public decimal TerminalCharges { get; set; }
-        public decimal CustomsExpenses { get; set; }
-        public decimal Duty { get; set; }
-        public decimal BankExpenses { get; set; }
+        public ICollection<ProductSpecification> ProductSpecifications { get; set; }
         public ICollection<Purchase> Purchases { get; set; }
         public ICollection<Supplier> Suppliers { get; set; }
         public ICollection<Customer> Customers { get; set; }

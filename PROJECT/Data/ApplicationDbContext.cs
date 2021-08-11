@@ -20,6 +20,7 @@ namespace PROJECT.Data
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<ProductSupplier> ProductSuppliers { get; set; }
         public DbSet<ProductCustomer> ProductCustomers { get; set; }
+        public DbSet<ProductSpecification> ProductSpecifications { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -38,31 +39,31 @@ namespace PROJECT.Data
                 .HasForeignKey(a => a.CurrencyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Product>()
+            builder.Entity<ProductSpecification>()
            .Property(a => a.BankExpenses)
            .HasColumnType("decimal");
 
-            builder.Entity<Product>()
+            builder.Entity<ProductSpecification>()
                 .Property(a => a.CustomsExpenses)
                 .HasColumnType("decimal");
 
-            builder.Entity<Product>()
+            builder.Entity<ProductSpecification>()
                 .Property(a => a.Duty)
                 .HasColumnType("decimal");
 
-            builder.Entity<Product>()
+            builder.Entity<ProductSpecification>()
                 .Property(a => a.Price)
                 .HasColumnType("decimal");
 
-            builder.Entity<Product>()
+            builder.Entity<ProductSpecification>()
                 .Property(a => a.Cubic)
                 .HasColumnType("decimal");
 
-            builder.Entity<Product>()
+            builder.Entity<ProductSpecification>()
                 .Property(a => a.TerminalCharges)
                 .HasColumnType("decimal");
 
-            builder.Entity<Product>()
+            builder.Entity<ProductSpecification>()
                 .Property(a => a.TransportCost)
                 .HasColumnType("decimal");
 

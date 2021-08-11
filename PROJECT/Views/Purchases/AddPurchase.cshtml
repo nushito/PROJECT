@@ -1,71 +1,209 @@
 ﻿
 @model PurchaseFormModel
 
-  <a href="~/Suppliers/AddSupplier" class="btn btn-primary mb-3 mt-3">Add Supplier</a>
-  <form enctype="multipart/form-data" method="post">
-      <div class="form-group">
-          <label asp-for="SupplierName">Supplier</label>
-          <select asp-for="SupplierName" asp-items="@(new SelectList(Model.Suppliers))">
-              <option value="">Choose Supplier</option>
-              @foreach (var supplier in Model.Suppliers)
-              {
-                  <option value="@supplier">@supplier</option>
-              }
-          </select>
-      </div>
 
-      @*<button type="button" class="btn btn-primary mb-4" asp-action="AddSupplier" asp-controller="Suppliers">Add Supplier</button>*@
+<a href="~/Suppliers/AddSupplier" class="btn btn-primary mb-3 mt-3">Add Supplier</a>
+<form enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label asp-for="SupplierId">Supplier</label>
+        <select asp-for="SupplierId" asp-items="@(new SelectList(Model.Suppliers))">
+            <option value="">Choose Supplier</option>
+            @foreach (var supplier in Model.Suppliers)
+            {
+                <option value="@supplier.Id">@supplier.Name</option>
+            }
+        </select>
+    </div>
 
+    <div class="form-group">
+        <label asp-for="InvoiceNumber">Invoice Number</label>
+        <input asp-for="InvoiceNumber" type="text" class="form-control" placeholder="Invoice number">
+    </div>
 
-      <div class="form-group">
-          <label asp-for="InvoiceNumber">Invoice Number</label>
-          <input asp-for="InvoiceNumber" type="text" class="form-control" placeholder="Invoice number">
-      </div>
+    <div class="form-group">
+        <label asp-for="Date">Date</label>
+        <input asp-for="Date" type="text" class="form-control" placeholder="Date">
+    </div>
 
-      <div class="form-group">
-          <label asp-for="Date">Date</label>
-          <input asp-for="Date" type="text" class="form-control" placeholder="Date">
-      </div>
+    @*<div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            Add Product
+        </button>
+    </div>*@
+    @*<a href="~/Purchases/AddSupplier" class="btn btn-primary mb-3 mt-3">Add Product</a>*@
+<!--<fieldset>
+    <h4 class="modal-title" id="gridSystemModalLabel">Products</h4>
+    <table id="clientTable" class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Type</td>
+                <td>Size</td>
+                <td>Grade</td>
+                <td>Count</td>
+                <td>Quantity</td>
+                <td>Price</td>
+                <td>Transport Cost</td>
+                <td>Terminal Charges</td>
+                <td>Duty</td>
+                <td>Customs Expenses</td>
+                <td>Bank Expenses</td>
+            </tr>
+        </thead>
+        <tr id="tablerow0">
+            <td>
+                <div class="editor-field">
+                    <select name="PurchaseProducts.Description[0]" asp-for="PurchaseProducts.ProductDescription" asp-items="@(new SelectList(Model.PurchaseProductFormModel.Descriptions))">
+                        <option value="">All</option>
+                        @foreach (var type in Model.PurchaseProductFormModel.Descriptions)
+                        {
+                            <option value="@type">@type</option>
+                        }
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
+                    <select name="PurchaseProducts.Size[0]" asp-for="PurchaseProducts.Size" asp-items="@(new SelectList(Model.PurchaseProductFormModel.Sizes))">
+                        <option value="">All</option>
+                        @foreach (var size in Model.PurchaseProductFormModel.Sizes)
+                        {
+                            <option value="@size">@size</option>
+                        }
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
+                    <select name="PurchaseProducts.Grade[0]" asp-for="PurchaseProducts.Grade" asp-items="@(new SelectList(Model.PurchaseProductFormModel.Grades))">
+                        <option value="">All</option>
+                        @foreach (var grade in Model.PurchaseProductFormModel.Grades)
+                        {
+                            <option value="@grade">@grade</option>
+                        }
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
+                    <input asp-for="PurchaseProducts.Pieces" type="text" class="text-box single-line" name="purchaseProducts.Pieces[0]" value="" required="required">
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
+                    <input asp-for="PurchaseProducts.Cubic" type="text" class="text-box single-line" name="purchaseProducts.Cubic[0]" value="" required="required">
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
+                    <input asp-for="PurchaseProducts.PurchasePrice" type="text" class="text-box single-line" name="purchaseProducts.PurchasePrice[0]" value="" required="required">
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
+                    <input asp-for="PurchaseProducts.TransportCost" type="text" class="text-box single-line" name="purchaseProducts.TransportCost[0]" value="" required="required">
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
+                    <input asp-for="PurchaseProducts.TerminalCharges" type="text" class="text-box single-line" name="purchaseProducts.TerminalCharges[0]" value="" required="required">
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
+                    <input asp-for="PurchaseProducts.Duty" type="text" class="text-box single-line" name="purchaseProducts.Duty[0]" value="" required="required">
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
 
-      <a href="~/Purchases/AddSupplier" class="btn btn-primary mb-3 mt-3">Add Product</a>
+                    <input asp-for="PurchaseProducts.CustomsExpenses" type="text" class="text-box single-line" name="purchaseProducts.CustomsExpenses[0]" value="" required="required">
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
 
-      <div class="row">
-          <div class="form-group col-3">
-              <label asp-for="Description">Description</label>
-              <select asp-for="Description" asp-items="@(new SelectList(Model.Descriptions))">
-                  <option value="">All</option>
-                  @foreach (var type in Model.Descriptions)
-                  {
-                      <option value="@type">@type</option>
-                  }
-              </select>
-          </div>
-          <div class="form-group col-3">
-              <label asp-for="Size">Size</label>
-              <select asp-for="Size" asp-items="@(new SelectList(Model.Sizes))">
-                  <option value="">All</option>
-                  @foreach (var size in Model.Sizes)
-                  {
-                      <option value="@size">@size</option>
-                  }
-              </select>
-          </div>
-          <div class="form-group col-3">
-              <label asp-for="Grade">Grade</label>
-              <select asp-for="Grade" asp-items="@(new SelectList(Model.Grades))">
-                  <option value="">All</option>
-                  @foreach (var grade in Model.Grades)
-                  {
-                      <option value="@grade">@grade</option>
-                  }
-              </select>
-          </div>
-      </div>
-     
+                    <input asp-for="PurchaseProducts.BankExpenses" type="text" class="text-box single-line" name="purchaseProducts.BankExpenses[0]" value="" required="required">
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" onclick="removeTr(0);">Delete</button>
+            </td>
+        </tr>
+    </table>
+    <p>
+        <button id="addButton" type="submit" class="btn btn-primary">New Product</button>
+    </p>-->
+    @*<p>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </p>*@
+<!--</fieldset>
 
-    <partial name="_PartialPurchaseView" />
+    @section Scripts {
+       
+        <script type="text/javascript">
+            var counter = 1;
+            $(function () {
+                $('#addButton').click(function () {
+                    $('<tr id="tablerow' + counter + '"><td>' +
+                        ' <select name="Description[' + counter + ']" asp-for="Description" asp-items="@(new SelectList(Model.PurchaseProductFormModel.Descriptions))"><option value="">All</option>@foreach (var type in Model.PurchaseProductFormModel.Descriptions){<option value="@type">@type</option>}</select>' +
+                        '</td>' +
+                        '<td>' +
+                        '<select name="Size[' + counter + ']" asp-for="Size" asp-items="@(new SelectList(Model.PurchaseProductFormModel.Sizes))"><option value="">All</option>@foreach (var size in Model.PurchaseProductFormModel.Sizes){<option value="@size">@size</option>}</select>' +
+                        '</td>' +
+                        '<td>' +
+                        '<select name="Grade[' + counter + ']" asp-for="Grade" asp-items="@(new SelectList(Model.PurchaseProductFormModel.Grades))"><option value="">All</option>@foreach (var grade in Model.PurchaseProductFormModel.Grades){<option value="@grade">@grade</option>}</select>' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="purchaseProducts.Pieces[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="purchaseProducts.Cubic[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="purchaseProducts.PurchasePrice[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="purchaseProducts.TransportCost[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="purchaseProducts.TerminalCharges[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="purchaseProducts.Duty[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="text" class="text-box single-line" name="purchaseProducts.CustomsExpenses[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type="email" class="text-box single-line" name="purchaseProducts.BankExpenses[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
 
-      <br />
-      <button type="submit" class="btn btn-primary">Submit</button>
+                        '<td>' +
+                        '<button type="button" class="btn btn-primary" onclick="removeTr(' + counter + ');">Delete</button>' +
+                        '</td>' +
+                        '</tr>').appendTo('#clientTable');
+                    counter++;
+                    return false;
+                });
+            });
 
-  </form>
+            function removeTr(index) {
+                if (counter > 1) {
+                    $('#tablerow' + index).remove();
+                    counter--;
+                }
+                return false;
+            }
+        </script>
+    }-->
+        <div class="row">
+          
+        <partial name="_ProductPurchaseView.cshtml" model="@Model.PurchaseProducts"/>
+        </div>
+        @*@await Html.PartialAsync("_ProductPurchaseView.cshtml")*@
+        <!--</div>-->
+
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
