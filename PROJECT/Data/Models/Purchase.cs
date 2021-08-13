@@ -8,7 +8,7 @@ namespace PROJECT.Data.Models
     {
      
         public int Id { get; init; }
-        public int SipplierId { get; set; }
+        public int SupplierId { get; set; }
         public Supplier Supplier { get; set; }
         public DateTime Date { get; set; }
         public string InvoiceNumber { get; set; }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using PROJECT.Data;
 using PROJECT.Infrastructure;
 using PROJECT.Services;
+using PROJECT.Services.Customer;
 using PROJECT.Services.MyCompany;
 using PROJECT.Services.Products;
 using PROJECT.Services.Purchases;
@@ -41,6 +42,8 @@ namespace PROJECT
             services.AddTransient<IBankService, BankService>();
             services.AddTransient<IProductsService, ProductsService>();
             services.AddTransient<IPurchaseService, PurchaseService>();
+            services.AddTransient<IProductsService, ProductsService>();
+            services.AddTransient<ICustomerService, CustomerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -15,13 +15,14 @@ namespace PROJECT.Services.Purchases
             this.dbContext = dbContext;
         }
 
-        public int Create( int supplierId, string date, string invoiceNumber,
-            
+        public int Create( int supplierId, string date, string invoiceNumber,     
+            int productId,
             string productDescription,
             string size, string grade,
             int pieces, decimal cubic,
             decimal purchasePrice, decimal transportCost,
-            decimal terminalCharges, decimal duty, decimal customsExpenses, decimal bankExpenses
+            decimal terminalCharges, decimal duty, 
+            decimal customsExpenses, decimal bankExpenses
            )
         {
           //  var supplier = dbContext.Suppliers.Find(supplierId);
@@ -29,7 +30,7 @@ namespace PROJECT.Services.Purchases
             {
                 Date = DateTime.Parse(date, System.Globalization.CultureInfo.InvariantCulture),
                 InvoiceNumber = invoiceNumber,
-                SipplierId = supplierId,                
+                SupplierId = supplierId                   
             };
 
             var prId = SaveProduct(productId, productDescription,
@@ -74,6 +75,7 @@ namespace PROJECT.Services.Purchases
                 && a.Grade.ToLower() == grade.ToLower())
                     .FirstOrDefault();
                 //  _Client.Add(new Client { ClientName = ClientName, Email = EMail });
+
                 var productSpecification = new ProductSpecification
                 {
                     Pieces = pieces,

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ProductViewModel>
+
+<div class="row">
+    @foreach (var report in Model)
+    {
+    <div class="row">
+        <div class="col-2">
+            @report.ProductDescription
+        </div>
+        <div class="col-2">
+            @report.Size
+        </div>
+        <div class="col-2">
+            @report.Grade
+        </div>
+        <div class="col-2">
+            @report.Cubic
+        </div>
+        <div class="col-2">
+            @report.CostPrice
+        </div>
+        <div class="col-2">
+            @report.Income
+        </div>
+    </div>
+        
+    }
+
+</div>

@@ -38,8 +38,8 @@ namespace PROJECT.Controllers
             {
                 Suppliers = supplierService.GetSuppliers(),
                 Descriptions = productsService.GetDescription(),
-                    Sizes = productsService.GetSize(),
-                    Grades = productsService.GetGrade()
+                Sizes = productsService.GetSize(),
+                Grades = productsService.GetGrade()
                
             }) ;             
         }
@@ -52,14 +52,10 @@ namespace PROJECT.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
-                //model.Suppliers = supplierService.GetSuppliers();
-                //model.PurchaseProducts = new PurchaseProductFormModel
-                //{
-                //    Descriptions = productsService.GetDescription(),
-                //    Sizes = productsService.GetSize(),
-                //    Grades = productsService.GetGrade()
-                //};
+                model.Suppliers = supplierService.GetSuppliers();
+                model.Descriptions = productsService.GetDescription();
+                model.Sizes = productsService.GetSize();
+                model.Grades = productsService.GetGrade();               
             }
 
             if (!this.User.Identity.IsAuthenticated)
@@ -67,23 +63,26 @@ namespace PROJECT.Controllers
                 return RedirectToAction("Index","Home");
             }
 
-            if (!model.Suppliers.Any())
-            {
-              
-                return RedirectToAction(nameof(SuppliersController.AddSupplier),"Suppliers");
-            }
-
-            var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.InvoiceNumber
-            ,model.PurchaseProductFormModel.ProductDescription,
-            model.PurchaseProductFormModel.Size,
-            model.PurchaseProductFormModel.Grade,
-            model.PurchaseProductFormModel.Pieces,
-            model.PurchaseProductFormModel.Cubic,
-            model.PurchaseProductFormModel.PurchasePrice,
-            model.PurchaseProductFormModel.TerminalCharges,
-            model.PurchaseProductFormModel.Duty,
-            model.PurchaseProductFormModel.CustomsExpenses,
-            model.PurchaseProductFormModel.BankExpenses);
+            //int supplierId, string date, string invoiceNumber,
+            //int productId,
+            //string productDescription,
+            //string size, string grade,
+            //int pieces, decimal cubic,
+            //decimal purchasePrice, decimal transportCost,
+            //decimal terminalCharges, decimal duty, decimal customsExpenses, decimal bankExpenses
+            var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.InvoiceNumber,
+            model.Id,
+            model.Description,
+            model.Size,
+            model.Grade,
+            model.Pieces,
+            model.Cubic,
+            model.PurchasePrice,
+            model.TransportCost,
+            model.TerminalCharges,
+            model.Duty,
+            model.CustomsExpenses,
+            model.BankExpenses);
 
             return RedirectToAction("Index","Home");
         }       
@@ -148,8 +147,6 @@ namespace PROJECT.Controllers
                     list.Add(product) ;
 
 
-                    //  _Client.Add(new Client { ClientName = ClientName, Email = EMail });
-                      
                 }
             }
             return RedirectToAction(nameof(AddPurchase));
