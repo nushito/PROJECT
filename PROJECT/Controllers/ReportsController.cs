@@ -82,6 +82,17 @@ namespace PROJECT.Controllers
             {
                 listQuery = listQuery.Where(a => a.Customers.Any(x => x.Name == model.CustomerName));
             }
+
+            var products = listQuery
+                .Select(a=>new ProductViewModel { 
+                 ProductDescription = a.Description,
+                 Size = a.Size,
+                 Grade = a.Grade,
+                  Cubic = a.ProductSpecifications.Select(a=>a.Cubic).FirstOrDefault(),
+                   CostPrice = a.ProductSpecifications.Select(a=>a.Price).FirstOrDefault(),
+                    Income = a.ProductSpecifications.Select(a=>a.Price).FirstOrDefault(),
+                 
+                }).ToList();
             //var pro = listQuery.Select(a => new 
             //{
             //    de = descriptions,
@@ -91,13 +102,23 @@ namespace PROJECT.Controllers
             //}).ToList();
             //var listOfProducts = new ProductsAvailability
             //{
-               
+
             //    Products = listQuery
             //};
 
             //model.Products = listQuery.ToList();
 
-            return View();
+            var pro = new ProductsAvailability
+            {
+                Descriptions = descriptions,
+                Sizes = sizes,
+                Grades = grades,
+                Suppliers = suppliers,
+                Customers = customers,
+                
+            };
+
+            return View(pro);
 
         }
 
