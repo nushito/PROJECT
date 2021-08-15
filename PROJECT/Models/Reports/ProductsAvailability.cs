@@ -24,6 +24,6 @@ namespace PROJECT.Models.Reports
         public IEnumerable<string> Descriptions { get; set; }
         public IEnumerable<string> Sizes { get; set; }
         public IEnumerable<string> Grades { get; set; }
-        public ICollection<ProductsAvailability> Products { get; set; }
+        public ICollection<ProductViewModel> Products { get; set; }
     }
 }

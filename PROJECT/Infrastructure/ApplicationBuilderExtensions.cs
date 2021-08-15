@@ -45,8 +45,8 @@
 
             data.Currencies.AddRange(new[]
             {
-                new Currency { Name = "EUR" },
-               new Currency { Name = "BGN" },
+              new Currency { Name = "EUR" },
+              new Currency { Name = "BGN" },
               new Currency { Name = "USD" },
               
             });

@@ -10,6 +10,7 @@ namespace PROJECT.Data.Models
         {
             Products = new HashSet<Product>();
             BankDetails = new List<BankDetails>();
+            Purchases = new List<Purchase>();
          }
      
         public int Id { get; init; }

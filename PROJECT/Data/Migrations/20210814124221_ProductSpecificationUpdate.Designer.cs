@@ -10,8 +10,8 @@ using PROJECT.Data;
 namespace PROJECT.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210811084553_NewColumn")]
-    partial class NewColumn
+    [Migration("20210814124221_ProductSpecificationUpdate")]
+    partial class ProductSpecificationUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -574,6 +574,9 @@ namespace PROJECT.Data.Migrations
                     b.Property<decimal>("BankExpenses")
                         .HasColumnType("decimal");
 
+                    b.Property<decimal>("CostPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("Cubic")
                         .HasColumnType("decimal");
 
@@ -582,6 +585,9 @@ namespace PROJECT.Data.Migrations
 
                     b.Property<decimal>("Duty")
                         .HasColumnType("decimal");
+
+                    b.Property<decimal>("Income")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Pieces")
                         .HasColumnType("int");
@@ -631,10 +637,7 @@ namespace PROJECT.Data.Migrations
                     b.Property<string>("InvoiceNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SipplierId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SupplierId")
+                    b.Property<int>("SupplierId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -910,7 +913,9 @@ namespace PROJECT.Data.Migrations
                 {
                     b.HasOne("PROJECT.Data.Models.Supplier", "Supplier")
                         .WithMany("Purchases")
-                        .HasForeignKey("SupplierId");
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Supplier");
                 });

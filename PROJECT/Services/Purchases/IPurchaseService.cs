@@ -7,7 +7,8 @@ namespace PROJECT.Services.Purchases
 {
     public interface IPurchaseService
     {
-        public int Create(int supplierId, string date, string invoiceNumber,
+        public int Create(
+            int supplierId, string date, string invoiceNumber,
             int productId,
             string productDescription,
             string size, string grade,

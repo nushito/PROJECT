@@ -19,7 +19,7 @@ namespace PROJECT.Models.Products
         public decimal CustomsExpenses { get; set; }
         public decimal BankExpenses { get; set; }
         public decimal CostPrice { get; set; }
-        
+        public decimal  Income { get; set; }
 
     }
 }

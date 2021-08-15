@@ -30,9 +30,9 @@ namespace PROJECT.Models.Purchases
         public decimal BankExpenses { get; set; }
         public decimal CostPrice { get; set; }
        
-        public ICollection<DescriptionListModel> Descriptions { get; set; }
-        public ICollection<SizeListModel> Sizes { get; set; }
-        public ICollection<GradeListModel> Grades { get; set; }
+        public ICollection<string> Descriptions { get; set; }
+        public ICollection<string> Sizes { get; set; }
+        public ICollection<string> Grades { get; set; }
         public ICollection<AllSuppliers> Suppliers { get; set; }
         public ICollection<PurchaseProductFormModel> PurchaseProducts { get; set; } 
         

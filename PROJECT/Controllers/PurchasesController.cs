@@ -63,13 +63,6 @@ namespace PROJECT.Controllers
                 return RedirectToAction("Index","Home");
             }
 
-            //int supplierId, string date, string invoiceNumber,
-            //int productId,
-            //string productDescription,
-            //string size, string grade,
-            //int pieces, decimal cubic,
-            //decimal purchasePrice, decimal transportCost,
-            //decimal terminalCharges, decimal duty, decimal customsExpenses, decimal bankExpenses
             var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.InvoiceNumber,
             model.Id,
             model.Description,

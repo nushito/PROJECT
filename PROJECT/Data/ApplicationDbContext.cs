@@ -67,6 +67,14 @@ namespace PROJECT.Data
                 .Property(a => a.TransportCost)
                 .HasColumnType("decimal");
 
+            builder.Entity<ProductSpecification>()
+                .Property(a => a.CostPrice)
+                .HasColumnType("decimal");
+
+            builder.Entity<ProductSpecification>()
+                .Property(a => a.Income)
+                .HasColumnType("decimal");
+
             builder.Entity<ProductSupplier>()
                     .HasKey(a => new { a.ProductId, a.SupplierId });
 
@@ -75,6 +83,12 @@ namespace PROJECT.Data
 
             builder.Entity<ProductInvoice>()
                    .HasKey(a => new { a.ProductId, a.InvoiceId });
+
+            builder.Entity<Purchase>()
+                .HasOne(a => a.Supplier)
+                .WithMany(a => a.Purchases)
+                .HasForeignKey(a => a.SupplierId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

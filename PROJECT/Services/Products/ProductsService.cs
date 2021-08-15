@@ -35,38 +35,24 @@ namespace PROJECT.Services.Products
             return newProduct.Id;
         }
 
-        public ICollection<DescriptionListModel> GetDescription()
+        public ICollection<string> GetDescription()
         {
             return dbContext.Products
-                .Select(x => new DescriptionListModel 
-                {
-                    Id = x.Id, 
-                    Name = x.Description
-                })
-                .ToList();
+                .Select(x =>x.Description).ToList();
         }
     
 
-        public ICollection<GradeListModel> GetGrade()
+        public ICollection<string> GetGrade()
         {
             return dbContext.Products
                 .Select(x => 
-                new GradeListModel
-                {
-                    Id = x.Id,
-                    Name = x.Grade
-                })
-                .ToList();
+                 x.Grade).ToList();
         }
     
-        public ICollection<SizeListModel> GetSize()
+        public ICollection<string> GetSize()
         {
             return dbContext.Products
-                .Select(x => new SizeListModel 
-                { 
-                    Id = x.Id,
-                    Name = x.Size
-                } )                 
+                .Select(x => x.Size)              
                 .ToList();
         }
     }

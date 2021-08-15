@@ -8,6 +8,6 @@ namespace PROJECT.Services.Reports
 {
     public class ReportsService : IReportsService
     {
-        private readonly ApplicationDbContext dbContext;
+       
     }
 }

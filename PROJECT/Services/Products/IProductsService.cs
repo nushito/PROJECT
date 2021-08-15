@@ -14,9 +14,9 @@ namespace PROJECT.Services.Products
             string size,
             string grade);
 
-        public ICollection<DescriptionListModel> GetDescription();
-        public ICollection<SizeListModel> GetSize();
-        public ICollection<GradeListModel> GetGrade();
+        public ICollection<string> GetDescription();
+        public ICollection<string> GetSize();
+        public ICollection<string> GetGrade();
 
     }
 }

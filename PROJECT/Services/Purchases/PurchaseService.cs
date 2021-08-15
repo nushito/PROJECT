@@ -25,13 +25,15 @@ namespace PROJECT.Services.Purchases
             decimal customsExpenses, decimal bankExpenses
            )
         {
+
           //  var supplier = dbContext.Suppliers.Find(supplierId);
             var purchase = new Purchase
             {
                 Date = DateTime.Parse(date, System.Globalization.CultureInfo.InvariantCulture),
                 InvoiceNumber = invoiceNumber,
-                SupplierId = supplierId                   
-            };
+                SupplierId = supplierId,
+                Supplier = dbContext.Suppliers.Find(supplierId)
+        };
 
             var prId = SaveProduct(productId, productDescription,
                 size, grade,

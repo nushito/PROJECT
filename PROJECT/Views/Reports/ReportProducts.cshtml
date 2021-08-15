@@ -63,7 +63,7 @@
                 <select asp-for="CustomerName" class="form-control" asp-items="@(new SelectList(Model.Customers))">
                     <option value="">All</option>
 
-                    @foreach (var customer in Model.Sizes)
+                    @foreach (var customer in Model.Customers)
                     {
                         <option value="@customer">@customer</option>
                     }
@@ -71,5 +71,9 @@
             </div>
         </div>
     </div>
-    <partial name="_ProductList" model="@Model.Products"/>
 </form>
+@if (!Model.Products.Any()) 
+{ 
+    <h2>No products found by selected criterias!</h2>
+}
+<partial name="_ProductList" model="@Model.Products" />
