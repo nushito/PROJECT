@@ -5,7 +5,7 @@
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label asp-for="Description"></label>
-                <select asp-for="Description" class="form-control" asp-items="@(new SelectList(Model.Descriptions))">
+                <select asp-for="Description" class="form-control">
                     <option value="">All</option>
 
                     @foreach (var description in Model.Descriptions)
@@ -19,7 +19,7 @@
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label asp-for="Size"></label>
-                <select asp-for="Size" class="form-control" asp-items="@(new SelectList(Model.Sizes))">
+                <select asp-for="Size" class="form-control" >
                     <option value="">All</option>
 
                     @foreach (var size in Model.Sizes)
@@ -33,7 +33,7 @@
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label asp-for="Grade"></label>
-                <select asp-for="Grade" class="form-control" asp-items="@(new SelectList(Model.Grades))">
+                <select asp-for="Grade" class="form-control">
                     <option value="">All</option>
 
                     @foreach (var grade in Model.Grades)
@@ -72,6 +72,7 @@
         </div>
     </div>
 </form>
+
 @if (!Model.Products.Any()) 
 { 
     <h2>No products found by selected criterias!</h2>

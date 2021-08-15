@@ -25,51 +25,51 @@ namespace PROJECT.Controllers
         }
 
         [Authorize]
-        public IActionResult ReportProducts(ProductsAvailability model,
-            int supplierId,
-            string description,
-            string size, 
-            string grade, 
-            string customerName)
+        public IActionResult ReportProducts(ProductsAvailability model)
+            //int supplierId,
+            //string description,
+            //string size, 
+            //string grade, 
+            //string customerName)
         {
-            var descriptions = productService.GetDescription();            
-            var sizes = productService.GetSize();
-            var grades = productService.GetDescription();
-            var suppliers = supplierService.GetSuppliers().Select(a=>a.Name);
-            var customers = customerService.GetCustomers();           
+            model.Descriptions = productService.GetDescription();            
+            model.Sizes = productService.GetSize();
+            model.Grades = productService.GetDescription();
+            model.Suppliers = supplierService.GetSuppliers().Select(a=>a.Name);
+            model.Customers = customerService.GetCustomers();           
 
             var listQuery = dbContext.Products.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(description))
+            if (!string.IsNullOrWhiteSpace(model.Description))
             {
-                listQuery = listQuery.Where(a => a.Description == description);
+                listQuery = listQuery.Where(a => a.Description == model.Description);
             }
-            if (!string.IsNullOrWhiteSpace(size))
+            if (!string.IsNullOrWhiteSpace(model.Size))
             {
-                listQuery = listQuery.Where(a => a.Size == size);
-            }
-
-            if (!string.IsNullOrWhiteSpace(grade))
-            {
-                listQuery = listQuery.Where(a => a.Grade == grade);
+                listQuery = listQuery.Where(a => a.Size == model.Size);
             }
 
-            if (supplierId != 0)
+            if (!string.IsNullOrWhiteSpace(model.Grade))
             {
-                listQuery = listQuery.Where(a => a.Suppliers.Any(x => x.Id == supplierId));
+                listQuery = listQuery.Where(a => a.Grade == model.Grade);
+            }
+
+            if (model.SupplierId != 0)
+            {
+                listQuery = listQuery.Where(a => a.Suppliers.Any(x => x.Id == model.SupplierId));
             }
            
-            if (!string.IsNullOrWhiteSpace(customerName))
+            if (!string.IsNullOrWhiteSpace(model.CustomerName))
             {
-                listQuery = listQuery.Where(a => a.Customers.Any(x => x.Name == customerName));
+                listQuery = listQuery.Where(a => a.Customers.Any(x => x.Name == model.CustomerName));
             }
 
             var products = listQuery
                 .Select(a => new ProductViewModel
                 {
-                    Description = description,
-                    Size = size,
-                    Grade = grade,
+                    Description = model.Description,
+                    Size = model.Size,
+                    Grade = model.Grade,
                     Specification = new ProductSpecificationViewModel
                     {
                         BankExpenses = a.ProductSpecifications.Select(a => a.BankExpenses).FirstOrDefault(),
@@ -83,17 +83,9 @@ namespace PROJECT.Controllers
                 })
                 .ToList();
 
-            var pro = new ProductsAvailability
-            {
-                Descriptions = descriptions,
-                Sizes = sizes,
-                Grades = grades,
-                Suppliers = suppliers,
-                Customers = customers,
-                Products = products
-            };
+           model.Products = products;
             
-            return View();
+            return View(model);
 
         }
 
