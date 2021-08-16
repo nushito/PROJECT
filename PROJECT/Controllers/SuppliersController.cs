@@ -37,7 +37,6 @@ namespace PROJECT.Controllers
             }
             var supplier = new Supplier
             { 
-                Id = model.Id,
                 Name = model.Name,
                 VAT = model.VAT,
                 Eik = model.Eik,
@@ -48,6 +47,7 @@ namespace PROJECT.Controllers
                     Street = model.SupplierAddress,
                     Country = model.Country
                 },
+                RepresentativePerson = model.RepresentativePerson
             };
 
             //var currencyList = model.Currencies
@@ -67,7 +67,7 @@ namespace PROJECT.Controllers
             this.dbContext.Suppliers.Add(supplier);
             this.dbContext.SaveChanges();
 
-            return View(supplier);
+            return View();
                 //RedirectToAction("AddPurchase");
 
         }

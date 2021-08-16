@@ -15,14 +15,7 @@ namespace PROJECT.Services.Purchases
             this.dbContext = dbContext;
         }
 
-        public int Create( int supplierId, string date, string invoiceNumber,     
-            int productId,
-            string productDescription,
-            string size, string grade,
-            int pieces, decimal cubic,
-            decimal purchasePrice, decimal transportCost,
-            decimal terminalCharges, decimal duty, 
-            decimal customsExpenses, decimal bankExpenses
+        public int Create( int supplierId, string date, string invoiceNumber
            )
         {
 
@@ -33,17 +26,17 @@ namespace PROJECT.Services.Purchases
                 InvoiceNumber = invoiceNumber,
                 SupplierId = supplierId,
                 Supplier = dbContext.Suppliers.Find(supplierId)
-        };
+            };
 
-            var prId = SaveProduct(productId, productDescription,
-                size, grade,
-                pieces,cubic, purchasePrice,
-                transportCost, terminalCharges,
-                duty, customsExpenses,
-                bankExpenses);
+            //var prId = SaveProduct(productDescription,
+            //    size, grade,
+            //    pieces,cubic, purchasePrice,
+            //    transportCost, terminalCharges,
+            //    duty, customsExpenses,
+            //    bankExpenses);
 
-            var product = dbContext.Products.Find(prId);
-            purchase.Products.Add(product);
+            //var product = dbContext.Products.Find(prId);
+            //purchase.Products.Add(product);
 
 
             dbContext.Purchases.Add(purchase);
@@ -55,7 +48,7 @@ namespace PROJECT.Services.Purchases
         }
 
      
-        public int SaveProduct(int productId, 
+        public int SaveProduct( 
             string productDescription, 
             string size, string grade, 
             int pieces, decimal cubic, 
@@ -94,5 +87,7 @@ namespace PROJECT.Services.Purchases
 
             return product.Id;
         }
+
+        
     }
 }

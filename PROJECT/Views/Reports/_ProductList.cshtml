@@ -1,28 +1,40 @@
 ﻿@model IEnumerable<ProductViewModel>
 
-<div class="row">
-    @foreach (var report in Model)
-    {
-    <div class="row">
-        <div class="col-2">
-            @report.Description
-        </div>
-        <div class="col-2">
-            @report.Size
-        </div>
-        <div class="col-2">
-            @report.Grade
-        </div>
-        <div class="col-2">
-            @report.Specification.Cubic </div>
-        <div class="col-2">
-            @report.Specification.CostPrice
-        </div>
-        <div class="col-2">
-            @report.Specification.Income
-        </div>
-    </div>
-        
-    }
+<div class="table-responsive">
 
-</div>
+    <table class="table">
+       <thead>
+           <tr>
+    <td>Description</td>
+    <td>Size</td>
+    <td>Grade</td>
+    <td>Cubic</td>
+    <td>Cost Price</td>
+    <td>Income</td>
+            </tr>
+        </thead> 
+        @foreach (var report in Model)
+        {
+            <tr>
+                <td>
+                    @report.Description
+                </td>
+                <td>
+                    @report.Size
+                </td>
+                <td>
+                    @report.Grade
+                </td>
+                <td>
+                    @report.Specification.Cubic
+                </td>
+                <td>
+                    @report.Specification.CostPrice
+                </td>
+                <td>
+                    @report.Specification.Income
+                </td>
+                </tr>
+    }
+    </table>
+ </div>

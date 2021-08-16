@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using PROJECT.Services.Purchases;
 using PROJECT.Services;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace PROJECT.Controllers
 {
@@ -37,25 +38,30 @@ namespace PROJECT.Controllers
             return View(new PurchaseFormModel
             {
                 Suppliers = supplierService.GetSuppliers(),
-                Descriptions = productsService.GetDescription(),
-                Sizes = productsService.GetSize(),
-                Grades = productsService.GetGrade()
+                PurchaseProductFormModel = new PurchaseProductFormModel
+                {
+                    Descriptions = productsService.GetDescription(),
+                    Sizes = productsService.GetSize(),
+                    Grades = productsService.GetGrade()
+                }
+            });
                
-            }) ;             
+                     
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult AddPurchase(
-            PurchaseFormModel model 
-           )
+        public IActionResult AddPurchase(PurchaseFormModel model, PurchaseProductFormModel formModel)
         {
             if (!ModelState.IsValid)
             {
                 model.Suppliers = supplierService.GetSuppliers();
-                model.Descriptions = productsService.GetDescription();
-                model.Sizes = productsService.GetSize();
-                model.Grades = productsService.GetGrade();               
+                model.PurchaseProductFormModel = new PurchaseProductFormModel
+                {
+                    Descriptions = productsService.GetDescription(),
+                    Sizes = productsService.GetSize(),
+                    Grades = productsService.GetGrade()
+                };
             }
 
             if (!this.User.Identity.IsAuthenticated)
@@ -63,29 +69,86 @@ namespace PROJECT.Controllers
                 return RedirectToAction("Index","Home");
             }
 
-            var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.InvoiceNumber,
-            model.Id,
-            model.Description,
-            model.Size,
-            model.Grade,
-            model.Pieces,
-            model.Cubic,
-            model.PurchasePrice,
-            model.TransportCost,
-            model.TerminalCharges,
-            model.Duty,
-            model.CustomsExpenses,
-            model.BankExpenses);
+            var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.InvoiceNumber           
+            );
 
+
+
+            //var idPr = purchaseService.SaveProduct(
+            //    model.PurchaseProductFormModel.Description,
+            //    model.PurchaseProductFormModel.Size,
+            //    model.PurchaseProductFormModel.Grade,
+            //    model.PurchaseProductFormModel.Pieces,
+            //    model.PurchaseProductFormModel.Cubic,
+            //    model.PurchaseProductFormModel.PurchasePrice,
+            //    model.PurchaseProductFormModel.TransportCost,
+            //    model.PurchaseProductFormModel.TerminalCharges,
+            //    model.PurchaseProductFormModel.Duty,
+            //    model.PurchaseProductFormModel.CustomsExpenses,
+            //    model.PurchaseProductFormModel.BankExpenses);
+
+            ICollection<Product> list = null;
+
+            for (int i = 0; i <= Request.Form.Count; i++)
+            {
+                var productDescription = Request.Form["Description[" + i + "]"];
+                var size = Request.Form["Size[" + i + "]"];
+                var grade = Request.Form["Grade[" + i + "]"];
+                var pices = Request.Form["Pieces[" + i + "]"];
+                var cubic = Request.Form["Cubic[" + i + "]"];
+                var purchasePrice = Request.Form["PurchasePrice[" + i + "]"];
+                var transportCost = Request.Form["TransportCost[" + i + "]"];
+                var terminalCharges = Request.Form["TerminalCharges[" + i + "]"];
+                var duty = Request.Form["Duty[" + i + "]"];
+                var customsExpenses = Request.Form["CustomsExpenses[" + i + "]"];
+                var bankExpenses = Request.Form["BankExpenses[" + i + "]"];
+
+                if ((productDescription.ToString() != null) && (size.ToString() != null)
+                    && (grade.ToString() != null) && (pices != 0) && (cubic != 0) &&
+                    (purchasePrice != 0) && (transportCost != 0) && (terminalCharges != 0) && (duty != 0) &&
+                    (customsExpenses != 0) && (bankExpenses != 0))
+                {
+                    var product = this.dbContext.Products
+                        .Where(a => a.Description.ToLower() == model.PurchaseProductFormModel.Description.ToLower()
+                    && a.Size.ToLower() == model.PurchaseProductFormModel.Size.ToLower()
+                    && a.Grade.ToLower() == model.PurchaseProductFormModel.Grade.ToLower())
+                        .FirstOrDefault();
+
+                    var productDetails = new ProductSpecification
+                    {
+                        BankExpenses = Decimal.Parse(bankExpenses),
+                        Cubic = Decimal.Parse(cubic),
+                        CustomsExpenses = Decimal.Parse(customsExpenses),
+                        Duty = Decimal.Parse(duty),
+                        Pieces = int.Parse(pices),
+                        Price = Decimal.Parse(purchasePrice),
+                        TerminalCharges = Decimal.Parse(terminalCharges),
+                        TransportCost = Decimal.Parse(transportCost)
+                    };
+
+                    product.ProductSpecifications.Add(productDetails);
+
+                    list.Add(product);
+
+                }
+            }
+
+            var one = dbContext.Purchases.Find(purchaseId);
+            one.Products = list;
+           // one.Products = AddProductToPurchase(model.PurchaseProductFormModel);
             return RedirectToAction("Index","Home");
-        }       
-      
-
-        public IActionResult AddProductToPurchase(PurchaseProductFormModel model)
+        }    
+        
+        
+        [HttpPost]
+        public ICollection<Product> AddProductToPurchase(PurchaseProductFormModel model)
         {
+            model.Descriptions = productsService.GetDescription();
+            model.Sizes = productsService.GetSize();
+            model.Grades = productsService.GetGrade();
+
             var idPr = purchaseService.SaveProduct(
-                model.Id,
-                model.ProductDescription,
+                model.Description,
                 model.Size,
                 model.Grade,
                 model.Pieces,
@@ -97,11 +160,11 @@ namespace PROJECT.Controllers
                 model.CustomsExpenses,
                 model.BankExpenses);
 
-            IList list = null;
+            ICollection<Product> list = null;
 
             for (int i = 0; i <= Request.Form.Count; i++)
             {
-                var productDescription = Request.Form["ProductDescription[" + i + "]"];
+                var productDescription = Request.Form["Description[" + i + "]"];
                 var size = Request.Form["Size[" + i + "]"];
                 var grade = Request.Form["Grade[" + i + "]"];
                 var pices = Request.Form["Pieces[" + i + "]"];
@@ -119,10 +182,11 @@ namespace PROJECT.Controllers
                     (customsExpenses != 0) && (bankExpenses != 0))
                 {
                     var product = this.dbContext.Products
-                        .Where(a => a.Description.ToLower() == model.ProductDescription.ToLower()
+                        .Where(a => a.Description.ToLower() == model.Description.ToLower()
                     && a.Size.ToLower() == model.Size.ToLower()
                     && a.Grade.ToLower() == model.Grade.ToLower())
                         .FirstOrDefault();
+
                     var productDetails = new ProductSpecification
                     {
                         BankExpenses = Decimal.Parse(bankExpenses),
@@ -139,10 +203,9 @@ namespace PROJECT.Controllers
 
                     list.Add(product) ;
 
-
                 }
             }
-            return RedirectToAction(nameof(AddPurchase));
+            return list;
         }
 
     }
