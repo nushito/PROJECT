@@ -72,20 +72,6 @@ namespace PROJECT.Controllers
             var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.InvoiceNumber           
             );
 
-            //var idPr = purchaseService.SaveProduct(
-            //    model.PurchaseProductFormModel.Description,
-            //    model.PurchaseProductFormModel.Size,
-            //    model.PurchaseProductFormModel.Grade,
-            //    model.PurchaseProductFormModel.Pieces,
-            //    model.PurchaseProductFormModel.Cubic,
-            //    model.PurchaseProductFormModel.PurchasePrice,
-            //    model.PurchaseProductFormModel.TransportCost,
-            //    model.PurchaseProductFormModel.TerminalCharges,
-            //    model.PurchaseProductFormModel.Duty,
-            //    model.PurchaseProductFormModel.CustomsExpenses,
-            //    model.PurchaseProductFormModel.BankExpenses);
-
-
             ICollection<Product> list = null;
 
             for (int i = 0; i <= Request.Form.Count; i++)
@@ -93,9 +79,9 @@ namespace PROJECT.Controllers
                 var productDescription = Request.Form["Description[" + i + "]"];
                 var size = Request.Form["Size[" + i + "]"];
                 var grade = Request.Form["Grade[" + i + "]"];
-                var pices = Request.Form["Pieces[" + i + "]"];
+                var pieces = Request.Form["Pieces[" + i + "]"];
                 var cubic = Request.Form["Cubic[" + i + "]"];
-                var purchasePrice = Request.Form["PurchasePrice[" + i + "]"];
+                var purchasePrice = Request.Form["Price[" + i + "]"];
                 var transportCost = Request.Form["TransportCost[" + i + "]"];
                 var terminalCharges = Request.Form["TerminalCharges[" + i + "]"];
                 var duty = Request.Form["Duty[" + i + "]"];
@@ -103,7 +89,7 @@ namespace PROJECT.Controllers
                 var bankExpenses = Request.Form["BankExpenses[" + i + "]"];
 
                 if ((productDescription.ToString() != null) && (size.ToString() != null)
-                    && (grade.ToString() != null) && (pices != 0) && (cubic != 0) &&
+                    && (grade.ToString() != null) && (pieces != 0) && (cubic != 0) &&
                     (purchasePrice != 0) && (transportCost != 0) && (terminalCharges != 0) && (duty != 0) &&
                     (customsExpenses != 0) && (bankExpenses != 0))
                 {
@@ -113,24 +99,30 @@ namespace PROJECT.Controllers
                     && a.Grade.ToLower() == grade.ToString().ToLower())
                         .FirstOrDefault();
 
-                    var costPrice = (Decimal.Parse(bankExpenses) + Decimal.Parse(customsExpenses) + Decimal.Parse(duty)
-                        + Decimal.Parse(terminalCharges) + Decimal.Parse(transportCost) + Decimal.Parse(cubic) * Decimal.Parse(purchasePrice)
-                        ) / Decimal.Parse(cubic);
-
                     var productDetails = new ProductSpecification
                     {
-                        BankExpenses = Decimal.Parse(bankExpenses),
-                        Cubic = Decimal.Parse(cubic),
-                        CustomsExpenses = Decimal.Parse(customsExpenses),
-                        Duty = Decimal.Parse(duty),
-                        Pieces = int.Parse(pices),
-                        Price = Decimal.Parse(purchasePrice),
-                        TerminalCharges = Decimal.Parse(terminalCharges),
-                        TransportCost = Decimal.Parse(transportCost),
-                        CostPrice = costPrice
+                        BankExpenses = Math.Round(decimal.Parse(bankExpenses.ToString()), 4),
+                        Cubic = Math.Round(decimal.Parse(cubic.ToString()),4),
+                        CustomsExpenses = Math.Round(decimal.Parse(customsExpenses.ToString()),4),
+                        Duty = Math.Round(decimal.Parse(duty.ToString()),4),
+                        Pieces = int.Parse(pieces.ToString()),
+                        Price = Math.Round(decimal.Parse(purchasePrice.ToString()), 4),
+                        TerminalCharges = Math.Round(decimal.Parse(terminalCharges.ToString()), 4),
+                        TransportCost = Math.Round(decimal.Parse(transportCost.ToString()), 4),
+                       
                     };
 
-                  
+                    var costPrice = (
+                       decimal.Parse(bankExpenses.ToString()) +
+                       decimal.Parse(customsExpenses.ToString()) +
+                       decimal.Parse(duty.ToString()) +
+                       decimal.Parse(terminalCharges.ToString()) +
+                       decimal.Parse(transportCost.ToString()) +
+                       decimal.Parse(cubic.ToString()) * decimal.Parse(purchasePrice.ToString())
+                       ) / decimal.Parse(cubic.ToString());
+
+                    productDetails.CostPrice = costPrice;
+
                     product.ProductSpecifications.Add(productDetails);
 
                     list.Add(product);
@@ -138,9 +130,10 @@ namespace PROJECT.Controllers
                 }
             }
 
-            var one = dbContext.Purchases.Find(purchaseId);
-            one.Products = list;
-           // one.Products = AddProductToPurchase(model.PurchaseProductFormModel);
+            var thisPurchase = dbContext.Purchases.Find(purchaseId);
+            thisPurchase.Products = list;
+            dbContext.SaveChanges();
+          
             return RedirectToAction("Index","Home");
         }    
         

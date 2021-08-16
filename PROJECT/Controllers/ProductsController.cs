@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PROJECT.Models.Products;
-using PROJECT.Models.Purchases;
 using PROJECT.Services.MyCompany;
 using PROJECT.Services.Products;
 
@@ -36,18 +35,6 @@ namespace PROJECT.Controllers
             return RedirectToAction("Index","Home");
         }
 
-        [Authorize]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [Authorize]
-        public IActionResult Create(ProductFormModel model)
-        {
-            return View();
-        }
-
+       
     }
 }

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PROJECT.Data.Models
+﻿namespace PROJECT.Data.Models
 {
     public class ProductSpecification
     {
         public int Id { get; set; }
-        public int Pieces { get; set; }
-        [Required]
+        public int Pieces { get; set; } 
         public decimal Cubic { get; set; }
         public decimal Price { get; set; }
         public decimal TransportCost { get; set; }

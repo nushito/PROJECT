@@ -7,7 +7,7 @@ namespace PROJECT.Models.Purchases
 {
     public class PurchaseProductFormModel
     {
-        
+        public int Id { get; set; }
         public int DescriptionId { get; set; }
         public string Description { get; set; }
         public int SizeId { get; set; }
