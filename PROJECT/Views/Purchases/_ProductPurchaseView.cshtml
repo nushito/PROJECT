@@ -67,22 +67,22 @@
     <tr id="tablerow0">
         <td>
             <div class="editor-field">
-                <input asp-for="Pieces" type="text" class="text-box single-line" name="Pieces[0]" value="" required="required">
+                <input asp-for="Pieces" class="text-box single-line" name="Pieces[0]" value="" required="required">
             </div>
         </td>
         <td>
             <div class="editor-field">
-                <input asp-for="Cubic" type="text" class="text-box single-line" name="Cubic[0]" value="" required="required">
+                <input asp-for="Cubic" class="text-box single-line" name="Cubic[0]" value="" required="required">
             </div>
         </td>
         <td>
             <div class="editor-field">
-                <input asp-for="PurchasePrice" type="text" class="text-box single-line" name="PurchasePrice[0]" value="" required="required">
+                <input asp-for="Price" type="number" class="text-box single-line" name="Price[0]" value="" required="required">
             </div>
         </td>
         <td>
             <div class="editor-field">
-                <input asp-for="TransportCost" type="text" class="text-box single-line" name="TransportCost[0]" value="" required="required">
+                <input asp-for="TransportCost" class="text-box single-line" name="TransportCost[0]" value="" required="required">
             </div>
         </td>
         <td>
@@ -92,7 +92,7 @@
         </td>
         <td>
             <div class="editor-field">
-                <input asp-for="Duty" type="text" class="text-box single-line" name="Duty[0]" value="" required="required">
+                <input asp-for="Duty" class="text-box single-line" name="Duty[0]" value="" required="required">
             </div>
         </td>
         <td>
@@ -104,7 +104,7 @@
         <td>
             <div class="editor-field">
 
-                <input asp-for="BankExpenses" type="text" class="text-box single-line" name="BankExpenses[0]" value="" required="required">
+                <input asp-for="BankExpenses"  class="text-box single-line" name="BankExpenses[0]" value="" required="required">
             </div>
         </td>
         <td>
@@ -139,27 +139,25 @@
                         '<select name="Grade[' + counter + ']" asp-for="Grade" ><option value="">All</option>@foreach (var grade in Model.Grades){<option value="@grade">@grade</option>}</select>' +
                         '</td>' +
                         '<td>' +
-                        '<input type="text" class="text-box single-line" name="Pieces[' + counter + ']" value="" required="required" />' +
+                        '<input class="text-box single-line" name="Pieces[' + counter + ']" value="" required="required" />' +
                         '</td>' +
                         '<td>' +
-                       '</td>' +
-                        '<td>' +
-                        '<input type="text" class="text-box single-line" name="PurchasePrice[' + counter + ']" value="" required="required" />' +
+                        '<input  type="number" class="text-box single-line" name="Price[' + counter + ']" value="" required="required" />' +
                         '</td>' +
                         '<td>' +
-                        '<input type="text" class="text-box single-line" name="TransportCost[' + counter + ']" value="" required="required" />' +
+                        '<input  class="text-box single-line" name="TransportCost[' + counter + ']" value="" required="required" />' +
                         '</td>' +
                         '<td>' +
-                        '<input type="text" class="text-box single-line" name="TerminalCharges[' + counter + ']" value="" required="required" />' +
+                        '<input  class="text-box single-line" name="TerminalCharges[' + counter + ']" value="" required="required" />' +
                         '</td>' +
                         '<td>' +
-                        '<input type="text" class="text-box single-line" name="Duty[' + counter + ']" value="" required="required" />' +
+                        '<input class="text-box single-line" name="Duty[' + counter + ']" value="" required="required" />' +
                         '</td>' +
                         '<td>' +
-                        '<input type="text" class="text-box single-line" name="CustomsExpenses[' + counter + ']" value="" required="required" />' +
+                        '<input class="text-box single-line" name="CustomsExpenses[' + counter + ']" value="" required="required" />' +
                         '</td>' +
                         '<td>' +
-                        '<input type="email" class="text-box single-line" name="BankExpenses[' + counter + ']" value="" required="required" />' +
+                        '<input class="text-box single-line" name="BankExpenses[' + counter + ']" value="" required="required" />' +
                         '</td>' +
 
                         '<td>' +

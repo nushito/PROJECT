@@ -21,14 +21,14 @@ namespace PROJECT.Models.Purchases
         //public string Size { get; set; }
         //public string Grade { get; set; }
         public int Pieces { get; set; }
-        public decimal Cubic { get; set; }
-        public decimal PurchasePrice { get; set; }
-        public decimal TransportCost { get; set; }
-        public decimal TerminalCharges { get; set; }
-        public decimal Duty { get; set; }
-        public decimal CustomsExpenses { get; set; }
-        public decimal BankExpenses { get; set; }
-        public decimal CostPrice { get; set; }
+        //public decimal Cubic { get; set; }
+        //public decimal PurchasePrice { get; set; }
+        //public decimal TransportCost { get; set; }
+        //public decimal TerminalCharges { get; set; }
+        //public decimal Duty { get; set; }
+        //public decimal CustomsExpenses { get; set; }
+        //public decimal BankExpenses { get; set; }
+        //public decimal CostPrice { get; set; }
         public PurchaseProductFormModel PurchaseProductFormModel { get; set; }
         //public ICollection<string> Descriptions { get; set; }
         //public ICollection<string> Sizes { get; set; }

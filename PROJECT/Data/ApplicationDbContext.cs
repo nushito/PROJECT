@@ -75,6 +75,10 @@ namespace PROJECT.Data
                 .Property(a => a.Income)
                 .HasColumnType("decimal");
 
+            builder.Entity<ProductSpecification>()
+                .Property(a => a.SoldPrice)
+                .HasColumnType("decimal");
+
             builder.Entity<ProductSupplier>()
                     .HasKey(a => new { a.ProductId, a.SupplierId });
 

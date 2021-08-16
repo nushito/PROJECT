@@ -51,7 +51,7 @@ namespace PROJECT.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult AddPurchase(PurchaseFormModel model, PurchaseProductFormModel formModel)
+        public IActionResult AddPurchase(PurchaseFormModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -72,8 +72,6 @@ namespace PROJECT.Controllers
             var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.InvoiceNumber           
             );
 
-
-
             //var idPr = purchaseService.SaveProduct(
             //    model.PurchaseProductFormModel.Description,
             //    model.PurchaseProductFormModel.Size,
@@ -86,6 +84,7 @@ namespace PROJECT.Controllers
             //    model.PurchaseProductFormModel.Duty,
             //    model.PurchaseProductFormModel.CustomsExpenses,
             //    model.PurchaseProductFormModel.BankExpenses);
+
 
             ICollection<Product> list = null;
 
@@ -109,10 +108,14 @@ namespace PROJECT.Controllers
                     (customsExpenses != 0) && (bankExpenses != 0))
                 {
                     var product = this.dbContext.Products
-                        .Where(a => a.Description.ToLower() == model.PurchaseProductFormModel.Description.ToLower()
-                    && a.Size.ToLower() == model.PurchaseProductFormModel.Size.ToLower()
-                    && a.Grade.ToLower() == model.PurchaseProductFormModel.Grade.ToLower())
+                        .Where(a => a.Description.ToLower() == productDescription.ToString().ToLower()
+                    && a.Size.ToLower() == size.ToString().ToLower()
+                    && a.Grade.ToLower() == grade.ToString().ToLower())
                         .FirstOrDefault();
+
+                    var costPrice = (Decimal.Parse(bankExpenses) + Decimal.Parse(customsExpenses) + Decimal.Parse(duty)
+                        + Decimal.Parse(terminalCharges) + Decimal.Parse(transportCost) + Decimal.Parse(cubic) * Decimal.Parse(purchasePrice)
+                        ) / Decimal.Parse(cubic);
 
                     var productDetails = new ProductSpecification
                     {
@@ -123,9 +126,11 @@ namespace PROJECT.Controllers
                         Pieces = int.Parse(pices),
                         Price = Decimal.Parse(purchasePrice),
                         TerminalCharges = Decimal.Parse(terminalCharges),
-                        TransportCost = Decimal.Parse(transportCost)
+                        TransportCost = Decimal.Parse(transportCost),
+                        CostPrice = costPrice
                     };
 
+                  
                     product.ProductSpecifications.Add(productDetails);
 
                     list.Add(product);
@@ -153,7 +158,7 @@ namespace PROJECT.Controllers
                 model.Grade,
                 model.Pieces,
                 model.Cubic,               
-                model.PurchasePrice,
+                model.Price,
                 model.TransportCost,
                 model.TerminalCharges,
                 model.Duty,
@@ -169,7 +174,7 @@ namespace PROJECT.Controllers
                 var grade = Request.Form["Grade[" + i + "]"];
                 var pices = Request.Form["Pieces[" + i + "]"];
                 var cubic = Request.Form["Cubic[" + i + "]"];
-                var purchasePrice = Request.Form["PurchasePrice[" + i + "]"];
+                var purchasePrice = Request.Form["Price[" + i + "]"];
                 var transportCost = Request.Form["TransportCost[" + i + "]"];
                 var terminalCharges = Request.Form["TerminalCharges[" + i + "]"];
                 var duty = Request.Form["Duty[" + i + "]"];

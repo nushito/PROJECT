@@ -1,13 +1,10 @@
-﻿
-using PROJECT.Services.Products.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace PROJECT.Models.Purchases
+namespace PROJECT.Models.Products
 {
-    public class PurchaseProductFormModel
+    public class ProductFormModel
     {
-        
         public int DescriptionId { get; set; }
         public string Description { get; set; }
         public int SizeId { get; set; }
@@ -18,7 +15,7 @@ namespace PROJECT.Models.Purchases
         [Required]
         public int Pieces { get; set; }
         public decimal Cubic { get; set; }
-        public decimal Price { get; set; }
+        public decimal PurchasePrice { get; set; }
         public decimal TransportCost { get; set; }
         public decimal TerminalCharges { get; set; }
         public decimal Duty { get; set; }
@@ -29,7 +26,5 @@ namespace PROJECT.Models.Purchases
         public ICollection<string> Sizes { get; set; }
         public ICollection<string> Grades { get; set; }
         public ICollection<string> Descriptions { get; set; }
-
-
     }
 }

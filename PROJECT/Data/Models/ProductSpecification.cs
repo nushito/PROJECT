@@ -19,6 +19,7 @@ namespace PROJECT.Data.Models
         public decimal Duty { get; set; }
         public decimal BankExpenses { get; set; }
         public decimal CostPrice { get; set; }
+        public decimal SoldPrice { get; set; }
         public decimal Income { get; set; }
     }
 }
