@@ -18,7 +18,7 @@ namespace PROJECT.Data.Models
         [Required]
         public string Size { get; set; }
         [Required]
-        public string Grade { get; set; }       
+        public string Grade { get; set; }      
         [Required]
         public ICollection<ProductSpecification> ProductSpecifications { get; set; }
         public ICollection<Purchase> Purchases { get; set; }

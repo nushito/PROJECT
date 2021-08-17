@@ -21,7 +21,7 @@ namespace PROJECT.Data.Models
         public DateTime Date { get; set; }
  
         [Required]
-        public Supplier Supplier { get; set; }
+        public MyCompany Seller { get; set; }
         [Required]
         public Customer Client { get; set; }
         public ICollection<Product> Products { get; set; }

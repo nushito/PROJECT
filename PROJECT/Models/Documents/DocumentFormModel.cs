@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace PROJECT.Models.Documents
+{
+    public class DocumentFormModel
+    {
+        public string Type { get; set; }
+        public ICollection<string> Types { get; set; }
+        public IDocument Document { get; set; }
+        public SupplierModel Seller { get; set; }
+        public ICollection<string> Customers { get; set; }
+        public decimal SubTotal { get; set; }
+        public decimal Total { get; set; }
+        public int VatParcent { get; set; }
+
+    }
+}
