@@ -22,7 +22,7 @@ namespace PROJECT.Services.Purchases
           //  var supplier = dbContext.Suppliers.Find(supplierId);
             var purchase = new Purchase
             {
-                Date = DateTime.Parse(date, System.Globalization.CultureInfo.InvariantCulture),
+                Date = DateTime.Parse(date),
                 InvoiceNumber = invoiceNumber,
                 SupplierId = supplierId,
                 Supplier = dbContext.Suppliers.Find(supplierId)

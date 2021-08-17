@@ -45,8 +45,7 @@ namespace PROJECT.Controllers
                     Grades = productsService.GetGrade()
                 }
             });
-               
-                     
+                      
         }
 
         [HttpPost]
@@ -72,7 +71,7 @@ namespace PROJECT.Controllers
             var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.InvoiceNumber           
             );
 
-            ICollection<Product> list = null;
+            ICollection<Product> list = new List<Product>();
 
             for (int i = 0; i <= Request.Form.Count; i++)
             {
@@ -99,6 +98,8 @@ namespace PROJECT.Controllers
                     && a.Grade.ToLower() == grade.ToString().ToLower())
                         .FirstOrDefault();
 
+                 
+
                     var productDetails = new ProductSpecification
                     {
                         BankExpenses = Math.Round(decimal.Parse(bankExpenses.ToString()), 4),
@@ -123,6 +124,11 @@ namespace PROJECT.Controllers
 
                     productDetails.CostPrice = costPrice;
 
+                    if (!product.Suppliers.Select(a => a.Name).Contains(model.SupplierName))
+                    {
+                        product.Suppliers.Add(new Supplier { Id = model.SupplierId, Name = model.SupplierName });
+                    }
+                   
                     product.ProductSpecifications.Add(productDetails);
 
                     list.Add(product);

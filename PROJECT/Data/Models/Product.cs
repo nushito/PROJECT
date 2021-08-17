@@ -9,6 +9,7 @@ namespace PROJECT.Data.Models
         {
             Suppliers = new HashSet<Supplier>();
             Customers = new HashSet<Customer>();
+            ProductSpecifications = new HashSet<ProductSpecification>();
         }
         
         public int Id { get; init; }
