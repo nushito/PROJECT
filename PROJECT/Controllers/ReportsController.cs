@@ -25,7 +25,7 @@ namespace PROJECT.Controllers
         }
 
         [Authorize]
-        public IActionResult ReportProducts(ProductsAvailability model)
+        public IActionResult ReportProducts([FromQuery] ProductsAvailability model)
             //int supplierId,
             //string description,
             //string size, 
@@ -34,7 +34,7 @@ namespace PROJECT.Controllers
         {
             model.Descriptions = productService.GetDescription();            
             model.Sizes = productService.GetSize();
-            model.Grades = productService.GetDescription();
+            model.Grades = productService.GetGrade();
             model.Suppliers = supplierService.GetSuppliers().Select(a=>a.Name);
             model.Customers = customerService.GetCustomers();           
 
@@ -54,9 +54,9 @@ namespace PROJECT.Controllers
                 listQuery = listQuery.Where(a => a.Grade == model.Grade);
             }
 
-            if (model.SupplierId != 0)
+            if (!string.IsNullOrWhiteSpace(model.SupplierName))
             {
-                listQuery = listQuery.Where(a => a.Suppliers.Any(x => x.Id == model.SupplierId));
+                listQuery = listQuery.Where(a => a.Suppliers.Any(x => x.Name == model.SupplierName));
             }
            
             if (!string.IsNullOrWhiteSpace(model.CustomerName))
@@ -67,9 +67,9 @@ namespace PROJECT.Controllers
             var products = listQuery
                 .Select(a => new ProductViewModel
                 {
-                    Description = model.Description,
-                    Size = model.Size,
-                    Grade = model.Grade,
+                    Description = a.Description,
+                    Size = a.Size,
+                    Grade = a.Grade,
                     Specification = new ProductSpecificationViewModel
                     {
                         BankExpenses = a.ProductSpecifications.Select(a => a.BankExpenses).FirstOrDefault(),
@@ -83,9 +83,9 @@ namespace PROJECT.Controllers
                 })
                 .ToList();
 
-           model.Products = products;
+          // model.Products = products;
             
-            return View(model);
+           return View(model);
 
         }
 

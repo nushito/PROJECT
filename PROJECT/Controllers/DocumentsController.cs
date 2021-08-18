@@ -25,6 +25,7 @@ namespace PROJECT.Controllers
             ViewBag.Number = 000000000;
             var document = new DocumentFormModel
             {
+                Number = ViewBag.Number,
                 Types = new List<string>()
                 {
                     "Invoice", "Proforma Invoice", "CreditNote", "Order" },
@@ -39,9 +40,9 @@ namespace PROJECT.Controllers
                      VAT = a.VAT,
                      Name = a.Name
                 }).FirstOrDefault(),
-                Customers = dbContext.Clients.Select(a => a.Name).ToList()
+                Customers = dbContext.Clients.Select(a => a.Name).ToList()               
             };
-            return View();
+            return View(document);
         }
 
         [HttpPost]
@@ -64,35 +65,50 @@ namespace PROJECT.Controllers
                             VAT = a.VAT,
                             Name = a.Name
                         }).FirstOrDefault();
+
                  model.Customers = dbContext.Clients.Select(a => a.Name).ToList();                 
             }
 
-            if(model.Seller == null)
+            model.Seller = dbContext.MyCompanies.
+                            Where(a => a.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)).
+                       Select(a => new SupplierModel
+                       {
+                           City = a.Address.City,
+                           Country = a.Address.Country,
+                           Street = a.Address.Street,
+                           EIK = a.Eik,
+                           VAT = a.VAT,
+                           Name = a.Name
+                       }).FirstOrDefault();
+
+            var seller = dbContext.MyCompanies.
+                Where(a => a.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                .FirstOrDefault();
+
+
+            if (model.Seller == null)
             {
                 RedirectToAction("Register", "MyCompany");
             }
 
           if(model.Type.ToString() == "Invoice")
             {
-                model.Document = new InvoiceModel { };
+                model.Document = new InvoiceModel {Seller = model.Seller };
             }
           else if (model.Type.ToString() == "Proforma Invoice")
             {
-                model.Document = new ProformaModel { };
+                model.Document = new ProformaModel { Seller = model.Seller };
             }
             else if(model.Type.ToString() == "Order")
             {
-                model.Document = new OrderModel { };
+                model.Document = new OrderModel { Seller = model.Seller };
             }
             else
             {
-                model.Document = new CreditNote { };
+                model.Document = new CreditNote { Seller = model.Seller };
             };
 
-            var seller = dbContext.MyCompanies.
-                Where(a => a.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-                .FirstOrDefault();
-
+            
             for (int i = 0; i < Request.Form.Count; i++)
             {
                 var products = new AddProductsFormModel

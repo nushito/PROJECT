@@ -96,7 +96,6 @@ namespace PROJECT.Data
                 .Property(a => a.Total)
                 .HasColumnType("decimal");
 
-
             builder.Entity<Purchase>()
                 .HasOne(a => a.Supplier)
                 .WithMany(a => a.Purchases)

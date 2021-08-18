@@ -8,6 +8,7 @@ namespace PROJECT.Models.Documents
     public class DocumentFormModel
     {
         public string Type { get; set; }
+        public int Number { get; set; }
         public ICollection<string> Types { get; set; }
         public IDocument Document { get; set; }
         public SupplierModel Seller { get; set; }

@@ -8,7 +8,7 @@ namespace PROJECT.Models.Reports
     public class ProductsAvailability
     {
        
-        public int Id { get; init; }
+       
         [Required]
         public string Description { get; set; }
         [Required]
