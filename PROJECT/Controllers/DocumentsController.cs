@@ -21,6 +21,8 @@ namespace PROJECT.Controllers
         [Authorize]
         public IActionResult Create()
         {
+            
+            ViewBag.Number = 000000000;
             var document = new DocumentFormModel
             {
                 Types = new List<string>()
@@ -39,7 +41,7 @@ namespace PROJECT.Controllers
                 }).FirstOrDefault(),
                 Customers = dbContext.Clients.Select(a => a.Name).ToList()
             };
-            return View(document);
+            return View();
         }
 
         [HttpPost]
@@ -90,6 +92,7 @@ namespace PROJECT.Controllers
             var seller = dbContext.MyCompanies.
                 Where(a => a.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                 .FirstOrDefault();
+
             for (int i = 0; i < Request.Form.Count; i++)
             {
                 var products = new AddProductsFormModel
@@ -99,8 +102,7 @@ namespace PROJECT.Controllers
 
             }
             
-            //model.Document.Products =
-
+            
             var issuedDocument = new Document
             {
                 Type = model.Type,

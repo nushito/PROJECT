@@ -8,7 +8,7 @@ namespace PROJECT.Models.Documents
 {
     public interface IDocument
     {
-        public string Number { get; set; }
+        public int Number { get; set; }
         [Required]
         public DateTime Date { get; set; }
         public int SellerId { get; set; }

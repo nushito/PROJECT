@@ -16,8 +16,8 @@ namespace PROJECT.Data.Models
         public int Id { get; init; }
         public string Type { get; set; }
         [Required]
-        [StringLength(InvoiceNumber)]
-        public string Number { get; set; }
+        [MaxLength(InvoiceNumber)]
+        public int Number { get; set; }
         [Required]
         public DateTime Date { get; set; }
        

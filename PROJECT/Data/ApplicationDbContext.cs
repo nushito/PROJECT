@@ -88,6 +88,15 @@ namespace PROJECT.Data
             builder.Entity<ProductInvoice>()
                    .HasKey(a => new { a.ProductId, a.InvoiceId });
 
+            builder.Entity<Document>()
+                .Property(a => a.SubTotal)
+                .HasColumnType("decimal");
+
+            builder.Entity<Document>()
+                .Property(a => a.Total)
+                .HasColumnType("decimal");
+
+
             builder.Entity<Purchase>()
                 .HasOne(a => a.Supplier)
                 .WithMany(a => a.Purchases)

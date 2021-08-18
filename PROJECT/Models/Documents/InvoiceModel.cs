@@ -12,7 +12,7 @@ namespace PROJECT.Models.Documents
     public class InvoiceModel : IDocument
     {
         public int Id { get; set; }
-        public string Number { get; set; }
+        public int Number { get; set; }
         public DateTime Date { get; set; }
         [Display(Name = "Customer")]
         public AddCustomerFormModel Client { get; set; }
