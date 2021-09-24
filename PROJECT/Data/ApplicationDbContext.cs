@@ -96,11 +96,48 @@ namespace PROJECT.Data
                 .Property(a => a.Total)
                 .HasColumnType("decimal");
 
+            builder.Entity<Document>()
+              .Property(a => a.Amount)
+              .HasColumnType("decimal");
+
             builder.Entity<Purchase>()
                 .HasOne(a => a.Supplier)
                 .WithMany(a => a.Purchases)
                 .HasForeignKey(a => a.SupplierId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Invoice>()
+               .Property(a => a.SubTotal)
+               .HasColumnType("decimal");
+
+            builder.Entity<Invoice>()
+              .Property(a => a.Amount)
+              .HasColumnType("decimal");
+
+            builder.Entity<Invoice>()
+                .Property(a => a.Total)
+                .HasColumnType("decimal");
+
+            builder.Entity<Order>()
+               .Property(a => a.SubTotal)
+               .HasColumnType("decimal");
+
+            builder.Entity<Order>()
+                .Property(a => a.Total)
+                .HasColumnType("decimal");
+
+            builder.Entity<Order>()
+              .Property(a => a.Amount)
+              .HasColumnType("decimal");
+
+            builder.Entity<Product>()
+                .Property(a => a.Quantity)
+                .HasColumnType("decimal");
+
+            builder.Entity<Purchase>()
+                .HasOne(a => a.Supplier)
+                .WithMany(a => a.Purchases)
+                .HasForeignKey(a => a.SupplierId);
 
             base.OnModelCreating(builder);
         }

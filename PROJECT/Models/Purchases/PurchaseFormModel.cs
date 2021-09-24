@@ -15,7 +15,7 @@ namespace PROJECT.Models.Purchases
      
         public int SupplierId { get; set; }
         public string SupplierName { get; set; }
-        public string InvoiceNumber { get; set; }
+        public int Number { get; set; }
         public string Date { get; set; }
        
         public int Pieces { get; set; }

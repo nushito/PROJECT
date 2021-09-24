@@ -75,9 +75,6 @@
     <button class="btn btn-outline-primary badge-success p-2 m-3" value="Submit">Submit</button>
 </form>
 
-@if(!Model.Products.Any())
-{
-    <h2>No products found by selected criterias!</h2>
-}
+
 <partial name="_ProductList" model="@Model.Products" />
 

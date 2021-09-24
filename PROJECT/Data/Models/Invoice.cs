@@ -25,5 +25,9 @@ namespace PROJECT.Data.Models
         [Required]
         public Customer Client { get; set; }
         public ICollection<Product> Products { get; set; }
+        public decimal Amount { get; set; }
+        public decimal SubTotal { get; set; }
+        public decimal Total { get; set; }
+        public int VatParcent { get; set; }
     }
 }

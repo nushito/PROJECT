@@ -83,7 +83,7 @@ namespace PROJECT.Controllers
                 })
                 .ToList();
 
-          // model.Products = products;
+           model.Products = products;
             
            return View(model);
 

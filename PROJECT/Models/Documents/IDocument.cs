@@ -8,6 +8,7 @@ namespace PROJECT.Models.Documents
 {
     public interface IDocument
     {
+        public int Id { get; set; }
         public int Number { get; set; }
         [Required]
         public DateTime Date { get; set; }
@@ -16,7 +17,11 @@ namespace PROJECT.Models.Documents
 
         public int ClientId { get; set; }
         public AddCustomerFormModel Client { get; set; }
-        public ICollection<AddCustomerFormModel> Customers { get; set; }
+        public ICollection<string> Customers { get; set; }
         public ICollection<AddProductsFormModel> Products { get; set; }
+        public decimal Amount { get; set; }
+        public decimal SubTotal { get; set; }
+        public decimal Total { get; set; }
+        public int VatPercent { get; set; }
     }
 }

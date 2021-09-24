@@ -35,6 +35,9 @@ namespace PROJECT.Controllers
             return RedirectToAction("Index","Home");
         }
 
-       
+       public IActionResult All()
+        {
+            return RedirectToAction("Home", "Index");
+        }
     }
 }

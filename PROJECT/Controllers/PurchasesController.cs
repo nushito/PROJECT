@@ -12,6 +12,7 @@ using PROJECT.Services.Purchases;
 using PROJECT.Services;
 using System.Collections;
 using System.Collections.Generic;
+using PROJECT.Services.Documents;
 
 namespace PROJECT.Controllers
 {
@@ -21,6 +22,7 @@ namespace PROJECT.Controllers
         private readonly ISupplierService supplierService;
         private readonly IProductsService productsService;
         private readonly IPurchaseService purchaseService;
+       
         public PurchasesController(ApplicationDbContext dbContext, 
             ISupplierService supplierService,
             IProductsService productsService,
@@ -30,6 +32,7 @@ namespace PROJECT.Controllers
             this.supplierService = supplierService;
             this.productsService = productsService;
             this.purchaseService = purchaseService;
+           
         }
         [Authorize]
         public IActionResult AddPurchase()
@@ -37,6 +40,7 @@ namespace PROJECT.Controllers
 
             return View(new PurchaseFormModel
             {
+                
                 Suppliers = supplierService.GetSuppliers(),
                 PurchaseProductFormModel = new PurchaseProductFormModel
                 {
@@ -44,7 +48,7 @@ namespace PROJECT.Controllers
                     Sizes = productsService.GetSize(),
                     Grades = productsService.GetGrade()
                 }
-            });
+            }) ;
                       
         }
 
@@ -68,7 +72,7 @@ namespace PROJECT.Controllers
                 return RedirectToAction("Index","Home");
             }
 
-            var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.InvoiceNumber           
+            var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.Number           
             );
 
             ICollection<Product> list = new List<Product>();
@@ -98,10 +102,9 @@ namespace PROJECT.Controllers
                     && a.Grade.ToLower() == grade.ToString().ToLower())
                         .FirstOrDefault();
 
-                 
-
                     var productDetails = new ProductSpecification
                     {
+                       
                         BankExpenses = Math.Round(decimal.Parse(bankExpenses.ToString()), 4),
                         Cubic = Math.Round(decimal.Parse(cubic.ToString()),4),
                         CustomsExpenses = Math.Round(decimal.Parse(customsExpenses.ToString()),4),
@@ -142,76 +145,7 @@ namespace PROJECT.Controllers
           
             return RedirectToAction("Index","Home");
         }    
-        
-        
-        [HttpPost]
-        public ICollection<Product> AddProductToPurchase(PurchaseProductFormModel model)
-        {
-            model.Descriptions = productsService.GetDescription();
-            model.Sizes = productsService.GetSize();
-            model.Grades = productsService.GetGrade();
-
-            var idPr = purchaseService.SaveProduct(
-                model.Description,
-                model.Size,
-                model.Grade,
-                model.Pieces,
-                model.Cubic,               
-                model.Price,
-                model.TransportCost,
-                model.TerminalCharges,
-                model.Duty,
-                model.CustomsExpenses,
-                model.BankExpenses);
-
-            ICollection<Product> list = null;
-
-            for (int i = 0; i <= Request.Form.Count; i++)
-            {
-                var productDescription = Request.Form["Description[" + i + "]"];
-                var size = Request.Form["Size[" + i + "]"];
-                var grade = Request.Form["Grade[" + i + "]"];
-                var pices = Request.Form["Pieces[" + i + "]"];
-                var cubic = Request.Form["Cubic[" + i + "]"];
-                var purchasePrice = Request.Form["Price[" + i + "]"];
-                var transportCost = Request.Form["TransportCost[" + i + "]"];
-                var terminalCharges = Request.Form["TerminalCharges[" + i + "]"];
-                var duty = Request.Form["Duty[" + i + "]"];
-                var customsExpenses = Request.Form["CustomsExpenses[" + i + "]"];
-                var bankExpenses = Request.Form["BankExpenses[" + i + "]"];
-
-                if ((productDescription.ToString() != null) && (size.ToString() != null)
-                    && (grade.ToString() != null) && (pices != 0)&& (cubic != 0) &&
-                    (purchasePrice != 0) && (transportCost != 0) && (terminalCharges != 0) && (duty != 0) && 
-                    (customsExpenses != 0) && (bankExpenses != 0))
-                {
-                    var product = this.dbContext.Products
-                        .Where(a => a.Description.ToLower() == model.Description.ToLower()
-                    && a.Size.ToLower() == model.Size.ToLower()
-                    && a.Grade.ToLower() == model.Grade.ToLower())
-                        .FirstOrDefault();
-
-                    var productDetails = new ProductSpecification
-                    {
-                        BankExpenses = Decimal.Parse(bankExpenses),
-                        Cubic = Decimal.Parse(cubic),
-                        CustomsExpenses = Decimal.Parse(customsExpenses),
-                        Duty = Decimal.Parse(duty),
-                        Pieces = int.Parse(pices),
-                        Price = Decimal.Parse(purchasePrice),
-                        TerminalCharges = Decimal.Parse(terminalCharges),
-                        TransportCost = Decimal.Parse(transportCost)
-                    };
-
-                    product.ProductSpecifications.Add(productDetails);
-
-                    list.Add(product) ;
-
-                }
-            }
-            return list;
-        }
-
+      
     }
     
  }

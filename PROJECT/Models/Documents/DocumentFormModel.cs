@@ -14,9 +14,10 @@ namespace PROJECT.Models.Documents
         public SupplierModel Seller { get; set; }
         public string Customer { get; set; }
         public ICollection<string> Customers { get; set; }
+        public decimal Amount { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Total { get; set; }
-        public int VatParcent { get; set; }
+        public int VatPercent { get; set; }
 
     }
 }

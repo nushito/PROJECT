@@ -8,13 +8,13 @@ namespace PROJECT.Services.Purchases
     public interface IPurchaseService
     {
         public int Create(
-            int supplierId, string date, string invoiceNumber
+            int supplierId, string date, int invoiceNumber
            );
 
-        public int SaveProduct(string productDescription,
-            string size, string grade, int pieces,
-            decimal cubic, decimal purchasePrice, decimal transportCost,
-            decimal terminalCharges, decimal duty, decimal customsExpenses, decimal bankExpenses);
+        //public int SaveProduct(string productDescription,
+        //    string size, string grade, int pieces,
+        //    decimal cubic, decimal purchasePrice, decimal transportCost,
+        //    decimal terminalCharges, decimal duty, decimal customsExpenses, decimal bankExpenses);
 
     }
 }

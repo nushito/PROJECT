@@ -4,6 +4,7 @@ using PROJECT.Data;
 using PROJECT.Data.Models;
 using PROJECT.Models.Documents;
 using PROJECT.Models.Products;
+using PROJECT.Services.Documents;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -13,22 +14,22 @@ namespace PROJECT.Controllers
     public class DocumentsController : Controller
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly IDocumentService documentService;
 
-        public DocumentsController(ApplicationDbContext dbContext)
+        public DocumentsController(ApplicationDbContext dbContext,
+            IDocumentService documentService)
         {
             this.dbContext = dbContext;
+            this.documentService = documentService;
         }
+
+
         [Authorize]
-        public IActionResult Create()
+        public IActionResult CreateInvoice()
         {
-            
-            ViewBag.Number = 000000000;
-            var document = new DocumentFormModel
+            var document = new InvoiceModel
             {
-                Number = ViewBag.Number,
-                Types = new List<string>()
-                {
-                    "Invoice", "Proforma Invoice", "CreditNote", "Order" },
+                Number = documentService.GetLastNumInvoice(),
                 Seller = dbContext.MyCompanies.
                 Where(a => a.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)).
                 Select(a => new SupplierModel
@@ -47,13 +48,10 @@ namespace PROJECT.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create(DocumentFormModel model)
+        public IActionResult CreateInvoice(InvoiceModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Types = new List<string>()
-                {
-                    "Invoice", "Proforma Invoice", "CreditNote", "Order" };
                 model.Seller = dbContext.MyCompanies.
                              Where(a => a.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)).
                         Select(a => new SupplierModel
@@ -91,48 +89,57 @@ namespace PROJECT.Controllers
                 RedirectToAction("Register", "MyCompany");
             }
 
-          if(model.Type.ToString() == "Invoice")
-            {
-                model.Document = new InvoiceModel {Seller = model.Seller };
-            }
-          else if (model.Type.ToString() == "Proforma Invoice")
-            {
-                model.Document = new ProformaModel { Seller = model.Seller };
-            }
-            else if(model.Type.ToString() == "Order")
-            {
-                model.Document = new OrderModel { Seller = model.Seller };
-            }
-            else
-            {
-                model.Document = new CreditNote { Seller = model.Seller };
-            };
+            IList<Product> listInvoice = new List<Product>();
 
-            
             for (int i = 0; i < Request.Form.Count; i++)
             {
-                var products = new AddProductsFormModel
-                {
+                var productDescription = Request.Form["Description[" + i + "]"];
+                var size = Request.Form["Size[" + i + "]"];
+                var grade = Request.Form["Grade[" + i + "]"];
+                var price = Request.Form["SoldPrice[" + i + "]"];
+                var cubic = Request.Form["Cubic[" + i + "]"];
+                var amount = Request.Form["Amount[" + i + "]"];
 
+                
+                var product = dbContext.Products.
+                    Where(a => a.Description == productDescription && a.Size == size && a.Grade == grade)
+                    .FirstOrDefault();
+
+                var spec = new ProductSpecification
+                {
+                     SoldPrice = decimal.Parse(price.ToString()),
+                     Cubic = decimal.Parse(cubic.ToString())
                 };
 
+                product.ProductSpecifications.Add(spec);
+              
+
+                listInvoice.Add(product);
+                dbContext.SaveChanges();
             }
-            
-            
-            var issuedDocument = new Document
+
+            var customer = dbContext.Clients.Where(a => a.Name.ToLower() == model.Client.Name.ToLower())
+                .FirstOrDefault();
+
+            var issuedDocument = new Invoice
             {
-                Type = model.Type,
+                Id = model.Id,
                 Seller = seller,
-                ClientId = model.Document.ClientId,
-                Date = model.Document.Date,
-                Number = model.Document.Number,         
+                Client = customer,
+                Date = model.Date,
+                Number = model.Number,         
                 SubTotal = model.SubTotal,
                 Total = model.Total,
-                VatParcent = model.VatParcent
+                VatParcent = model.VatPercent,
+                Products = listInvoice
             };
+
+            dbContext.Invoices.Add(issuedDocument);
+            dbContext.SaveChanges();
+
+
            
-            
-            return View();
+            return RedirectToAction("Index","Home");
         }
 
     }

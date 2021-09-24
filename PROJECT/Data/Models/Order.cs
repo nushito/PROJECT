@@ -24,5 +24,8 @@ namespace PROJECT.Data.Models
         public int MyCompanyId { get; set; }
         public MyCompany MyCompany { get; set; }
         public IEnumerable<Product> Products { get; set; }
+        public decimal Amount { get; set; }
+        public decimal SubTotal { get; set; }
+        public decimal Total { get; set; }
     }
 }

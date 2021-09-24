@@ -5,6 +5,24 @@
         <main role="main" class="pb-3">
             <div id="wrapper">
                 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+                  
+                        <li>
+
+                            <div class="dropdown ">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    MySales
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Documents" asp-action="CreateInvoice">Invoice</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Documents" asp-action="CreateProforma">Proforma Invoice</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Documents" asp-action="CreateOrder">Order</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Documents" asp-action="CreateCreditNote">Credit Note</a>
+                                </div>
+                            </div>
+                        </li>
+
+
+                  
 
                     <li class="nav-item active">
                         <a href="~/Documents/Create" class="nav-link">
@@ -61,11 +79,6 @@
                             <span>Products Avaialbility</span>
                         </a>
                     </li>
-
-                    <!-- Sidebar Toggler (Sidebar) -->
-                    <span class="text-center d-none d-md-inline">
-                        <button class="rounded-circle border-0"> Check</button>
-                    </span>
 
                 </ul>
 

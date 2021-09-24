@@ -1,54 +1,14 @@
 ﻿@model PurchaseProductFormModel
 
-<form method="post">
+<form method="post">    
     <fieldset>
         <h4 class="modal-title" id="gridSystemModalLabel">Products</h4>
         <table id="clientTable" class="table table-bordered">
-            <thead>
+            <thead class="thead-light">
                 <tr>
                     <td>Type</td>
                     <td>Size</td>
                     <td>Grade</td>
-                </tr>
-                <tr>
-                <tr id="tablerow0">
-                    <td>
-                        <div class="editor-field">
-                            <select name="Description[0]" asp-for="Description">
-                                <option value="">All</option>
-                                @foreach (var type in Model.Descriptions)
-                                {
-                                    <option value="@type">@type</option>
-                                }
-                            </select>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="editor-field">
-                            <select name="Size[0]" asp-for="Size">
-                                <option value="">All</option>
-                                @foreach (var size in Model.Sizes)
-                                {
-                                    <option value="@size">@size</option>
-                                }
-                            </select>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="editor-field">
-                            <select name="Grade[0]" asp-for="Grade">
-                                <option value="">All</option>
-                                @foreach (var grade in Model.Grades)
-                                {
-                                    <option value="@grade">@grade</option>
-                                }
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-            </thead>
-           
-                <tr>
                     <td>Pieces</td>
                     <td>Quantity</td>
                     <td>Price</td>
@@ -58,64 +18,99 @@
                     <td>Customs Expenses</td>
                     <td>Bank Expenses</td>
                 </tr>
-          
-            
-    <tr id="tablerow1">
-        <td>
-            <div class="editor-field">
-                <input asp-for="Pieces" class="text-box single-line" name="Pieces[0]" value="" required="required">
-            </div>
-        </td>
-        <td>
-            <div class="editor-field">
-                <input asp-for="Cubic" class="text-box single-line" name="Cubic[0]" value="" required="required">
-            </div>
-        </td>
-        <td>
-            <div class="editor-field">
-                <input asp-for="Price"  class="text-box single-line" name="Price[0]" value="" required="required">
-            </div>
-        </td>
-        <td>
-            <div class="editor-field">
-                <input asp-for="TransportCost" class="text-box single-line" name="TransportCost[0]" value="" required="required">
-            </div>
-        </td>
-        <td>
-            <div class="editor-field">
-                <input asp-for="TerminalCharges" type="text" class="text-box single-line" name="TerminalCharges[0]" value="" required="required">
-            </div>
-        </td>
-        <td>
-            <div class="editor-field">
-                <input asp-for="Duty" class="text-box single-line" name="Duty[0]" value="" required="required">
-            </div>
-        </td>
-        <td>
-            <div class="editor-field">
+            </thead>
 
-                <input asp-for="CustomsExpenses" type="text" class="text-box single-line" name="CustomsExpenses[0]" value="" required="required">
-            </div>
-        </td>
-        <td>
-            <div class="editor-field">
+            <tr id="tablerow0">
+                <td>
+                    <div class="editor-field">
+                        <select name="Description[0]" asp-for="Description">
+                            <option value="">All</option>
+                            @foreach (var type in Model.Descriptions)
+                            {
+                                <option value="@type">@type</option>
+                            }
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="editor-field">
+                        <select name="Size[0]" asp-for="Size">
+                            <option value="">All</option>
+                            @foreach (var size in Model.Sizes)
+                            {
+                                <option value="@size">@size</option>
+                            }
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="editor-field">
+                        <select name="Grade[0]" asp-for="Grade">
+                            <option value="">All</option>
+                            @foreach (var grade in Model.Grades)
+                            {
+                                <option value="@grade">@grade</option>
+                            }
+                        </select>
+                    </div>
+                </td>
+                <td class="col-sm-1">
+                    <div class="editor-field">
+                        <input asp-for="Pieces" class="text-box single-line" name="Pieces[0]" value="" required="required">
+                    </div>
+                </td>
+                <td class="col-sm-1">
+                    <div class="editor-field">
+                        <input asp-for="Cubic" class="text-box single-line" name="Cubic[0]" value="" required="required">
+                    </div>
+                </td>
+                <td class="col-sm-1">
+                    <div class="editor-field">
+                        <input asp-for="Price" class="text-box single-line" name="Price[0]" value="" required="required">
+                    </div>
+                </td>
+                <td class="col-sm-1">
+                    <div class="editor-field">
+                        <input asp-for="TransportCost" class="text-box single-line" name="TransportCost[0]" value="" required="required">
+                    </div>
+                </td>
+                <td class="col-md-1">
+                    <div class="editor-field">
+                        <input asp-for="TerminalCharges" type="text" class="text-box single-line" name="TerminalCharges[0]" value="" required="required">
+                    </div>
+                </td>
+                <td class="col-sm-3">
+                    <div class="editor-field">
+                        <input asp-for="Duty" class="text-box single-line" name="Duty[0]" value="" required="required">
+                    </div>
+                </td>
+                <td class="col">
+                    <div class="editor-field">
 
-                <input asp-for="BankExpenses"  class="text-box single-line" name="BankExpenses[0]" value="" required="required">
-            </div>
-        </td>
-        <td>
-            <button type="button" class="btn btn-primary" onclick="removeTr(0);">Delete</button>
-        </td>
-    </tr>
-    </table>
-    <p>
-        <button id="addButton" type="submit" class="btn btn-primary">New Product</button>
-    </p>
-    <hr />
+                        <input asp-for="CustomsExpenses" type="text" class="text-box single-line" name="CustomsExpenses[0]" value="" required="required">
+                    </div>
+                </td>
+                <td class="col">
+                    <div class="editor-field">
 
-    <p>
-        <input type="submit" class="btn btn-primary">
-    </p>
+                        <input asp-for="BankExpenses" class="text-box single-line" name="BankExpenses[0]" value="" required="required">
+                    </div>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" onclick="removeTr(0);">Delete</button>
+                </td>
+            </tr>
+        </table>
+        <p>
+            <button id="addButton" type="button" class="btn btn-primary">Add Product</button>
+        </p>
+        <hr />
+        <p>
+            <button type="submit" class="btn btn-primary">Save Purchase</button>
+        </p>
+        @*<p>
+            <input type="submit" class="btn btn-primary">
+        </p>*@
 
     </fieldset>
 </form>
