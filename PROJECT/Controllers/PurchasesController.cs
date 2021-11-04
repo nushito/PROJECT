@@ -77,6 +77,7 @@ namespace PROJECT.Controllers
 
             ICollection<Product> list = new List<Product>();
 
+            
             for (int i = 0; i <= Request.Form.Count; i++)
             {
                 var productDescription = Request.Form["Description[" + i + "]"];
@@ -127,9 +128,11 @@ namespace PROJECT.Controllers
 
                     productDetails.CostPrice = costPrice;
 
+                    var thisSupplier = dbContext.Suppliers.Find(model.SupplierId);
                     if (!product.Suppliers.Select(a => a.Name).Contains(model.SupplierName))
                     {
-                        product.Suppliers.Add(new Supplier { Id = model.SupplierId, Name = model.SupplierName });
+
+                        product.Suppliers.Add(thisSupplier);//new Supplier { Id = model.SupplierId, Name = model.SupplierName });
                     }
                    
                     product.ProductSpecifications.Add(productDetails);

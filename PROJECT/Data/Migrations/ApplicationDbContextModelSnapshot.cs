@@ -549,6 +549,9 @@ namespace PROJECT.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 

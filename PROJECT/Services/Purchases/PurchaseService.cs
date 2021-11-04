@@ -1,9 +1,7 @@
 ﻿using PROJECT.Data;
 using PROJECT.Data.Models;
 using System;
-using System.Web;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
+using System.Globalization;
 
 namespace PROJECT.Services.Purchases
 {
@@ -15,12 +13,14 @@ namespace PROJECT.Services.Purchases
             this.dbContext = dbContext;
         }
 
-        public int Create( int supplierId, string date, int invoiceNumber
+        public int Create( int supplierId, string dateInput, int invoiceNumber
            )
         {
-            var purchase = new Purchase
+            
+
+           var purchase = new Purchase
             {
-                Date = DateTime.Parse(date),
+                Date = Convert.ToDateTime(dateInput, System.Globalization.CultureInfo.GetCultureInfo("bg-BG").DateTimeFormat),
                 InvoiceNumber = invoiceNumber.ToString(),
                 SupplierId = supplierId,
                 Supplier = dbContext.Suppliers.Find(supplierId)

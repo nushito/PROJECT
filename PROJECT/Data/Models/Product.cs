@@ -20,6 +20,7 @@ namespace PROJECT.Data.Models
         [Required]
         public string Grade { get; set; }
         public decimal Quantity { get; set; }
+        public bool IsDeleted { get; set; }
         [Required]
         public ICollection<ProductSpecification> ProductSpecifications { get; set; }
         public ICollection<Purchase> Purchases { get; set; }
