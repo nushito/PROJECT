@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PROJECT.Data;
 using PROJECT.Models.Reports;
+using PROJECT.Models.Reports.Customers;
 using PROJECT.Services;
 using PROJECT.Services.Customer;
 using PROJECT.Services.Products;
@@ -70,6 +71,7 @@ namespace PROJECT.Controllers
                     Description = a.Description,
                     Size = a.Size,
                     Grade = a.Grade,
+                    Quantity = a.Quantity,
                     Specification = new ProductSpecificationViewModel
                     {
                         BankExpenses = a.ProductSpecifications.Select(a => a.BankExpenses).FirstOrDefault(),
@@ -89,5 +91,30 @@ namespace PROJECT.Controllers
 
         }
 
+
+        public IActionResult ReposrtCustomer([FromQuery] CustomerByInvoice customersModel)
+        {
+            customersModel.CustomerNames = customerService.GetCustomers();
+
+            var listCustomers = dbContext.Clients.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(customersModel.Name))
+            {
+                listCustomers = listCustomers.Where(x => x.Name == customersModel.Name);
+            }
+
+            var customers = listCustomers
+                .Select(x => new DocumentsSelection
+                {
+                    Invoices = x.Invoices,
+                    Orders = x.Orders
+
+                }).ToList();
+
+            customersModel.Invoices = customerService.GetInvoices(customersModel.Name);
+            customersModel.Orders = customerService.Select(a => a.Orders).ToList();
+
+            return View(customers);
+        }
     }
 }

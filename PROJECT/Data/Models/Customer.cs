@@ -8,7 +8,7 @@ namespace PROJECT.Data.Models
     {
         public Customer()
         {
-            Invoices = new HashSet<Document>();
+            Invoices = new HashSet<Invoice>();
             Orders = new HashSet<Order>();
         }
        
@@ -30,7 +30,7 @@ namespace PROJECT.Data.Models
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
 
-        public ICollection<Document> Invoices { get; set; }
+        public ICollection<Invoice> Invoices { get; set; }
         public ICollection<Order> Orders { get; set; }
     }
 }

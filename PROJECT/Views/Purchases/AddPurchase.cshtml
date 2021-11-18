@@ -1,7 +1,7 @@
 ﻿
 @model PurchaseFormModel
 
-<div class="container-fluid">
+<div class="container-fluid col-lg-9">
     <a href="~/Suppliers/AddSupplier" class="btn btn-primary mb-3 mt-3">Add Supplier</a>
     <form enctype="multipart/form-data" method="post">
         <div class="form-group col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
@@ -20,7 +20,7 @@
             <label asp-for="Number">Invoice Number</label>
             <input asp-for="Number" type="text" class="form-control" placeholder="Number">
         </div>
-        <div class="form-group col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <div class="form-group col-sm-6 offset-lg-2 col-md-6 offset-xl-3 col-xl-6">
             <label asp-for="Date">Date</label>
             <input asp-for="Date" type="text" class="form-control" placeholder="Date">
         </div>
@@ -29,7 +29,7 @@
         @*<partial name="_ProductPurchaseView" model="Model.PurchaseProductFormModel" />*@
         <fieldset>
             <h4 class="modal-title" id="gridSystemModalLabel">Products</h4>
-            <table id="clientTable" class="table table-bordered">
+            <table id="clientTable" class="table table-bordered col-lg-9" >
                 <thead class="thead-light">
                     <tr>
                         <td>Type</td>
@@ -141,6 +141,7 @@
         </fieldset>
     </form>
     @section Scripts {
+    
 
         <script type="text/javascript">
             var counter = 1;
