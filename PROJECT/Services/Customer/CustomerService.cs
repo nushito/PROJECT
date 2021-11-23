@@ -17,5 +17,14 @@ namespace PROJECT.Services.Customer
         {
             return dbContext.Clients.Select(a => a.Name).ToList();
         }
+
+        public IEnumerable<int> GetInvoices(string name = null)
+        {
+            return dbContext.Invoices
+                .Where(a => a.Client.Name == name)
+                .Select(x=>x.Number)
+                .ToList();
+
+        }
     }
 }

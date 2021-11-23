@@ -92,9 +92,11 @@ namespace PROJECT.Controllers
         }
 
 
-        public IActionResult ReposrtCustomer([FromQuery] CustomerByInvoice customersModel)
+        public IActionResult ReportCustomer([FromQuery] CustomerByInvoice customersModel)
         {
             customersModel.CustomerNames = customerService.GetCustomers();
+            var name = customersModel.Name;
+            customersModel.Invoices = customerService.GetInvoices();
 
             var listCustomers = dbContext.Clients.AsQueryable();
 
@@ -103,10 +105,11 @@ namespace PROJECT.Controllers
                 listCustomers = listCustomers.Where(x => x.Name == customersModel.Name);
             }
 
+      
             var customers = listCustomers
                 .Select(x => new DocumentsSelection
                 {
-                    Invoices = x.Invoices,
+                    //Invoices = x.Invoices.Select(a=>a.Number).ToList(),
                     Orders = x.Orders
 
                 }).ToList();
