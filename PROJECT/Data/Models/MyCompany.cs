@@ -14,7 +14,8 @@ namespace PROJECT.Data.Models
            
             BankDetails = new HashSet<BankDetails>();
             Currencies = new HashSet<Currency>();
-            Invoices = new List<Document>();
+            Invoices = new HashSet<Invoice>();
+            Orders = new HashSet<Order>();
 
         }
         
@@ -42,7 +43,7 @@ namespace PROJECT.Data.Models
 
         public ISet<BankDetails> BankDetails { get; set; }
 
-      public IEnumerable<Document> Invoices { get; set; }
+      public IEnumerable<Invoice> Invoices { get; set; }
         
     
 

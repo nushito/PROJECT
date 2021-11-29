@@ -32,7 +32,7 @@ namespace PROJECT.Data.Models
         public Address SupplierAddress { get; set; }
 
         public string RepresentativePerson { get; set; }
-        public int ProductId { get; set; }
+       // public int ProductId { get; set; }
         public ICollection<Product> Products { get; set; }
         public ICollection<Purchase> Purchases { get; set; }
     }

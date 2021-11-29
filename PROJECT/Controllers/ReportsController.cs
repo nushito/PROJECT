@@ -57,7 +57,7 @@ namespace PROJECT.Controllers
 
             if (!string.IsNullOrWhiteSpace(model.SupplierName))
             {
-                listQuery = listQuery.Where(a => a.Suppliers.Any(x => x.Name == model.SupplierName));
+                listQuery = listQuery.Where(a => a.Supplier.Name.ToLower() == model.SupplierName.ToLower());
             }
            
             if (!string.IsNullOrWhiteSpace(model.CustomerName))
@@ -94,30 +94,33 @@ namespace PROJECT.Controllers
 
         public IActionResult ReportCustomer([FromQuery] CustomerByInvoice customersModel)
         {
-            customersModel.CustomerNames = customerService.GetCustomers();
-            var name = customersModel.Name;
-            customersModel.Invoices = customerService.GetInvoices();
+            var listInvoiceNum = customersModel.Invoices
+                .Select(a => a.Number)
+                .ToList();
 
+            customersModel.CustomerNames = customerService.GetCustomers();
+             customersModel.InvoiceNumbers = customerService.GetInvoices(customersModel.CustomerName);
+            //var name = customersModel.CustomerName;
+          
             var listCustomers = dbContext.Clients.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(customersModel.Name))
+            if (!string.IsNullOrWhiteSpace(customersModel.CustomerName))
             {
-                listCustomers = listCustomers.Where(x => x.Name == customersModel.Name);
+                listCustomers = listCustomers.Where(x => x.Name == customersModel.CustomerName);
             }
 
-      
+               
             var customers = listCustomers
                 .Select(x => new DocumentsSelection
                 {
-                    //Invoices = x.Invoices.Select(a=>a.Number).ToList(),
-                    Orders = x.Orders
+                    Number = x.Invoices.Select(a=>a.Number).FirstOrDefault(),
+                    Date = x.Invoices.Select(a=>a.Date).FirstOrDefault()                    
 
                 }).ToList();
 
-            customersModel.Invoices = customerService.GetInvoices(customersModel.Name);
-            customersModel.Orders = customerService.Select(a => a.Orders).ToList();
-
-            return View(customers);
+            customersModel.Invoices = customers;
+           
+            return View(customersModel);
         }
     }
 }

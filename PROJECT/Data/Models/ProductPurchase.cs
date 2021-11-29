@@ -1,11 +1,10 @@
 ﻿namespace PROJECT.Data.Models
 {
-    public class ProductSupplier
+    public class ProductPurchase
     {
-      
         public int ProductId { get; set; }
         public Product Product { get; set; }
-        public int SupplierId { get; set; }
-        public Supplier Supplier { get; set; }
+        public int PurchaseId { get; set; }
+        public Purchase Purchase { get; set; }
     }
 }

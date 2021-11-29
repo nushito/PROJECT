@@ -19,9 +19,11 @@ namespace PROJECT.Data.Models
         public int Number { get; set; }
         [Required]
         public DateTime Date { get; set; }
- 
+        public int SellerId { get; set; }
+
         [Required]
         public MyCompany Seller { get; set; }
+        public int ClientId { get; set; }
         [Required]
         public Customer Client { get; set; }
         public ICollection<Product> Products { get; set; }

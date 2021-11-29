@@ -10,8 +10,8 @@ using PROJECT.Data;
 namespace PROJECT.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210814124221_ProductSpecificationUpdate")]
-    partial class ProductSpecificationUpdate
+    [Migration("20211128141547_MigrateProject")]
+    partial class MigrateProject
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -236,6 +236,21 @@ namespace PROJECT.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.Property<int>("OrdersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrdersId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("OrderProduct");
+                });
+
             modelBuilder.Entity("PROJECT.Data.Models.Address", b =>
                 {
                     b.Property<int>("Id")
@@ -369,41 +384,6 @@ namespace PROJECT.Data.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("PROJECT.Data.Models.Document", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("MyCompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasMaxLength(9)
-                        .HasColumnType("nvarchar(9)");
-
-                    b.Property<int?>("SupplierId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("MyCompanyId");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("Documents");
-                });
-
             modelBuilder.Entity("PROJECT.Data.Models.Invoice", b =>
                 {
                     b.Property<int>("Id")
@@ -411,25 +391,36 @@ namespace PROJECT.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ClientId")
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal");
+
+                    b.Property<int>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Number")
-                        .IsRequired()
+                    b.Property<int>("Number")
                         .HasMaxLength(9)
-                        .HasColumnType("nvarchar(9)");
+                        .HasColumnType("int");
 
-                    b.Property<int?>("SupplierId")
+                    b.Property<int>("SellerId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal");
+
+                    b.Property<int>("VatParcent")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("SupplierId");
+                    b.HasIndex("SellerId");
 
                     b.ToTable("Invoices");
                 });
@@ -479,6 +470,9 @@ namespace PROJECT.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal");
+
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
@@ -494,6 +488,12 @@ namespace PROJECT.Data.Migrations
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal");
 
                     b.HasKey("Id");
 
@@ -515,25 +515,26 @@ namespace PROJECT.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DocumentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Grade")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal");
 
                     b.Property<string>("Size")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("DocumentId");
-
-                    b.HasIndex("OrderId");
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("Products");
                 });
@@ -548,6 +549,8 @@ namespace PROJECT.Data.Migrations
 
                     b.HasKey("ProductId", "CustomerId");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("ProductCustomers");
                 });
 
@@ -561,7 +564,24 @@ namespace PROJECT.Data.Migrations
 
                     b.HasKey("ProductId", "InvoiceId");
 
+                    b.HasIndex("InvoiceId");
+
                     b.ToTable("ProductInvoice");
+                });
+
+            modelBuilder.Entity("PROJECT.Data.Models.ProductPurchase", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchaseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "PurchaseId");
+
+                    b.HasIndex("PurchaseId");
+
+                    b.ToTable("ProductPurchase");
                 });
 
             modelBuilder.Entity("PROJECT.Data.Models.ProductSpecification", b =>
@@ -575,7 +595,7 @@ namespace PROJECT.Data.Migrations
                         .HasColumnType("decimal");
 
                     b.Property<decimal>("CostPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal");
 
                     b.Property<decimal>("Cubic")
                         .HasColumnType("decimal");
@@ -587,7 +607,10 @@ namespace PROJECT.Data.Migrations
                         .HasColumnType("decimal");
 
                     b.Property<decimal>("Income")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal");
+
+                    b.Property<int>("InvoiceNumber")
+                        .HasColumnType("int");
 
                     b.Property<int>("Pieces")
                         .HasColumnType("int");
@@ -595,8 +618,11 @@ namespace PROJECT.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("SoldPrice")
+                        .HasColumnType("decimal");
 
                     b.Property<decimal>("TerminalCharges")
                         .HasColumnType("decimal");
@@ -611,19 +637,6 @@ namespace PROJECT.Data.Migrations
                     b.ToTable("ProductSpecifications");
                 });
 
-            modelBuilder.Entity("PROJECT.Data.Models.ProductSupplier", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId", "SupplierId");
-
-                    b.ToTable("ProductSuppliers");
-                });
-
             modelBuilder.Entity("PROJECT.Data.Models.Purchase", b =>
                 {
                     b.Property<int>("Id")
@@ -634,8 +647,8 @@ namespace PROJECT.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("InvoiceNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("InvoiceNumber")
+                        .HasColumnType("int");
 
                     b.Property<int>("SupplierId")
                         .HasColumnType("int");
@@ -668,9 +681,6 @@ namespace PROJECT.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.Property<string>("RepresentativePerson")
                         .HasColumnType("nvarchar(max)");
 
@@ -688,36 +698,6 @@ namespace PROJECT.Data.Migrations
                     b.HasIndex("SupplierAddressId");
 
                     b.ToTable("Suppliers");
-                });
-
-            modelBuilder.Entity("ProductPurchase", b =>
-                {
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PurchasesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductsId", "PurchasesId");
-
-                    b.HasIndex("PurchasesId");
-
-                    b.ToTable("ProductPurchase");
-                });
-
-            modelBuilder.Entity("ProductSupplier", b =>
-                {
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SuppliersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductsId", "SuppliersId");
-
-                    b.HasIndex("SuppliersId");
-
-                    b.ToTable("ProductSupplier");
                 });
 
             modelBuilder.Entity("InvoiceProduct", b =>
@@ -786,6 +766,21 @@ namespace PROJECT.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.HasOne("PROJECT.Data.Models.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PROJECT.Data.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PROJECT.Data.Models.BankDetails", b =>
                 {
                     b.HasOne("PROJECT.Data.Models.MyCompany", "Company")
@@ -831,38 +826,23 @@ namespace PROJECT.Data.Migrations
                     b.Navigation("ClientAddress");
                 });
 
-            modelBuilder.Entity("PROJECT.Data.Models.Document", b =>
-                {
-                    b.HasOne("PROJECT.Data.Models.Customer", "Client")
-                        .WithMany("Invoices")
-                        .HasForeignKey("ClientId");
-
-                    b.HasOne("PROJECT.Data.Models.MyCompany", null)
-                        .WithMany("Invoices")
-                        .HasForeignKey("MyCompanyId");
-
-                    b.HasOne("PROJECT.Data.Models.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId");
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Supplier");
-                });
-
             modelBuilder.Entity("PROJECT.Data.Models.Invoice", b =>
                 {
                     b.HasOne("PROJECT.Data.Models.Customer", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
+                        .WithMany("Invoices")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("PROJECT.Data.Models.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId");
+                    b.HasOne("PROJECT.Data.Models.MyCompany", "Seller")
+                        .WithMany("Invoices")
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Client");
 
-                    b.Navigation("Supplier");
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("PROJECT.Data.Models.MyCompany", b =>
@@ -893,20 +873,81 @@ namespace PROJECT.Data.Migrations
 
             modelBuilder.Entity("PROJECT.Data.Models.Product", b =>
                 {
-                    b.HasOne("PROJECT.Data.Models.Document", null)
+                    b.HasOne("PROJECT.Data.Models.Supplier", "Supplier")
                         .WithMany("Products")
-                        .HasForeignKey("DocumentId");
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasOne("PROJECT.Data.Models.Order", null)
+                    b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("PROJECT.Data.Models.ProductCustomer", b =>
+                {
+                    b.HasOne("PROJECT.Data.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PROJECT.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("PROJECT.Data.Models.ProductInvoice", b =>
+                {
+                    b.HasOne("PROJECT.Data.Models.Invoice", "Invoice")
+                        .WithMany()
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PROJECT.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("PROJECT.Data.Models.ProductPurchase", b =>
+                {
+                    b.HasOne("PROJECT.Data.Models.Product", "Product")
+                        .WithMany("Purchases")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PROJECT.Data.Models.Purchase", "Purchase")
                         .WithMany("Products")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Purchase");
                 });
 
             modelBuilder.Entity("PROJECT.Data.Models.ProductSpecification", b =>
                 {
-                    b.HasOne("PROJECT.Data.Models.Product", null)
+                    b.HasOne("PROJECT.Data.Models.Product", "Product")
                         .WithMany("ProductSpecifications")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("PROJECT.Data.Models.Purchase", b =>
@@ -914,7 +955,7 @@ namespace PROJECT.Data.Migrations
                     b.HasOne("PROJECT.Data.Models.Supplier", "Supplier")
                         .WithMany("Purchases")
                         .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Supplier");
@@ -935,36 +976,6 @@ namespace PROJECT.Data.Migrations
                     b.Navigation("SupplierAddress");
                 });
 
-            modelBuilder.Entity("ProductPurchase", b =>
-                {
-                    b.HasOne("PROJECT.Data.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PROJECT.Data.Models.Purchase", null)
-                        .WithMany()
-                        .HasForeignKey("PurchasesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ProductSupplier", b =>
-                {
-                    b.HasOne("PROJECT.Data.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PROJECT.Data.Models.Supplier", null)
-                        .WithMany()
-                        .HasForeignKey("SuppliersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PROJECT.Data.Models.Currency", b =>
                 {
                     b.Navigation("BankDetails");
@@ -975,11 +986,6 @@ namespace PROJECT.Data.Migrations
                     b.Navigation("Invoices");
 
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("PROJECT.Data.Models.Document", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("PROJECT.Data.Models.MyCompany", b =>
@@ -993,21 +999,25 @@ namespace PROJECT.Data.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("PROJECT.Data.Models.Order", b =>
-                {
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("PROJECT.Data.Models.Product", b =>
                 {
                     b.Navigation("Customers");
 
                     b.Navigation("ProductSpecifications");
+
+                    b.Navigation("Purchases");
+                });
+
+            modelBuilder.Entity("PROJECT.Data.Models.Purchase", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("PROJECT.Data.Models.Supplier", b =>
                 {
                     b.Navigation("BankDetails");
+
+                    b.Navigation("Products");
 
                     b.Navigation("Purchases");
                 });

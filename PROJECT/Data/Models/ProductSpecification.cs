@@ -14,5 +14,9 @@
         public decimal CostPrice { get; set; }
         public decimal SoldPrice { get; set; }
         public decimal Income { get; set; }
+        public int InvoiceNumber { get; set; }
+
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
     }
 }

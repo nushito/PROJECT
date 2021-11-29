@@ -1,0 +1,13 @@
+﻿@model IEnumerable<DocumentsSelection>
+
+@foreach(var invoice in Model)
+            {
+                <tr>
+                    <td>
+                        @invoice.Number
+                    </td>
+                    <td>
+                        @invoice.Date
+                    </td>
+                </tr>
+            }

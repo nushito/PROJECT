@@ -8,7 +8,7 @@ namespace PROJECT.Data.Models
     {
         public Purchase()
         {
-            Products = new List<Product>();
+            Products = new HashSet<ProductPurchase>();
         }
      
         public int Id { get; init; }
@@ -17,7 +17,7 @@ namespace PROJECT.Data.Models
         [Required]
         public Supplier Supplier { get; set; }
         public DateTime Date { get; set; }
-        public string InvoiceNumber { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public int InvoiceNumber { get; set; }
+        public ICollection<ProductPurchase> Products { get; set; }
     }
 }

@@ -1,0 +1,21 @@
+﻿@model CustomerByInvoice
+
+<form method="get">
+    <div class="form-group col-md-4">
+        <div class="form-group">
+            <label asp-for="CustomerName"></label>
+            <select asp-for="CustomerName" class="form-control" asp-items="@(new SelectList(Model.CustomerNames))">
+                <option value="">All</option>
+
+                @foreach (var name in Model.CustomerNames)
+                {
+                    <option value="@name">@name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <button class="btn btn-outline-primary badge-success p-2 m-3" value="Submit">Submit</button>
+</form>
+
+<partial name="_InvoiceList" model="@Model.Invoices" />

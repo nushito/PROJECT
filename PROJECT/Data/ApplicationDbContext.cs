@@ -11,16 +11,17 @@ namespace PROJECT.Data
         public DbSet<BankDetails> BankDetails { get; set; }
         public DbSet<Customer> Clients { get; set; }
         public DbSet<Currency> Currencies { get; set; }
-        public DbSet<Document> Documents { get; set; }
+      
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<MyCompany> MyCompanies { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<ProductSupplier> ProductSuppliers { get; set; }
         public DbSet<ProductCustomer> ProductCustomers { get; set; }
         public DbSet<ProductSpecification> ProductSpecifications { get; set; }
+        public DbSet<ProductPurchase> ProductPurchases { get; set; }
+        public DbSet<ProductInvoice> ProductInvoices { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -79,27 +80,19 @@ namespace PROJECT.Data
                 .Property(a => a.SoldPrice)
                 .HasColumnType("decimal");
 
-            builder.Entity<ProductSupplier>()
-                    .HasKey(a => new { a.ProductId, a.SupplierId });
+            builder.Entity<ProductSpecification>()
+                   .HasOne(a => a.Product)
+                   .WithMany(a => a.ProductSpecifications)
+                   .HasForeignKey(a => a.ProductId)
+                   .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<ProductCustomer>()
+             builder.Entity<ProductCustomer>()
                     .HasKey(a => new { a.ProductId, a.CustomerId });
 
             builder.Entity<ProductInvoice>()
                    .HasKey(a => new { a.ProductId, a.InvoiceId });
 
-            builder.Entity<Document>()
-                .Property(a => a.SubTotal)
-                .HasColumnType("decimal");
-
-            builder.Entity<Document>()
-                .Property(a => a.Total)
-                .HasColumnType("decimal");
-
-            builder.Entity<Document>()
-              .Property(a => a.Amount)
-              .HasColumnType("decimal");
-
+           
             builder.Entity<Purchase>()
                 .HasOne(a => a.Supplier)
                 .WithMany(a => a.Purchases)
@@ -134,10 +127,21 @@ namespace PROJECT.Data
                 .Property(a => a.Quantity)
                 .HasColumnType("decimal");
 
+            builder.Entity<Product>()
+                .HasOne(a => a.Supplier)
+                .WithMany(a => a.Products)
+                .HasForeignKey(a => a.SupplierId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Entity<Purchase>()
                 .HasOne(a => a.Supplier)
                 .WithMany(a => a.Purchases)
                 .HasForeignKey(a => a.SupplierId);
+
+            builder.Entity<ProductPurchase>()
+                .HasKey(a=> new { a.ProductId, a.PurchaseId});
+            builder.Entity<ProductInvoice>()
+                   .HasKey(a => new { a.InvoiceId, a.ProductId });
 
             base.OnModelCreating(builder);
         }

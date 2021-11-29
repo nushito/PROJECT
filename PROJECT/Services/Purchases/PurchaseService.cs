@@ -21,7 +21,7 @@ namespace PROJECT.Services.Purchases
            var purchase = new Purchase
             {
                 Date = Convert.ToDateTime(dateInput, System.Globalization.CultureInfo.GetCultureInfo("bg-BG").DateTimeFormat),
-                InvoiceNumber = invoiceNumber.ToString(),
+                InvoiceNumber = invoiceNumber,
                 SupplierId = supplierId,
                 Supplier = dbContext.Suppliers.Find(supplierId)
             };

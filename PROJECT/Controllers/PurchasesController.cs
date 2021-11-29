@@ -72,10 +72,9 @@ namespace PROJECT.Controllers
                 return RedirectToAction("Index","Home");
             }
 
-            var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.Number           
-            );
+            var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.Number);
 
-            ICollection<Product> list = new List<Product>();
+           // ICollection<Product> list = new List<Product>();
 
             
             for (int i = 0; i <= Request.Form.Count; i++)
@@ -129,21 +128,19 @@ namespace PROJECT.Controllers
                     productDetails.CostPrice = costPrice;
 
                     var thisSupplier = dbContext.Suppliers.Find(model.SupplierId);
-                    if (!product.Suppliers.Select(a => a.Name).Contains(model.SupplierName))
+                    if (product.Supplier.Name != (model.SupplierName))
                     {
 
-                        product.Suppliers.Add(thisSupplier);//new Supplier { Id = model.SupplierId, Name = model.SupplierName });
+                        product.Supplier = (thisSupplier);//new Supplier { Id = model.SupplierId, Name = model.SupplierName });
                     }
                    
                     product.ProductSpecifications.Add(productDetails);
-
-                    list.Add(product);
-
+                    dbContext.SaveChanges();
                 }
             }
 
-            var thisPurchase = dbContext.Purchases.Find(purchaseId);
-            thisPurchase.Products = list;
+            //var thisPurchase = dbContext.Purchases.Find(purchaseId);
+           // thisPurchase.Products = list;
             dbContext.SaveChanges();
           
             return RedirectToAction("Index","Home");
