@@ -14,7 +14,7 @@ namespace PROJECT.Models.Documents
         public int Id { get; set; }
         public int Number { get; set; }
         public DateTime Date { get; set; }
-        [Display(Name = "Customer")]
+       
        
         public ICollection<AddProductsFormModel> Products { get; set; }
         public int SellerId { get; set; }

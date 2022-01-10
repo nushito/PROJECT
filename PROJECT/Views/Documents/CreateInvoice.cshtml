@@ -1,4 +1,4 @@
-﻿@model DocumentFormModel
+﻿@model InvoiceModel
 
 
 <div class="container" ng-controller="DocumentsController">
@@ -21,8 +21,8 @@
             <div class="col-sm-6">
                 <div class="float-right">
                     <div>
-                        <label asp-for="Customer">Customer</label>
-                        <select asp-for="Customer">
+                        <label asp-for="Client">Customer</label>
+                        <select asp-for="Client">
                             <option value="">Choose Customer</option>
                             @foreach (var customer in Model.Customers)
                             {
@@ -56,9 +56,9 @@
                     <tr id="tablerow0">
                         <td>
                             <div class="editor-field">
-                                <select name="ProductDescription[0]" asp-for="Document.Products.Select(a=>a.ProductDescription)">
+                                <select name="ProductDescription[0]" asp-for="Products.Select(a=>a.ProductDescription)">
                                     <option value="">All</option>
-                                    @foreach (var type in Model.Document.Products)
+                                    @foreach (var type in Model.Products)
                                     {
                                         <option value="@type.ProductDescription">@type.ProductDescription</option>
                                     }
@@ -67,9 +67,9 @@
                         </td>
                         <td>
                             <div class="editor-field">
-                                <select name="Size[0]" asp-for="Document.Products.Select(a=>a.Size)">
+                                <select name="Size[0]" asp-for="Products.Select(a=>a.Size)">
                                     <option value="">All</option>
-                                    @foreach (var size in Model.Document.Products)
+                                    @foreach (var size in Model.Products)
                                     {
                                         <option value="@size.Size">@size.Size</option>
                                     }
@@ -78,9 +78,9 @@
                         </td>
                         <td>
                             <div class="editor-field">
-                                <select name="Grade[0]" asp-for="Document.Products.Select(a=>a.Grade)">
+                                <select name="Grade[0]" asp-for="Products.Select(a=>a.Grade)">
                                     <option value="">All</option>
-                                    @foreach (var grade in Model.Document.Products)
+                                    @foreach (var grade in Model.Products)
                                     {
                                         <option value="@grade.Grade">@grade.Grade</option>
                                     }
@@ -90,17 +90,17 @@
 
                         <td>
                             <div class="editor-field">
-                                <input asp-for="Document.Products.Select(a=>a.SoldPrice)" class="text-box single-line" name="SoldPrice[0]" value="" required="required">
+                                <input asp-for="Products.Select(a=>a.SoldPrice)" class="text-box single-line" name="SoldPrice[0]" value="" required="required">
                             </div>
                         </td>
                         <td>
                             <div class="editor-field">
-                                <input asp-for="Document.Products.Select(a=>a.Cubic)" class="text-box single-line" name="Cubic[0]" value="" required="required">
+                                <input asp-for="Products.Select(a=>a.Cubic)" class="text-box single-line" name="Cubic[0]" value="" required="required">
                             </div>
                         </td>
                         <td>
                             <div class="editor-field">
-                                <input asp-for="Amount" class="text-box single-line" name="Amount[0]" value="@Model.Document.Products.Select(a=>a.SoldPrice)*@Model.Document.Products.Select(a=>a.Cubic)" required="required">
+                                <input asp-for="Amount" class="text-box single-line" name="Amount[0]" value="@Model.Products.Select(a=>a.SoldPrice)*@Model.Products.Select(a=>a.Cubic)" required="required">
                             </div>
                         </td>
                         <td>
@@ -168,13 +168,13 @@
             $(function () {
                 $('#addButton').click(function () {
                     $('<tr id="tablerow' + counter + '"><td>' +
-                        ' <select name="ProductDescription[' + counter + ']" asp-for="Description" ><option value="">All</option>@foreach (var type in Model.Document.Products){<option value="@type.ProductDescription">@type.ProductDescription</option>}}</select>' +
+                        ' <select name="ProductDescription[' + counter + ']" asp-for="Description" ><option value="">All</option>@foreach (var type in Model.Products){<option value="@type.ProductDescription">@type.ProductDescription</option>}}</select>' +
                         '</td>' +
                         '<td>' +
-                        '<select name="Size[' + counter + ']" asp-for="Size" ><option value="">All</option>@foreach (var size in Model.Document.Products){<option value="@size.Size">@size.Size</option>}</select>' +
+                        '<select name="Size[' + counter + ']" asp-for="Size" ><option value="">All</option>@foreach (var size in Model.Products){<option value="@size.Size">@size.Size</option>}</select>' +
                         '</td>' +
                         '<td>' +
-                        '<select name="Grade[' + counter + ']" asp-for="Grade" ><option value="">All</option>@foreach (var grade in Model.Document.Products){<option value="@grade.Grade">@grade.Grade</option>}</select>' +
+                        '<select name="Grade[' + counter + ']" asp-for="Grade" ><option value="">All</option>@foreach (var grade in Model.Products){<option value="@grade.Grade">@grade.Grade</option>}</select>' +
                         '</td>' +
                         '<td>' +
                         '<input class="text-box single-line" name="Cubic[' + counter + ']" value="" required="required" />' +
@@ -183,7 +183,7 @@
                         '<input class="text-box single-line" name="SoldPrice[' + counter + ']" value="" required="required" />' +
                         '</td>' +
                         '<td>' +
-                        '<input  class="text-box single-line" name="SubTotal[' + counter + ']" value="@Model.Document.Products.Select(a=>a.SoldPrice)*@Model.Document.Products.Select(a=>a.Cubic)" required="required" />' +
+                        '<input  class="text-box single-line" name="SubTotal[' + counter + ']" value="@Model.Products.Select(a=>a.SoldPrice)*@Model.Products.Select(a=>a.Cubic)" required="required" />' +
                         '</td>' ,
                         '</tr>').appendTo('#clientTable');
                     counter++;

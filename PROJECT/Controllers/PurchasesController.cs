@@ -5,14 +5,10 @@ using Microsoft.AspNetCore.Authorization;
 using PROJECT.Data;
 using PROJECT.Models.Purchases;
 using PROJECT.Data.Models;
-using PROJECT.Services.Supplier;
 using PROJECT.Services.Products;
-using System.Threading.Tasks;
 using PROJECT.Services.Purchases;
 using PROJECT.Services;
-using System.Collections;
-using System.Collections.Generic;
-using PROJECT.Services.Documents;
+
 
 namespace PROJECT.Controllers
 {
@@ -42,7 +38,7 @@ namespace PROJECT.Controllers
             {
                 
                 Suppliers = supplierService.GetSuppliers(),
-                PurchaseProductFormModel = new PurchaseProductFormModel
+                PurchaseProductViewModel = new PurchaseProductViewModel
                 {
                     Descriptions = productsService.GetDescription(),
                     Sizes = productsService.GetSize(),
@@ -59,7 +55,7 @@ namespace PROJECT.Controllers
             if (!ModelState.IsValid)
             {
                 model.Suppliers = supplierService.GetSuppliers();
-                model.PurchaseProductFormModel = new PurchaseProductFormModel
+                model.PurchaseProductViewModel = new PurchaseProductViewModel
                 {
                     Descriptions = productsService.GetDescription(),
                     Sizes = productsService.GetSize(),
@@ -74,9 +70,9 @@ namespace PROJECT.Controllers
 
             var purchaseId =  purchaseService.Create(model.SupplierId, model.Date, model.Number);
 
-           // ICollection<Product> list = new List<Product>();
+            // ICollection<Product> list = new List<Product>();
 
-            
+            var a = Request.Form.Files.Count();
             for (int i = 0; i <= Request.Form.Count; i++)
             {
                 var productDescription = Request.Form["Description[" + i + "]"];
@@ -99,7 +95,8 @@ namespace PROJECT.Controllers
                     var product = this.dbContext.Products
                         .Where(a => a.Description.ToLower() == productDescription.ToString().ToLower()
                     && a.Size.ToLower() == size.ToString().ToLower()
-                    && a.Grade.ToLower() == grade.ToString().ToLower())
+                    && a.Grade.ToLower() == grade.ToString().ToLower()
+                   )
                         .FirstOrDefault();
 
                     var productDetails = new ProductSpecification
@@ -127,12 +124,12 @@ namespace PROJECT.Controllers
 
                     productDetails.CostPrice = costPrice;
 
-                    var thisSupplier = dbContext.Suppliers.Find(model.SupplierId);
-                    if (product.Supplier.Name != (model.SupplierName))
-                    {
+                  //  var thisSupplier = dbContext.Suppliers.Find(model.SupplierId);
+                    //if (product.Supplier.Name != (model.SupplierName))
+                    //{
 
-                        product.Supplier = (thisSupplier);//new Supplier { Id = model.SupplierId, Name = model.SupplierName });
-                    }
+                    //    product.Supplier = (thisSupplier);//new Supplier { Id = model.SupplierId, Name = model.SupplierName });
+                    //}
                    
                     product.ProductSpecifications.Add(productDetails);
                     dbContext.SaveChanges();

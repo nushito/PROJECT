@@ -25,5 +25,8 @@ namespace PROJECT.Models.Products
         public decimal CostPrice { get; set; }
         public decimal SoldPrice { get; set; }
         public decimal Income { get; set; }
+        public int SupplierId { get; set; }
+        public string  SupplierName { get; set; }
+        public ICollection<string> SupplierNames { get; set; }
     }
 }

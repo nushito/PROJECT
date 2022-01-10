@@ -21,6 +21,16 @@
                 <label asp-for="Grade">Grade</label>
                 <input asp-for="Grade" type="text" class="form-control">
             </div>
+            <div class="form-group ">
+                <label asp-for="SupplierName">Supplier</label>
+                <select asp-for="SupplierName">
+                    <option value="">Choose Supplier</option>
+                    @foreach (var supplier in Model.SupplierNames)
+                    {
+                        <option value="@supplier">@supplier</option>
+                    }
+                </select>
+            </div>
             <input class="btn btn-primary mt-3" type="submit" value="Save" />
         </form>
     </div>

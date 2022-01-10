@@ -12,7 +12,8 @@ namespace PROJECT.Services.Products
         public int Add(int id,
             string description,
             string size,
-            string grade);
+            string grade,
+            string name);
 
         public ICollection<string> GetDescription();
         public ICollection<string> GetSize();

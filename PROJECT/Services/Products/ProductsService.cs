@@ -18,15 +18,21 @@ namespace PROJECT.Services.Products
             int id,
             string description,
             string size,
-            string grade
+            string grade,
+            string name
            )
         {
+            var supplier = dbContext.Suppliers
+                .Where(a => a.Name.ToLower() == name.ToLower())
+                .FirstOrDefault();
+
             var newProduct = new Product
             {
                 Id = id,
                 Description = description,
                 Size = size,
                 Grade = grade,
+                SupplierId = supplier.Id
             };
 
             this.dbContext.Products.Add(newProduct);

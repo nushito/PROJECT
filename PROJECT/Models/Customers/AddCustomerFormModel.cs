@@ -7,6 +7,7 @@ namespace PROJECT.Models.Customers
     {
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Customer")]
         public string Name { get; set; }
         [Required]
         [StringLength(11)]

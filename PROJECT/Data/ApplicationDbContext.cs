@@ -143,6 +143,12 @@ namespace PROJECT.Data
             builder.Entity<ProductInvoice>()
                    .HasKey(a => new { a.InvoiceId, a.ProductId });
 
+            builder.Entity<Supplier>()
+                .HasMany(a => a.Products)
+                .WithOne(a => a.Supplier)
+                .HasForeignKey(a => a.SupplierId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
     }

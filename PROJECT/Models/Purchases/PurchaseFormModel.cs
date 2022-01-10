@@ -20,8 +20,9 @@ namespace PROJECT.Models.Purchases
        
         public int Pieces { get; set; }
         
-        public PurchaseProductFormModel PurchaseProductFormModel { get; set; }
-        
+       // public PurchaseProductFormModel PurchaseProductFormModel { get; set; }
+        public PurchaseProductViewModel PurchaseProductViewModel { get; set; }
+
         public ICollection<AllSuppliers> Suppliers { get; set; }
         public ICollection<PurchaseProductFormModel> PurchaseProducts { get; set; } 
         

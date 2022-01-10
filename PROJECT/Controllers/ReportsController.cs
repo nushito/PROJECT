@@ -94,9 +94,9 @@ namespace PROJECT.Controllers
 
         public IActionResult ReportCustomer([FromQuery] CustomerByInvoice customersModel)
         {
-            var listInvoiceNum = customersModel.Invoices
-                .Select(a => a.Number)
-                .ToList();
+            //var listInvoiceNums = customersModel.Invoices
+            //    .Select(a => a.Number)
+            //    .ToList();
 
             customersModel.CustomerNames = customerService.GetCustomers();
              customersModel.InvoiceNumbers = customerService.GetInvoices(customersModel.CustomerName);
