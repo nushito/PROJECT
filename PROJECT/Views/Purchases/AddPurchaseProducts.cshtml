@@ -1,8 +1,8 @@
-﻿ <!--PurchaseProductFormModel
+﻿@model PurchaseProductViewModel
 
 <form method="post">    
     <fieldset>
-        <h4 class="modal-title" id="gridSystemModalLabel">Products</h4>
+        <h4 class="modal-title" id="gridSystemModalLabel">Add Products</h4>
         <table id="clientTable" class="table table-bordered">
             <thead class="thead-light">
                 <tr>
@@ -56,44 +56,44 @@
                 </td>
                 <td class="col-sm-1">
                     <div class="editor-field">
-                        <input asp-for="Pieces" class="text-box single-line" name="Pieces[0]" value="" required="required">
+                        <input asp-for="PurchaseProductFormModel.Pieces" class="text-box single-line" name="Pieces[0]" value="" required="required">
                     </div>
                 </td>
                 <td class="col-sm-1">
                     <div class="editor-field">
-                        <input asp-for="Cubic" class="text-box single-line" name="Cubic[0]" value="" required="required">
+                        <input asp-for="PurchaseProductFormModel.Cubic" class="text-box single-line" name="Cubic[0]" value="" required="required">
                     </div>
                 </td>
                 <td class="col-sm-1">
                     <div class="editor-field">
-                        <input asp-for="Price" class="text-box single-line" name="Price[0]" value="" required="required">
+                        <input asp-for="PurchaseProductFormModel.Price" class="text-box single-line" name="Price[0]" value="" required="required">
                     </div>
                 </td>
                 <td class="col-sm-1">
                     <div class="editor-field">
-                        <input asp-for="TransportCost" class="text-box single-line" name="TransportCost[0]" value="" required="required">
+                        <input asp-for="PurchaseProductFormModel.TransportCost" class="text-box single-line" name="TransportCost[0]" value="" required="required">
                     </div>
                 </td>
                 <td class="col-md-1">
                     <div class="editor-field">
-                        <input asp-for="TerminalCharges" type="text" class="text-box single-line" name="TerminalCharges[0]" value="" required="required">
+                        <input asp-for="PurchaseProductFormModel.TerminalCharges" type="text" class="text-box single-line" name="TerminalCharges[0]" value="" required="required">
                     </div>
                 </td>
                 <td class="col-sm-3">
                     <div class="editor-field">
-                        <input asp-for="Duty" class="text-box single-line" name="Duty[0]" value="" required="required">
+                        <input asp-for="PurchaseProductFormModel.Duty" class="text-box single-line" name="Duty[0]" value="" required="required">
                     </div>
                 </td>
                 <td class="col">
                     <div class="editor-field">
 
-                        <input asp-for="CustomsExpenses" type="text" class="text-box single-line" name="CustomsExpenses[0]" value="" required="required">
+                        <input asp-for="PurchaseProductFormModel.CustomsExpenses" type="text" class="text-box single-line" name="CustomsExpenses[0]" value="" required="required">
                     </div>
                 </td>
                 <td class="col">
                     <div class="editor-field">
 
-                        <input asp-for="BankExpenses" class="text-box single-line" name="BankExpenses[0]" value="" required="required">
+                        <input asp-for="PurchaseProductFormModel.BankExpenses" class="text-box single-line" name="BankExpenses[0]" value="" required="required">
                     </div>
                 </td>
                 <td>
@@ -106,13 +106,10 @@
         </p>
         <hr />
         <p>
-            <button type="submit" class="btn btn-primary">Save Purchase</button>
-        </p>-->-->
-        @*<p>
-            <input type="submit" class="btn btn-primary">
-        </p>*@
-
-    <!--</fieldset>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </p>
+      
+    </fieldset>
 </form>
 @section Scripts {
 
@@ -131,6 +128,9 @@
                         '</td>' +
                         '<td>' +
                         '<input class="text-box single-line" name="Pieces[' + counter + ']" value="" required="required" />' +
+                        '</td>' +
+                        '<td>' +
+                        '<input class="text-box single-line" name="Cubic[' + counter + ']" value="" required="required" />' +
                         '</td>' +
                         '<td>' +
                         '<input class="text-box single-line" name="Price[' + counter + ']" value="" required="required" />' +
@@ -167,4 +167,4 @@
                 return false;
             }
     </script>
-}-->
+}

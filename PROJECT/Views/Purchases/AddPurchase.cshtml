@@ -3,7 +3,7 @@
 
 <div class="container-fluid col-lg-9">
     <a href="~/Suppliers/AddSupplier" class="btn btn-primary mb-3 mt-3">Add Supplier</a>
-    <form enctype="multipart/form-data" method="post">
+    <form enctype="multipart/form-data" method="post" asp-route-purchaseId="@Model.Id">
         <div class="form-group col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
             <label asp-for="SupplierId">Supplier</label>
             <select asp-for="SupplierId">
@@ -25,136 +25,140 @@
             <input asp-for="Date" type="text" class="form-control" placeholder="Date">
         </div>
 
+        <input type="submit" value="Add Products" class="btn btn-primary mt-3" />
 
-        @*<partial name="_ProductPurchaseView" model="Model.PurchaseProductFormModel" />*@
-        <fieldset>
-            <h4 class="modal-title" id="gridSystemModalLabel">Products</h4>
-            <table id="clientTable" class="table table-bordered col-lg-9" >
-                <thead class="thead-light">
-                    <tr>
-                        <td>Type</td>
-                        <td>Size</td>
-                        <td>Grade</td>
-                        <td>Pieces</td>
-                        <td>Quantity</td>
-                        <td>Price</td>
-                        <td>Transport Cost</td>
-                        <td>Terminal Charges</td>
-                        <td>Duty</td>
-                        <td>Customs Expenses</td>
-                        <td>Bank Expenses</td>
-                    </tr>
-                </thead>
 
-                <tr id="tablerow0">
-                    <td>
-                        <div class="editor-field">
-                            <select name="Description[0]" asp-for="PurchaseProductViewModel.Descriptions">
-                                <option value="">All</option>
-                                @foreach (var type in Model.PurchaseProductViewModel.Descriptions)
-                                {
-                                    <option value="@type">@type</option>
-                                }
-                            </select>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="editor-field">
-                            <select name="Size[0]" asp-for="PurchaseProductViewModel.Size">
-                                <option value="">All</option>
-                                @foreach (var size in Model.PurchaseProductViewModel.Sizes)
-                                {
-                                    <option value="@size">@size</option>
-                                }
-                            </select>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="editor-field">
-                            <select name="Grade[0]" asp-for="PurchaseProductViewModel.Grade">
-                                <option value="">All</option>
-                                @foreach (var grade in Model.PurchaseProductViewModel.Grades)
-                                {
-                                    <option value="@grade">@grade</option>
-                                }
-                            </select>
-                        </div>
-                    </td>
-                    <td class="col-sm-1">
-                        <div class="editor-field">
-                            <input asp-for="Pieces" class="text-box single-line" name="Pieces[0]" value="" required="required">
-                        </div>
-                    </td>
-                    <td class="col-sm-1">
-                        <div class="editor-field">
-                            <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.Cubic" class="text-box single-line" name="Cubic[0]" value="" required="required">
-                        </div>
-                    </td>
-                    <td class="col-sm-1">
-                        <div class="editor-field">
-                            <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.Price" class="text-box single-line" name="Price[0]" value="" required="required">
-                        </div>
-                    </td>
-                    <td class="col-sm-1">
-                        <div class="editor-field">
-                            <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.TransportCost" class="text-box single-line" name="TransportCost[0]" value="" required="required">
-                        </div>
-                    </td>
-                    <td class="col-md-1">
-                        <div class="editor-field">
-                            <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.TerminalCharges" type="text" class="text-box single-line" name="TerminalCharges[0]" value="" required="required">
-                        </div>
-                    </td>
-                    <td class="col-sm-3">
-                        <div class="editor-field">
-                            <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.Duty" class="text-box single-line" name="Duty[0]" value="" required="required">
-                        </div>
-                    </td>
-                    <td class="col">
-                        <div class="editor-field">
-
-                            <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.CustomsExpenses" type="text" class="text-box single-line" name="CustomsExpenses[0]" value="" required="required">
-                        </div>
-                    </td>
-                    <td class="col">
-                        <div class="editor-field">
-
-                            <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.BankExpenses" class="text-box single-line" name="BankExpenses[0]" value="" required="required">
-                        </div>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary" onclick="removeTr(0);">Delete</button>
-                    </td>
-                </tr>
-            </table>
-            <p>
-                <button id="addButton" class="btn btn-primary">Add Product</button>
-            </p>
-            <hr />
-            <p>
-                <input type="submit" class="btn btn-primary" value="Submit" />
-            </p>
-            @*<p>
-                    <input type="submit" class="btn btn-primary">
-                </p>*@
-
-        </fieldset>
     </form>
-    @section Scripts {
-    
+</div>
+
+<!--<fieldset> //href=" ~ /Purchase/AddPurchaseProducts" class="btn btn-primary mb-3 mt-3
+    <h4 class="modal-title" id="gridSystemModalLabel">Products</h4>
+    <table id="clientTable" class="table table-bordered col-lg-9">
+        <thead class="thead-light">
+            <tr>
+                <td>Type</td>
+                <td>Size</td>
+                <td>Grade</td>
+                <td>Pieces</td>
+                <td>Quantity</td>
+                <td>Price</td>
+                <td>Transport Cost</td>
+                <td>Terminal Charges</td>
+                <td>Duty</td>
+                <td>Customs Expenses</td>
+                <td>Bank Expenses</td>
+            </tr>
+        </thead>
+
+        <tr id="tablerow0">
+            <td>
+                <div class="editor-field">
+                    <select name="Description[0]" asp-for="PurchaseProductViewModel.Descriptions">
+                        <option value="">All</option>
+                        foreach (var type in Model.PurchaseProductViewModel.Descriptions)
+                        {
+                            <option value="type">type</option>
+                        }
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
+                    <select name="Size[0]" asp-for="PurchaseProductViewModel.Size">
+                        <option value="">All</option>
+                        foreach (var size in Model.PurchaseProductViewModel.Sizes)
+                        {
+                            <option value="size">size</option>
+                        }
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="editor-field">
+                    <select name="Grade[0]" asp-for="PurchaseProductViewModel.Grade">
+                        <option value="">All</option>
+                        foreach (var grade in Model.PurchaseProductViewModel.Grades)
+                        {
+                            <option value="grade">grade</option>
+                        }
+                    </select>
+                </div>
+            </td>
+            <td class="col-sm-1">
+                <div class="editor-field">
+                    <input asp-for="Pieces" class="text-box single-line" name="Pieces[0]" value="" required="required">
+                </div>
+            </td>
+            <td class="col-sm-1">
+                <div class="editor-field">
+                    <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.Cubic" class="text-box single-line" name="Cubic[0]" value="" required="required">
+                </div>
+            </td>
+            <td class="col-sm-1">
+                <div class="editor-field">
+                    <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.Price" class="text-box single-line" name="Price[0]" value="" required="required">
+                </div>
+            </td>
+            <td class="col-sm-1">
+                <div class="editor-field">
+                    <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.TransportCost" class="text-box single-line" name="TransportCost[0]" value="" required="required">
+                </div>
+            </td>
+            <td class="col-md-1">
+                <div class="editor-field">
+                    <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.TerminalCharges" type="text" class="text-box single-line" name="TerminalCharges[0]" value="" required="required">
+                </div>
+            </td>
+            <td class="col-sm-3">
+                <div class="editor-field">
+                    <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.Duty" class="text-box single-line" name="Duty[0]" value="" required="required">
+                </div>
+            </td>
+            <td class="col">
+                <div class="editor-field">
+
+                    <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.CustomsExpenses" type="text" class="text-box single-line" name="CustomsExpenses[0]" value="" required="required">
+                </div>
+            </td>
+            <td class="col">
+                <div class="editor-field">
+
+                    <input asp-for="PurchaseProductViewModel.PurchaseProductFormModel.BankExpenses" class="text-box single-line" name="BankExpenses[0]" value="" required="required">
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" onclick="removeTr(0);">Delete</button>
+            </td>
+        </tr>
+    </table>
+    <p>
+        <button id="addButton" class="btn btn-primary">Add Product</button>
+    </p>
+    <hr />
+    <p>
+        <input type="submit" class="btn btn-primary" value="Submit" />
+    </p>-->
+@*<p>
+        <input type="submit" class="btn btn-primary">
+    </p>*@
+
+<!--</fieldset>
+    </form>
+    section Scripts {
+
 
         <script type="text/javascript">
             var counter = 1;
             $(function () {
                 $('#addButton').click(function () {
                     $('<tr id="tablerow' + counter + '"><td>' +
-                        ' <select name="Description[' + counter + ']" asp-for="Description" ><option value="">All</option>@foreach (var type in Model.PurchaseProductViewModel.Descriptions){<option value="@type">@type</option>}</select>' +
+                        ' <select name="Description[' + counter + ']" asp-for="Description" ><option value="">All</option>foreach (var type in Model.PurchaseProductViewModel.Descriptions){<option value="type">type</option>}</select>' +
                         '</td>' +
                         '<td>' +
-                        '<select name="Size[' + counter + ']" asp-for="Size" ><option value="">All</option>@foreach (var size in Model.PurchaseProductViewModel.Sizes){<option value="@size">@size</option>}</select>' +
+                        '<select name="Size[' + counter + ']" asp-for="Size" ><option value="">All</optionforeach (var size in Model.PurchaseProductViewModel.Sizes){<option value="size">size</option>}</select>' +
                         '</td>' +
                         '<td>' +
-                        '<select name="Grade[' + counter + ']" asp-for="Grade" ><option value="">All</option>@foreach (var grade in Model.PurchaseProductViewModel.Grades){<option value="@grade">@grade</option>}</select>' +
+                        '<select name="Grade[' + counter + ']" asp-for="Grade" ><option value="">All</option>foreach (var grade in Model.PurchaseProductViewModel.Grades){<option value="grade">grade</option>}</select>' +
                         '</td>' +
                         '<td>' +
                         '<input class="text-box single-line" name="Pieces[' + counter + ']" value="" required="required" />' +
@@ -198,5 +202,4 @@
             }
         </script>
     }
-</div>
-
+</div>-->

@@ -4,7 +4,12 @@ using System.ComponentModel.DataAnnotations;
 namespace PROJECT.Models.Purchases
 {
     public class PurchaseProductViewModel
+
     {
+        public PurchaseProductViewModel()
+        {
+            var ProductProperties = new HashSet<PurchaseProductFormModel>();
+        }
         public int SupplierId { get; set; }
         public int Id { get; set; }
         public int DescriptionId { get; set; }
@@ -19,6 +24,7 @@ namespace PROJECT.Models.Purchases
         public ICollection<string> Grades { get; set; }
         public ICollection<string> Descriptions { get; set; }
         public PurchaseProductFormModel PurchaseProductFormModel { get; set; }
+        public ICollection<PurchaseProductFormModel> ProductProperties { get; set; }
 
 
     }

@@ -8,7 +8,7 @@ using PROJECT.Data.Models;
 using PROJECT.Services.Products;
 using PROJECT.Services.Purchases;
 using PROJECT.Services;
-
+using System.Collections.Generic;
 
 namespace PROJECT.Controllers
 {
@@ -38,12 +38,12 @@ namespace PROJECT.Controllers
             {
                 
                 Suppliers = supplierService.GetSuppliers(),
-                PurchaseProductViewModel = new PurchaseProductViewModel
-                {
-                    Descriptions = productsService.GetDescription(),
-                    Sizes = productsService.GetSize(),
-                    Grades = productsService.GetGrade()
-                }
+                //PurchaseProductViewModel = new PurchaseProductViewModel
+                //{
+                //    Descriptions = productsService.GetDescription(),
+                //    Sizes = productsService.GetSize(),
+                //    Grades = productsService.GetGrade()
+                //}
             }) ;
                       
         }
@@ -55,12 +55,12 @@ namespace PROJECT.Controllers
             if (!ModelState.IsValid)
             {
                 model.Suppliers = supplierService.GetSuppliers();
-                model.PurchaseProductViewModel = new PurchaseProductViewModel
-                {
-                    Descriptions = productsService.GetDescription(),
-                    Sizes = productsService.GetSize(),
-                    Grades = productsService.GetGrade()
-                };
+                //model.PurchaseProductViewModel = new PurchaseProductViewModel
+                //{
+                //    Descriptions = productsService.GetDescription(),
+                //    Sizes = productsService.GetSize(),
+                //    Grades = productsService.GetGrade()
+                //};
             }
 
             if (!this.User.Identity.IsAuthenticated)
@@ -72,7 +72,42 @@ namespace PROJECT.Controllers
 
             // ICollection<Product> list = new List<Product>();
 
-            var a = Request.Form.Files.Count();
+            
+          
+            return RedirectToAction("AddPurchaseProducts",  purchaseId );
+        }
+
+        [Authorize]
+        public IActionResult AddPurchaseProducts()
+        {
+            return View( new PurchaseProductViewModel
+                {
+                    Descriptions = productsService.GetDescription(),
+                    Sizes = productsService.GetSize(),
+                    Grades = productsService.GetGrade()
+                
+            });
+         }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult AddPurchaseProducts(int purchaseId, PurchaseProductViewModel model)
+        {
+
+
+            if (!ModelState.IsValid)
+            {
+                 model = new PurchaseProductViewModel
+                {
+                    Descriptions = productsService.GetDescription(),
+                    Sizes = productsService.GetSize(),
+                    Grades = productsService.GetGrade()
+                };
+            }
+
+           
+            var listProducts = new HashSet<ProductPurchase>();
+           
             for (int i = 0; i <= Request.Form.Count; i++)
             {
                 var productDescription = Request.Form["Description[" + i + "]"];
@@ -101,16 +136,16 @@ namespace PROJECT.Controllers
 
                     var productDetails = new ProductSpecification
                     {
-                       
+
                         BankExpenses = Math.Round(decimal.Parse(bankExpenses.ToString()), 4),
-                        Cubic = Math.Round(decimal.Parse(cubic.ToString()),4),
-                        CustomsExpenses = Math.Round(decimal.Parse(customsExpenses.ToString()),4),
-                        Duty = Math.Round(decimal.Parse(duty.ToString()),4),
+                        Cubic = Math.Round(decimal.Parse(cubic.ToString()), 4),
+                        CustomsExpenses = Math.Round(decimal.Parse(customsExpenses.ToString()), 4),
+                        Duty = Math.Round(decimal.Parse(duty.ToString()), 4),
                         Pieces = int.Parse(pieces.ToString()),
                         Price = Math.Round(decimal.Parse(purchasePrice.ToString()), 4),
                         TerminalCharges = Math.Round(decimal.Parse(terminalCharges.ToString()), 4),
                         TransportCost = Math.Round(decimal.Parse(transportCost.ToString()), 4),
-                       
+
                     };
 
                     var costPrice = (
@@ -124,25 +159,29 @@ namespace PROJECT.Controllers
 
                     productDetails.CostPrice = costPrice;
 
-                  //  var thisSupplier = dbContext.Suppliers.Find(model.SupplierId);
+                    //  var thisSupplier = dbContext.Suppliers.Find(model.SupplierId);
                     //if (product.Supplier.Name != (model.SupplierName))
                     //{
 
                     //    product.Supplier = (thisSupplier);//new Supplier { Id = model.SupplierId, Name = model.SupplierName });
                     //}
-                   
+
                     product.ProductSpecifications.Add(productDetails);
+                   
+                  //  listProducts.Add(product);
                     dbContext.SaveChanges();
                 }
             }
 
-            //var thisPurchase = dbContext.Purchases.Find(purchaseId);
-           // thisPurchase.Products = list;
+            var thisPurchase = dbContext.Purchases.Find(purchaseId);
+            thisPurchase.Products = listProducts;
             dbContext.SaveChanges();
-          
-            return RedirectToAction("Index","Home");
-        }    
-      
+
+            return View();
+        }
+           
+       
+
     }
     
  }
