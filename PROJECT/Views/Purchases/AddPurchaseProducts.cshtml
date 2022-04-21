@@ -19,8 +19,8 @@
                     <td>Bank Expenses</td>
                 </tr>
             </thead>
-
-            <tr id="tablerow0">
+                          
+            <tr id="tablerow0" asp-for="">
                 <td>
                     <div class="editor-field">
                         <select name="Description[0]" asp-for="Description">
@@ -66,6 +66,7 @@
                 </td>
                 <td class="col-sm-1">
                     <div class="editor-field">
+                        
                         <input asp-for="PurchaseProductFormModel.Price" class="text-box single-line" name="Price[0]" value="" required="required">
                     </div>
                 </td>

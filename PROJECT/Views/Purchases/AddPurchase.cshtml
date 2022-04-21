@@ -24,8 +24,8 @@
             <label asp-for="Date">Date</label>
             <input asp-for="Date" type="text" class="form-control" placeholder="Date">
         </div>
-
-        <input type="submit" value="Add Products" class="btn btn-primary mt-3" />
+        <input type="hidden" name="purchaseId" value="@Model.Id" />
+        <input type="submit" value="Add Products" class="btn btn-primary mt-3" asp-route-purchaseId="@Model.Id"/>
 
 
     </form>

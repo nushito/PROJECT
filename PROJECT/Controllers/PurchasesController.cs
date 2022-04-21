@@ -74,7 +74,7 @@ namespace PROJECT.Controllers
 
             
           
-            return RedirectToAction("AddPurchaseProducts",  purchaseId );
+            return RedirectToAction("AddPurchaseProducts", new { PurchaseId = purchaseId });
         }
 
         [Authorize]
@@ -91,7 +91,9 @@ namespace PROJECT.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult AddPurchaseProducts(int purchaseId, PurchaseProductViewModel model)
+        public IActionResult AddPurchaseProducts(int purchaseId, 
+            PurchaseProductViewModel model, 
+            ICollection<PurchaseProductFormModel> productModel)
         {
 
 
@@ -108,8 +110,10 @@ namespace PROJECT.Controllers
            
             var listProducts = new HashSet<ProductPurchase>();
            
-            for (int i = 0; i <= Request.Form.Count; i++)
+            for (int i = 0; i <= model.ProductProperties.Count; i++)
             {
+
+               
                 var productDescription = Request.Form["Description[" + i + "]"];
                 var size = Request.Form["Size[" + i + "]"];
                 var grade = Request.Form["Grade[" + i + "]"];
@@ -167,13 +171,20 @@ namespace PROJECT.Controllers
                     //}
 
                     product.ProductSpecifications.Add(productDetails);
+                    var x = new ProductPurchase
+                    {
+                        Product = product,
+                        PurchaseId = purchaseId
                    
-                  //  listProducts.Add(product);
+                    };
+                   
+                  listProducts.Add(x);
                     dbContext.SaveChanges();
                 }
             }
 
-            var thisPurchase = dbContext.Purchases.Find(purchaseId);
+           var thisPurchase = dbContext.Purchases.Find(purchaseId);
+           
             thisPurchase.Products = listProducts;
             dbContext.SaveChanges();
 

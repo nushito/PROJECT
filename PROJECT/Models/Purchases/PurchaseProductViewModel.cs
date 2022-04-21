@@ -10,6 +10,8 @@ namespace PROJECT.Models.Purchases
         {
             var ProductProperties = new HashSet<PurchaseProductFormModel>();
         }
+
+        public int PurchaseId { get; set; }
         public int SupplierId { get; set; }
         public int Id { get; set; }
         public int DescriptionId { get; set; }

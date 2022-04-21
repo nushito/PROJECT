@@ -7,14 +7,14 @@ namespace PROJECT.Models.Purchases
 {
     public class PurchaseProductFormModel
     {
-        //public int Id { get; set; }
-        //public int DescriptionId { get; set; }
-        //public string Description { get; set; }
-        //public int SizeId { get; set; }
-        //public string Size { get; set; }
-        //public int GradeId { get; set; }
-        //[Required]
-        //public string Grade { get; set; }
+        public int Id { get; set; }
+        public int DescriptionId { get; set; }
+        public string Description { get; set; }
+        public int SizeId { get; set; }
+        public string Size { get; set; }
+        public int GradeId { get; set; }
+        [Required]
+        public string Grade { get; set; }
         [Required]
         public int Pieces { get; set; }
         public decimal Cubic { get; set; }
