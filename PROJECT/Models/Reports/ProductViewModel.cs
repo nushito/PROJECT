@@ -13,7 +13,7 @@ namespace PROJECT.Models.Reports
         public string Size { get; set; }
         public string Grade { get; set; }
         public decimal Quantity { get; set; }
-
+       
         public ProductSpecificationViewModel Specification { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace PROJECT.Services
     public interface ISupplierService
     {
         public ICollection<AllSuppliers> GetSuppliers();
-
+       
        
     }
 }

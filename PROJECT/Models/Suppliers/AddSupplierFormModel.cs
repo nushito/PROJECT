@@ -27,6 +27,6 @@ namespace PROJECT.Models.Suppliers
         public string Country { get; set; }
 
         public string RepresentativePerson { get; set; }
-        public ICollection<PurchaseProductFormModel> ProductList { get; set; }
+        public ICollection<ProductSpecificationFormModel> ProductList { get; set; }
     }
 }

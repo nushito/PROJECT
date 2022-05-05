@@ -17,7 +17,7 @@ namespace PROJECT.Data.Models
         [Required]
         public Supplier Supplier { get; set; }
         public DateTime Date { get; set; }
-        public int InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; }
         public ICollection<ProductPurchase> Products { get; set; }
     }
 }

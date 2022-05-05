@@ -16,16 +16,16 @@ namespace PROJECT.Models.Purchases
         public int Id { get; init; }
         public int SupplierId { get; set; }
         public string SupplierName { get; set; }
-        public int Number { get; set; }
+        public string Number { get; set; }
         public string Date { get; set; }
        
         public int Pieces { get; set; }
         
        // public PurchaseProductFormModel PurchaseProductFormModel { get; set; }
-        public PurchaseProductViewModel PurchaseProductViewModel { get; set; }
+        public ICollection<PurchaseProductViewModel> PurchaseProductViewModel { get; set; }
 
         public ICollection<AllSuppliers> Suppliers { get; set; }
-        public ICollection<PurchaseProductFormModel> PurchaseProducts { get; set; } 
+        public ICollection<ProductSpecificationFormModel> ProductsSpecifications { get; set; } 
         
     }
 }

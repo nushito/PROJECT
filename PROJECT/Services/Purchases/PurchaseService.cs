@@ -1,7 +1,9 @@
 ﻿using PROJECT.Data;
 using PROJECT.Data.Models;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace PROJECT.Services.Purchases
 {
@@ -13,7 +15,14 @@ namespace PROJECT.Services.Purchases
             this.dbContext = dbContext;
         }
 
-        public int Create( int supplierId, string dateInput, int invoiceNumber
+        public IEnumerable<string> AllPurchases()
+        {
+            return dbContext.Purchases
+                .Select(a => a.InvoiceNumber)
+                .ToList();
+        }
+
+        public int Create( int supplierId, string dateInput, string invoiceNumber
            )
         {
             
@@ -35,7 +44,7 @@ namespace PROJECT.Services.Purchases
 
         }
 
-     
+      
         //public int SaveProduct( 
         //    string productDescription, 
         //    string size, string grade, 
@@ -46,7 +55,7 @@ namespace PROJECT.Services.Purchases
         //    //Loop through the forms
 
         //    Product product = null;
-          
+
         //    if ((productDescription.ToString() != null) && (size.ToString() != null)
         //            && (grade.ToString() != null) && (pieces != 0) && (cubic != 0) &&
         //            (purchasePrice != 0) && (transportCost != 0) && (terminalCharges != 0) && (duty != 0) &&
@@ -76,6 +85,6 @@ namespace PROJECT.Services.Purchases
         //    return product.Id;
         //}
 
-        
+
     }
 }

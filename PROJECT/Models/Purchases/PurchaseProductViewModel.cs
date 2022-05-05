@@ -8,7 +8,7 @@ namespace PROJECT.Models.Purchases
     {
         public PurchaseProductViewModel()
         {
-            var ProductProperties = new HashSet<PurchaseProductFormModel>();
+            var ProductSpecificationFormModels = new HashSet<ProductSpecificationFormModel>();
         }
 
         public int PurchaseId { get; set; }
@@ -21,12 +21,13 @@ namespace PROJECT.Models.Purchases
         public int GradeId { get; set; }
         [Required]
         public string Grade { get; set; }
-
         public ICollection<string> Sizes { get; set; }
         public ICollection<string> Grades { get; set; }
         public ICollection<string> Descriptions { get; set; }
-        public PurchaseProductFormModel PurchaseProductFormModel { get; set; }
-        public ICollection<PurchaseProductFormModel> ProductProperties { get; set; }
+
+        public int ProductSpecificationFormModelId { get; set; }
+        public ProductSpecificationFormModel ProductSpecificationFormModel { get; set; }
+        public ICollection<ProductSpecificationFormModel> ProductSpecificationFormModels { get; set; }
 
 
     }

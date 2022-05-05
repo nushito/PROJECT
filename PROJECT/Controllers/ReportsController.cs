@@ -6,6 +6,7 @@ using PROJECT.Models.Reports.Customers;
 using PROJECT.Services;
 using PROJECT.Services.Customer;
 using PROJECT.Services.Products;
+using PROJECT.Services.Purchases;
 using System.Linq;
 
 namespace PROJECT.Controllers
@@ -16,28 +17,31 @@ namespace PROJECT.Controllers
         private readonly IProductsService productService;
         private readonly ISupplierService supplierService;
         private readonly ICustomerService customerService;
+        private readonly IPurchaseService purchaseService;
         public ReportsController(IProductsService productService, ISupplierService supplierService,
-            ICustomerService customerService, ApplicationDbContext dbContext)
+            ICustomerService customerService, ApplicationDbContext dbContext, IPurchaseService purchaseService)
         {
             this.dbContext = dbContext;
             this.productService = productService;
             this.supplierService = supplierService;
             this.customerService = customerService;
+            this.purchaseService = purchaseService;
         }
 
         [Authorize]
-        public IActionResult ReportProducts([FromQuery] ProductsAvailability model)
-            //int supplierId,
-            //string description,
-            //string size, 
-            //string grade, 
-            //string customerName)
+        public IActionResult ReportProducts([FromQuery] ProductsAvailability model, string supplierName)
+        //int supplierId,
+        //string description,
+        //string size, 
+        //string grade, 
+
         {
             model.Descriptions = productService.GetDescription();            
             model.Sizes = productService.GetSize();
             model.Grades = productService.GetGrade();
             model.Suppliers = supplierService.GetSuppliers().Select(a=>a.Name);
-            model.Customers = customerService.GetCustomers();           
+            model.Customers = customerService.GetCustomers();
+            model.PurchaseNumbers = purchaseService.AllPurchases();
 
             var listQuery = dbContext.Products.AsQueryable();
 
@@ -57,13 +61,17 @@ namespace PROJECT.Controllers
 
             if (!string.IsNullOrWhiteSpace(model.SupplierName))
             {
-                listQuery = listQuery.Where(a => a.Supplier.Name.ToLower() == model.SupplierName.ToLower());
+                listQuery = listQuery.Where(a => a.Supplier.Name.ToLower() == supplierName.ToLower());
             }
+
+            
            
             if (!string.IsNullOrWhiteSpace(model.CustomerName))
             {
                 listQuery = listQuery.Where(a => a.Customers.Any(x => x.Name == model.CustomerName));
             }
+
+
 
             var products = listQuery
                 .Select(a => new ProductViewModel
@@ -80,10 +88,11 @@ namespace PROJECT.Controllers
                         Pieces = a.ProductSpecifications.Select(a=>a.Pieces).FirstOrDefault(),
                         Price = a.ProductSpecifications.Select(a=>a.Price).FirstOrDefault(),
                         CostPrice = a.ProductSpecifications.Select(a=>a.CostPrice).FirstOrDefault(),
-                        Income = a.ProductSpecifications.Select(a=>a.Income).FirstOrDefault()
+                        Income = a.ProductSpecifications.Select(a=>a.Income).FirstOrDefault(),
+                        PurchaseNumber = a.Purchases.Where(a=>a.Purchase.Supplier.Name == model.SupplierName).Select(a=>a.Purchase.InvoiceNumber).FirstOrDefault()
                     }
                 })
-                .ToList();
+                   .ToList();
 
            model.Products = products;
             

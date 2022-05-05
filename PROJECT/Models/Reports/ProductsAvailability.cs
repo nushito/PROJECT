@@ -18,6 +18,8 @@ namespace PROJECT.Models.Reports
         public int SupplierId { get; set; }
         public string SupplierName { get; set; }
         public IEnumerable<string> Suppliers { get; set; }
+        public string PurchaseNumber { get; set; }
+        public IEnumerable<string> PurchaseNumbers { get; set; }
         public int CustomerId { get; set; }
         public string CustomerName { get; set; }
         public IEnumerable<string> Customers { get; set; }

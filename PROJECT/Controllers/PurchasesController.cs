@@ -80,37 +80,53 @@ namespace PROJECT.Controllers
         [Authorize]
         public IActionResult AddPurchaseProducts()
         {
-            return View( new PurchaseProductViewModel
-                {
+            return View(
+                  new List<PurchaseProductViewModel>
+                {new PurchaseProductViewModel
+            {
                     Descriptions = productsService.GetDescription(),
                     Sizes = productsService.GetSize(),
-                    Grades = productsService.GetGrade()
-                
-            });
+                    Grades = productsService.GetGrade(),
+                ProductSpecificationFormModels = new List<ProductSpecificationFormModel>()
+
+            }});
          }
 
         [HttpPost]
         [Authorize]
-        public IActionResult AddPurchaseProducts(int purchaseId, 
-            PurchaseProductViewModel model, 
-            ICollection<PurchaseProductFormModel> productModel)
+        public IActionResult AddPurchaseProducts(int purchaseId, PurchaseProductViewModel productViewModel,
+            ICollection<PurchaseProductViewModel> model)
         {
 
 
             if (!ModelState.IsValid)
             {
-                 model = new PurchaseProductViewModel
-                {
+                new List<PurchaseProductViewModel>
+                {new PurchaseProductViewModel
+            {
                     Descriptions = productsService.GetDescription(),
                     Sizes = productsService.GetSize(),
-                    Grades = productsService.GetGrade()
-                };
+                    Grades = productsService.GetGrade(),
+                ProductSpecificationFormModels = new List<ProductSpecificationFormModel>()
+
+            }};
             }
 
-           
+
+
+            //   model = new List<PurchaseProductViewModel>();
+
+            var thisPurchase = dbContext.Purchases.Find(purchaseId);
             var listProducts = new HashSet<ProductPurchase>();
+
+
+            foreach (var item in model)
+            {
+                
+            }
            
-            for (int i = 0; i <= model.ProductProperties.Count; i++)
+           
+            for (int i = 0; i < model.Count; i++)
             {
 
                
@@ -173,7 +189,7 @@ namespace PROJECT.Controllers
                     product.ProductSpecifications.Add(productDetails);
                     var x = new ProductPurchase
                     {
-                        Product = product,
+                        ProductId = product.Id,
                         PurchaseId = purchaseId
                    
                     };
@@ -183,7 +199,7 @@ namespace PROJECT.Controllers
                 }
             }
 
-           var thisPurchase = dbContext.Purchases.Find(purchaseId);
+          
            
             thisPurchase.Products = listProducts;
             dbContext.SaveChanges();

@@ -18,5 +18,6 @@ namespace PROJECT.Models.Reports
         public decimal BankExpenses { get; set; }
         public decimal CostPrice { get; set; }
         public decimal  Income { get; set; }
+        public string PurchaseNumber { get; set; }
     }
 }

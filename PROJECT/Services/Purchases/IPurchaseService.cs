@@ -8,8 +8,10 @@ namespace PROJECT.Services.Purchases
     public interface IPurchaseService
     {
         public int Create(
-            int supplierId, string date, int invoiceNumber
+            int supplierId, string date, string invoiceNumber
            );
+
+        public IEnumerable<string> AllPurchases();
 
         //public int SaveProduct(string productDescription,
         //    string size, string grade, int pieces,
